@@ -2401,6 +2401,856 @@
       background: rgba(255, 255, 255, 0.12);
       border-color: rgba(255, 255, 255, 0.3);
     }
+
+    /* ================= REAL GOAT KNOCKOUT TOURNAMENT STYLES ================= */
+    .goat-nav-btn {
+      color: #f2b34c !important;
+      border-color: rgba(242, 179, 76, 0.35) !important;
+      background: rgba(242, 179, 76, 0.08) !important;
+      position: relative;
+    }
+    .goat-nav-btn:hover {
+      background: rgba(242, 179, 76, 0.18) !important;
+      border-color: rgba(242, 179, 76, 0.6) !important;
+      box-shadow: 0 0 16px rgba(242, 179, 76, 0.3);
+    }
+    .goat-nav-btn::after {
+      content: '';
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      width: 6px;
+      height: 6px;
+      background: #f2b34c;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #f2b34c;
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+
+    .goat-tournament-section {
+      position: relative;
+      z-index: 26;
+      width: 100%;
+      background: radial-gradient(circle at 50% 15%, rgba(242, 179, 76, 0.08) 0%, rgba(10, 10, 12, 1) 60%), #08080a;
+      color: #fafaf9;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.95);
+      border-top: 1px solid rgba(242, 179, 76, 0.25);
+      padding: 70px 20px 140px;
+      overflow: hidden;
+    }
+    .goat-tournament-inner {
+      max-width: 1420px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Ambient stadium spotlight background elements */
+    .goat-stadium-glow {
+      position: absolute;
+      top: -120px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 800px;
+      height: 380px;
+      background: radial-gradient(ellipse, rgba(242, 179, 76, 0.14) 0%, rgba(242, 179, 76, 0) 70%);
+      filter: blur(50px);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* Header Banner */
+    .goat-header-banner {
+      text-align: center;
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 2;
+    }
+    .goat-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(242, 179, 76, 0.1);
+      border: 1px solid rgba(242, 179, 76, 0.3);
+      padding: 6px 16px;
+      border-radius: 999px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: #f2b34c;
+      margin-bottom: 16px;
+    }
+    .goat-gold-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #f2b34c;
+      box-shadow: 0 0 10px #f2b34c;
+      animation: pulseDot 2s infinite ease-in-out;
+    }
+    .goat-main-heading {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(34px, 5vw, 56px);
+      letter-spacing: .08em;
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 14px;
+      text-shadow: 0 0 40px rgba(242, 179, 76, 0.35);
+    }
+    .goat-sub-desc {
+      max-width: 680px;
+      margin: 0 auto 24px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #a8a29e;
+      font-weight: 400;
+    }
+
+    /* Unlock status badge */
+    .goat-status-bar {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 8px 18px;
+      font-size: 12px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.08em;
+      color: #d6d3d1;
+    }
+    .goat-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 9px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .goat-status-pill.ready {
+      background: rgba(85, 223, 140, 0.18);
+      color: #55df8c;
+      border: 1px solid rgba(85, 223, 140, 0.35);
+    }
+    .goat-status-pill.locked {
+      background: rgba(242, 179, 76, 0.18);
+      color: #f2b34c;
+      border: 1px solid rgba(242, 179, 76, 0.35);
+    }
+
+    /* 3D Trophy Arena & Stage Hero */
+    .goat-stage-hero {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 24px;
+      margin-bottom: 36px;
+      position: relative;
+      z-index: 2;
+    }
+    @media (max-width: 960px) {
+      .goat-stage-hero {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .goat-trophy-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(20, 18, 14, 0.7) 100%);
+      border: 1px solid rgba(242, 179, 76, 0.28);
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), inset 0 0 30px rgba(242, 179, 76, 0.05);
+      position: relative;
+      overflow: hidden;
+    }
+    .goat-trophy-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(242, 179, 76, 0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .goat-trophy-3d-canvas {
+      width: 100%;
+      height: 230px;
+      border-radius: 12px;
+      cursor: grab;
+      display: block;
+    }
+    .goat-trophy-3d-canvas:active {
+      cursor: grabbing;
+    }
+    .goat-trophy-caption {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .goat-trophy-title {
+      font-family: 'Cinzel', serif;
+      font-size: 13px;
+      letter-spacing: .2em;
+      font-weight: 700;
+      color: #f2b34c;
+    }
+    .goat-trophy-sub {
+      font-size: 11px;
+      color: #a8a29e;
+      margin-top: 3px;
+    }
+
+    /* Highlight Banner Card */
+    .goat-highlight-panel {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(24, 22, 18, 0.8) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .goat-active-match-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .goat-match-versus-preview {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .goat-preview-side {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .goat-preview-poster {
+      width: 46px;
+      height: 64px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #111;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    }
+    .goat-preview-seed {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: #f2b34c;
+      font-weight: 700;
+    }
+    .goat-preview-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: #fff;
+      max-width: 180px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .goat-preview-rating {
+      font-size: 12px;
+      color: #fbbf24;
+      font-family: 'Space Mono', monospace;
+    }
+    .goat-vs-flair {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 900;
+      color: #f2b34c;
+      padding: 4px 12px;
+      border-radius: 999px;
+      background: rgba(242, 179, 76, 0.12);
+      border: 1px solid rgba(242, 179, 76, 0.35);
+      text-shadow: 0 0 12px rgba(242, 179, 76, 0.5);
+    }
+
+    /* Action Toolbar */
+    .goat-action-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+      position: relative;
+      z-index: 2;
+    }
+    .goat-tool-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s cubic-bezier(.2, .8, .2, 1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.05);
+      color: #d6d3d1;
+    }
+    .goat-tool-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.28);
+      color: #fff;
+    }
+    .goat-tool-btn.primary {
+      background: #f2b34c;
+      color: #111;
+      border-color: #f2b34c;
+      font-weight: 700;
+      box-shadow: 0 4px 16px rgba(242, 179, 76, 0.35);
+    }
+    .goat-tool-btn.primary:hover {
+      background: #ffc266;
+      box-shadow: 0 6px 22px rgba(242, 179, 76, 0.55);
+      transform: translateY(-1px);
+    }
+    .goat-tool-btn.danger {
+      color: #fca5a5;
+      border-color: rgba(239, 68, 68, 0.3);
+      background: rgba(239, 68, 68, 0.08);
+    }
+    .goat-tool-btn.danger:hover {
+      background: rgba(239, 68, 68, 0.18);
+      border-color: rgba(239, 68, 68, 0.5);
+    }
+
+    /* FOOTBALL STYLE TOURNAMENT BRACKET TREE */
+    .goat-bracket-outer {
+      width: 100%;
+      background: rgba(14, 13, 16, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 30px 16px 40px;
+      box-shadow: inset 0 0 60px rgba(0, 0, 0, 0.85);
+      position: relative;
+      z-index: 2;
+    }
+    .goat-bracket-scrollable {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 12px;
+    }
+    .goat-bracket-fixture {
+      display: grid;
+      grid-template-columns: 240px 220px 220px 270px 220px 220px 240px;
+      gap: 16px;
+      min-width: 1400px;
+      align-items: center;
+      position: relative;
+    }
+
+    .bracket-column {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      height: 100%;
+      gap: 20px;
+    }
+    .bracket-round-label {
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #a8a29e;
+      padding: 6px 10px;
+      margin-bottom: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .bracket-round-label.final {
+      color: #f2b34c;
+      background: rgba(242, 179, 76, 0.12);
+      border-color: rgba(242, 179, 76, 0.35);
+      font-weight: 700;
+    }
+
+    /* Match Box */
+    .match-box {
+      background: rgba(24, 23, 27, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 8px;
+      position: relative;
+      transition: all .25s ease;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+    }
+    .match-box:hover {
+      border-color: rgba(242, 179, 76, 0.45);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 16px rgba(242, 179, 76, 0.15);
+    }
+    .match-box.active-duel {
+      border-color: #f2b34c;
+      box-shadow: 0 0 20px rgba(242, 179, 76, 0.4);
+      background: rgba(36, 32, 24, 0.95);
+    }
+    .match-box.completed {
+      border-color: rgba(85, 223, 140, 0.3);
+    }
+
+    .match-header-tag {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: #78716c;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      padding: 0 4px;
+    }
+    .match-vs-btn {
+      background: rgba(242, 179, 76, 0.15);
+      border: 1px solid rgba(242, 179, 76, 0.35);
+      color: #f2b34c;
+      font-size: 9px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .match-vs-btn:hover {
+      background: #f2b34c;
+      color: #111;
+    }
+
+    /* Contender slot inside a match */
+    .contender-slot {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 7px 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid transparent;
+      cursor: pointer;
+      transition: all .2s;
+      margin-bottom: 4px;
+      position: relative;
+    }
+    .contender-slot:last-child {
+      margin-bottom: 0;
+    }
+    .contender-slot:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+    .contender-slot.winner {
+      background: rgba(242, 179, 76, 0.12);
+      border-color: rgba(242, 179, 76, 0.45);
+    }
+    .contender-slot.winner .contender-slot-name {
+      color: #fff;
+      font-weight: 700;
+    }
+    .contender-slot.eliminated {
+      opacity: 0.4;
+      text-decoration: line-through;
+    }
+    .contender-slot.empty {
+      cursor: default;
+      opacity: 0.4;
+      border: 1px dashed rgba(255, 255, 255, 0.15);
+    }
+
+    .contender-slot-thumb {
+      width: 26px;
+      height: 36px;
+      border-radius: 4px;
+      object-fit: cover;
+      background: #18181b;
+      flex-shrink: 0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .contender-slot-meta {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .contender-slot-top {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .contender-slot-seed {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: #f2b34c;
+      font-weight: 700;
+    }
+    .contender-slot-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #e7e5e4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .contender-slot-score {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #fbbf24;
+      margin-left: auto;
+      font-weight: 700;
+      padding-left: 4px;
+    }
+    .contender-slot-check {
+      color: #55df8c;
+      font-size: 11px;
+      margin-left: 4px;
+      font-weight: 900;
+    }
+
+    /* Grand Final Special Card */
+    .match-box.grand-final {
+      background: linear-gradient(180deg, rgba(40, 34, 22, 0.95) 0%, rgba(20, 18, 14, 0.98) 100%);
+      border: 2px solid #f2b34c;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(242, 179, 76, 0.35);
+      padding: 14px;
+    }
+    .grand-final-trophy-icon {
+      text-align: center;
+      font-size: 26px;
+      margin-bottom: 6px;
+      animation: floatTrophy 3s infinite ease-in-out;
+    }
+    @keyframes floatTrophy {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    /* 3D HOLOGRAPHIC CINEMA CLASH ARENA MODAL */
+    .goat-arena-backdrop {
+      z-index: 100;
+      background: rgba(4, 4, 6, 0.88);
+      backdrop-filter: blur(28px);
+    }
+    .goat-arena-card {
+      background: radial-gradient(circle at 50% 20%, rgba(242, 179, 76, 0.12) 0%, rgba(14, 13, 17, 0.98) 60%), #0a0a0d;
+      border: 1px solid rgba(242, 179, 76, 0.35);
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.9), 0 0 40px rgba(242, 179, 76, 0.2);
+      border-radius: 20px;
+      width: 100%;
+      max-width: 980px;
+      padding: 24px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .goat-arena-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding-bottom: 16px;
+      margin-bottom: 24px;
+    }
+    .goat-arena-round-badge {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: #f2b34c;
+      font-weight: 700;
+    }
+    .goat-arena-title {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      letter-spacing: .15em;
+      margin: 0;
+      color: #fff;
+    }
+
+    .goat-arena-stage {
+      display: grid;
+      grid-template-columns: 1fr 120px 1fr;
+      gap: 20px;
+      align-items: center;
+      perspective: 1200px;
+      margin-bottom: 20px;
+    }
+    @media (max-width: 768px) {
+      .goat-arena-stage {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* 3D Contender Card */
+    .contender-arena-card {
+      background: rgba(22, 20, 26, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 16px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      transform-style: preserve-3d;
+    }
+    .contender-arena-card:hover {
+      border-color: #f2b34c;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8), 0 0 30px rgba(242, 179, 76, 0.25);
+      transform: translateY(-4px) scale(1.02);
+    }
+    .contender-arena-card.left:hover {
+      transform: translateY(-4px) rotateY(4deg) scale(1.02);
+    }
+    .contender-arena-card.right:hover {
+      transform: translateY(-4px) rotateY(-4deg) scale(1.02);
+    }
+
+    .contender-poster-box {
+      width: 160px;
+      height: 235px;
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #111;
+    }
+    .contender-poster-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .contender-seed-tag {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid rgba(242, 179, 76, 0.6);
+      color: #f2b34c;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 7px;
+      border-radius: 5px;
+      backdrop-filter: blur(8px);
+    }
+    .contender-score-tag {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      background: rgba(0, 0, 0, 0.85);
+      border: 1px solid rgba(251, 191, 36, 0.6);
+      color: #fbbf24;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 5px;
+      backdrop-filter: blur(8px);
+    }
+
+    .contender-arena-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0 0 6px;
+      color: #fff;
+      line-height: 1.2;
+    }
+    .contender-arena-meta {
+      font-size: 12px;
+      color: #a8a29e;
+      margin-bottom: 10px;
+    }
+    .contender-arena-synopsis {
+      font-size: 12px;
+      color: #78716c;
+      line-height: 1.45;
+      max-height: 52px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .contender-choose-btn {
+      width: 100%;
+      background: #f2b34c;
+      color: #111;
+      border: none;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all .2s;
+      box-shadow: 0 4px 16px rgba(242, 179, 76, 0.35);
+    }
+    .contender-choose-btn:hover {
+      background: #ffc875;
+      box-shadow: 0 8px 24px rgba(242, 179, 76, 0.6);
+      transform: translateY(-2px);
+    }
+
+    /* Arena VS Ring */
+    .goat-arena-vs {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .vs-ring-pulse {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(242, 179, 76, 0.25) 0%, rgba(242, 179, 76, 0.05) 70%);
+      border: 2px solid #f2b34c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 25px rgba(242, 179, 76, 0.5);
+      animation: vsPulseRing 2s infinite ease-in-out;
+    }
+    @keyframes vsPulseRing {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(242, 179, 76, 0.4); }
+      50% { transform: scale(1.08); box-shadow: 0 0 35px rgba(242, 179, 76, 0.7); }
+    }
+    .vs-text {
+      font-family: 'Cinzel', serif;
+      font-size: 26px;
+      font-weight: 900;
+      color: #fff;
+      text-shadow: 0 0 15px rgba(242, 179, 76, 0.8);
+      position: absolute;
+    }
+    .vs-sub {
+      margin-top: 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: .2em;
+      color: #a8a29e;
+    }
+
+    /* Crown Celebration & Hall of Fame */
+    .goat-crown-celebration {
+      background: radial-gradient(circle at 50% 30%, rgba(242, 179, 76, 0.18) 0%, rgba(18, 16, 20, 0.95) 70%), #0c0b0f;
+      border: 2px solid #f2b34c;
+      border-radius: 20px;
+      padding: 48px 30px;
+      margin-top: 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 20px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(242, 179, 76, 0.3);
+      animation: crownFadeUp .6s cubic-bezier(.2, .8, .2, 1);
+    }
+    @keyframes crownFadeUp {
+      from { opacity: 0; transform: translateY(30px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .champion-trophy-emblem {
+      font-size: 54px;
+      margin-bottom: 12px;
+      animation: floatTrophy 3s infinite ease-in-out;
+    }
+    .champion-title-heading {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(28px, 4.5vw, 44px);
+      font-weight: 900;
+      color: #fff;
+      margin: 0 0 8px;
+      letter-spacing: .06em;
+      text-shadow: 0 0 30px rgba(242, 179, 76, 0.5);
+    }
+    .champion-sub-heading {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: #f2b34c;
+      margin-bottom: 28px;
+    }
+
+    .champion-podium-grid {
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      gap: 20px;
+      max-width: 780px;
+      margin: 0 auto 36px;
+      flex-wrap: wrap;
+    }
+    .podium-slot {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 220px;
+    }
+    .podium-slot.first {
+      background: linear-gradient(180deg, rgba(242, 179, 76, 0.15) 0%, rgba(26, 22, 15, 0.9) 100%);
+      border: 2px solid #f2b34c;
+      box-shadow: 0 10px 40px rgba(242, 179, 76, 0.25);
+      width: 260px;
+      transform: translateY(-16px);
+    }
+    .podium-rank-badge {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    .podium-poster {
+      width: 100px;
+      height: 145px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-bottom: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+    }
+    .podium-slot.first .podium-poster {
+      width: 125px;
+      height: 180px;
+      border: 2px solid #f2b34c;
+      box-shadow: 0 12px 35px rgba(242, 179, 76, 0.4);
+    }
+    .podium-name {
+      font-weight: 700;
+      font-size: 15px;
+      color: #fff;
+      margin-bottom: 4px;
+    }
+    .podium-score {
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      color: #fbbf24;
+      font-weight: 700;
+    }
   </style>
 </head>
 <body>
@@ -2436,6 +3286,10 @@
         <button id="btnOpenLedger" class="nav-btn-iconic" title="Archival Ledger & Ratings Index">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
           <span class="btn-text">The Ledger</span>
+        </button>
+        <button id="btnOpenGoat" class="nav-btn-iconic goat-nav-btn" title="Who is the Real GOAT? • Cinema Knockout Tournament">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span class="btn-text">Real GOAT</span>
         </button>
         <button id="btnNavShare" class="nav-btn-iconic" title="Share your Watchlist Reel">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
@@ -2699,7 +3553,10 @@
         <div style="font-family:'Space Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#78716c;">
           ARCHIVAL LEDGER & RATINGS INDEX
         </div>
-        <button id="btnJumpToReel" class="paper-btn">↑ Back to 3D Reel</button>
+        <div style="display:flex; gap:8px;">
+          <button id="btnJumpToGoatFromLedger" class="paper-btn" style="background:rgba(242,179,76,0.18); border-color:#f2b34c; color:#1b1917; font-weight:700;">👑 The Real GOAT ↓</button>
+          <button id="btnJumpToReel" class="paper-btn">↑ Back to 3D Reel</button>
+        </div>
       </div>
 
       <!-- REEL TWO: END OF THE DARK -->
@@ -2827,6 +3684,171 @@
 
     </div>
   </section>
+
+  <!-- ================= THE REAL GOAT KNOCKOUT TOURNAMENT SECTION ================= -->
+  <section id="goatSection" class="goat-tournament-section">
+    <div class="goat-stadium-glow"></div>
+    <div class="goat-tournament-inner">
+
+      <!-- HEADER BANNER -->
+      <div class="goat-header-banner">
+        <div class="goat-kicker">
+          <span class="goat-gold-dot"></span>
+          <span>THE CINEMA CLASH • KNOCKOUT ELIMINATION</span>
+        </div>
+        <h2 class="goat-main-heading">WHO IS THE REAL GOAT?</h2>
+        <p class="goat-sub-desc">
+          Your top 16 rated movies and TV series clash in a direct single-elimination football-style knockout fixture.
+          Resolve every battle round-by-round from the Round of 16 to the Grand Final, and crown the ultimate All-Time Cinema GOAT.
+        </p>
+
+        <div class="goat-status-bar" id="goatStatusBar">
+          <span class="goat-status-pill locked" id="goatStatusBadge">VAULT SYNC</span>
+          <span id="goatStatusText">Scanning logged archive for top 16 seeds...</span>
+        </div>
+      </div>
+
+      <!-- 3D TROPHY & HIGHLIGHT STAGE HERO -->
+      <div class="goat-stage-hero">
+        <!-- 3D Golden Reel Trophy Card -->
+        <div class="goat-trophy-card">
+          <canvas id="goatTrophyCanvas" class="goat-trophy-3d-canvas"></canvas>
+          <div class="goat-trophy-caption">
+            <div class="goat-trophy-title" id="goatTrophyTitle">THE GOLDEN REEL TROPHY</div>
+            <div class="goat-trophy-sub" id="goatTrophySub">Interactive 3D Asset • Drag to rotate in space</div>
+          </div>
+        </div>
+
+        <!-- Dynamic Matchup / Champion Panel -->
+        <div class="goat-highlight-panel" id="goatHighlightPanel">
+          <!-- Populated by JavaScript with active battle or championship banner -->
+        </div>
+      </div>
+
+      <!-- ACTION TOOLBAR -->
+      <div class="goat-action-toolbar">
+        <button type="button" id="btnGoatAutoSeed" class="goat-tool-btn" title="Refresh bracket with top 16 rated titles from your archive">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
+          <span id="btnGoatAutoSeedLabel">Sync Vault Top 16</span>
+        </button>
+
+        <button type="button" id="btnGoatPlayNext" class="goat-tool-btn primary" title="Enter the 3D Face-Off Arena for the next match">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+          <span id="btnGoatPlayNextLabel">Play Next Match</span>
+        </button>
+
+        <button type="button" id="btnGoatReset" class="goat-tool-btn danger" title="Reset tournament bracket">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+          <span>Reset Bracket</span>
+        </button>
+
+        <button type="button" id="btnGoatSoundToggle" class="goat-tool-btn" title="Toggle audio sound FX">
+          <span id="goatSoundIcon">🔊</span>
+          <span id="goatSoundLabel">Sound FX: ON</span>
+        </button>
+
+        <button type="button" id="btnGoatBackToTop" class="goat-tool-btn" title="Scroll back to top reel">
+          <span>↑ Back to Reel</span>
+        </button>
+      </div>
+
+      <!-- FOOTBALL STYLE KNOCKOUT BRACKET TREE -->
+      <div class="goat-bracket-outer" id="goatBracketOuter">
+        <div class="goat-bracket-scrollable">
+          <div class="goat-bracket-fixture" id="goatBracketFixture">
+            <!-- Dynamically populated 7-column fixture tree -->
+          </div>
+        </div>
+      </div>
+
+      <!-- CROWN CELEBRATION & HALL OF FAME PODIUM (Visible after Grand Final) -->
+      <div id="goatCrownCelebration" class="goat-crown-celebration" style="display:none;">
+        <div class="champion-trophy-emblem">👑</div>
+        <h3 class="champion-title-heading" id="championTitleText">THE REAL GOAT</h3>
+        <div class="champion-sub-heading">OFFICIALLY CROWNED CHAMPION OF THE CINEMA FILES ARCHIVE</div>
+
+        <!-- PODIUM (1ST, 2ND, 3RD) -->
+        <div class="champion-podium-grid" id="championPodiumGrid">
+          <!-- Populated dynamically -->
+        </div>
+
+        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+          <button type="button" id="btnShareGoatResult" class="goat-tool-btn primary">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+            <span>Share GOAT Crown</span>
+          </button>
+          <button type="button" id="btnReplayGoat" class="goat-tool-btn">
+            <span>Replay Tournament</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- SECTION FOOTER CREDITS -->
+      <div style="margin-top:50px; text-align:center; font-family:'Space Mono', monospace; font-size:11px; color:#78716c; letter-spacing:0.15em;">
+        <div>KNOCKOUT ENGINE DESIGNED & DEVELOPED FOR CINEMA FILES BY <strong>ANURAG SINGH INDOLIYA</strong></div>
+        <div style="margin-top:6px;">
+          <a href="https://instagram.com/anurag_singh.indoliya" target="_blank" rel="noopener noreferrer" style="color:#a8a29e; text-decoration:none;">
+            Instagram: @anurag_singh.indoliya
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- 3D HOLOGRAPHIC CINEMA CLASH ARENA MODAL -->
+  <div id="goatArenaModal" class="modal-backdrop goat-arena-backdrop">
+    <div class="goat-arena-card">
+      <div class="goat-arena-header">
+        <div class="goat-arena-round-badge" id="arenaRoundBadge">ROUND OF 16 • MATCH 1</div>
+        <h3 class="goat-arena-title">CHOOSE THE VICTOR</h3>
+        <button type="button" class="modal-close" id="btnCloseArena">×</button>
+      </div>
+
+      <div class="goat-arena-stage">
+        <!-- CONTENDER A -->
+        <div class="contender-arena-card left" id="contenderCardA">
+          <div class="contender-poster-box">
+            <img id="arenaPosterA" class="contender-poster-img" src="" alt="" />
+            <div class="contender-seed-tag" id="arenaSeedA">#01</div>
+            <div class="contender-score-tag" id="arenaRatingA">★ 9.9</div>
+          </div>
+          <h4 class="contender-arena-title" id="arenaTitleA">Breaking Bad</h4>
+          <div class="contender-arena-meta" id="arenaMetaA">2008 • TV Series</div>
+          <div class="contender-arena-synopsis" id="arenaSynopsisA">A high school chemistry teacher diagnosed with terminal lung cancer turns to manufacturing methamphetamine.</div>
+          <button type="button" class="contender-choose-btn" id="btnChooseA">
+            <span>👑 CHOOSE AS WINNER</span>
+          </button>
+        </div>
+
+        <!-- CENTER VS PULSE -->
+        <div class="goat-arena-vs">
+          <div class="vs-ring-pulse"></div>
+          <div class="vs-text">VS</div>
+          <div class="vs-sub">KNOCKOUT</div>
+        </div>
+
+        <!-- CONTENDER B -->
+        <div class="contender-arena-card right" id="contenderCardB">
+          <div class="contender-poster-box">
+            <img id="arenaPosterB" class="contender-poster-img" src="" alt="" />
+            <div class="contender-seed-tag" id="arenaSeedB">#16</div>
+            <div class="contender-score-tag" id="arenaRatingB">★ 2.1</div>
+          </div>
+          <h4 class="contender-arena-title" id="arenaTitleB">365 Days</h4>
+          <div class="contender-arena-meta" id="arenaMetaB">2020 • Feature Film</div>
+          <div class="contender-arena-synopsis" id="arenaSynopsisB">A fiery Polish executive falls victim to a Sicilian mafia boss who gives her 365 days to fall in love with him.</div>
+          <button type="button" class="contender-choose-btn" id="btnChooseB">
+            <span>👑 CHOOSE AS WINNER</span>
+          </button>
+        </div>
+      </div>
+
+      <div style="text-align:center; font-family:'Space Mono', monospace; font-size:11px; color:#a8a29e; letter-spacing:0.08em; padding-top:10px; border-top:1px solid rgba(255,255,255,0.08);">
+        Select either contender or press [<kbd style="background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:4px; color:#fff;">←</kbd> / <kbd style="background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:4px; color:#fff;">→</kbd>] to eliminate opponent & advance!
+      </div>
+    </div>
+  </div>
 
   <!-- FLOATING POSTER PREVIEW TOOLTIP -->
   <div id="indexPosterPreview">
@@ -3906,6 +4928,897 @@
       }
     }
 
+    /* =========================================================================
+       THE REAL GOAT KNOCKOUT TOURNAMENT ENGINE & 3D CINEMA CLASH
+       Single Elimination 16-Contender Football-Style Fixture Tree
+       ========================================================================= */
+
+    // 1. Web Audio API Synthesizer Sound Engine
+    const GoatAudio = {
+      ctx: null,
+      enabled: true,
+      init() {
+        if (!this.ctx && (window.AudioContext || window.webkitAudioContext)) {
+          this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+      },
+      playWhoosh() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const now = this.ctx.currentTime;
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(160, now);
+          osc.frequency.exponentialRampToValueAtTime(36, now + 0.35);
+          gain.gain.setValueAtTime(0.28, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now);
+          osc.stop(now + 0.36);
+        } catch (e) { }
+      },
+      playAdvance() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const now = this.ctx.currentTime;
+          [523.25, 659.25, 783.99].forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.05);
+            gain.gain.setValueAtTime(0.18, now + idx * 0.05);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 0.32);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + idx * 0.05);
+            osc.stop(now + idx * 0.05 + 0.33);
+          });
+        } catch (e) { }
+      },
+      playChampion() {
+        if (!this.enabled) return;
+        this.init();
+        if (!this.ctx) return;
+        try {
+          const now = this.ctx.currentTime;
+          const chords = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+          chords.forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+            gain.gain.setValueAtTime(0.24, now + idx * 0.08);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 1.4);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(now + idx * 0.08);
+            osc.stop(now + idx * 0.08 + 1.5);
+          });
+        } catch (e) { }
+      }
+    };
+
+    // 2. Curated Legendary Seeds (Fallback / Instant Play)
+    // Matches the user's prompt: Rank 1 Breaking Bad vs Rank 16 365 Days
+    const LEGENDARY_SEEDS = [
+      { t: "Breaking Bad", y: 2008, k: "TV Series", r: 9.9, p: "https://static.tvmaze.com/uploads/images/medium_portrait/501/1253519.jpg", n: "A high school chemistry teacher diagnosed with lung cancer manufactures crystal meth." },
+      { t: "The Godfather", y: 1972, k: "Feature Film", r: 9.8, p: "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg", n: "The patriarch of an organized crime dynasty transfers control to his reluctant son." },
+      { t: "Interstellar", y: 2014, k: "Feature Film", r: 9.7, p: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg", n: "A team of explorers travel through a wormhole in space to ensure humanity's survival." },
+      { t: "The Dark Knight", y: 2008, k: "Feature Film", r: 9.6, p: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg", n: "Batman battles the Joker who seeks to plunge Gotham City into complete anarchy." },
+      { t: "Chernobyl", y: 2019, k: "Miniseries", r: 9.5, p: "https://static.tvmaze.com/uploads/images/medium_portrait/193/484439.jpg", n: "The true story of the 1986 nuclear power plant catastrophe and heroic cleanup." },
+      { t: "Pulp Fiction", y: 1994, k: "Feature Film", r: 9.4, p: "https://image.tmdb.org/t/p/w500/d5iIlFnGhFvl0HqMAN2IPkeHRqD.jpg", n: "The lives of two mob hitmen, a boxer, and a gangster entwine in violent comedy." },
+      { t: "Severance", y: 2022, k: "TV Series", r: 9.3, p: "https://static.tvmaze.com/uploads/images/medium_portrait/397/993181.jpg", n: "Employees whose work and personal memories have been surgically divided uncover dark secrets." },
+      { t: "Succession", y: 2018, k: "TV Series", r: 9.2, p: "https://static.tvmaze.com/uploads/images/medium_portrait/456/1140989.jpg", n: "The Roy family clashes over succession of Waystar RoyCo, their global media empire." },
+      { t: "Spirited Away", y: 2001, k: "Feature Film", r: 9.1, p: "https://image.tmdb.org/t/p/w500/39wmItIWsg5sZMyRUHLkWBcuVCM.jpg", n: "A young girl wanders into an amusement park ruled by gods, spirits, and a sorceress." },
+      { t: "Better Call Saul", y: 2015, k: "TV Series", r: 9.0, p: "https://static.tvmaze.com/uploads/images/medium_portrait/408/1021464.jpg", n: "Jimmy McGill transforms into his sleazy, moral-bending criminal attorney alter-ego." },
+      { t: "Inception", y: 2010, k: "Feature Film", r: 8.9, p: "https://image.tmdb.org/t/p/w500/edv5CZvWj09upOsy2Y6IwDhK8bt.jpg", n: "A thief who steals corporate secrets through dream-sharing technology attempts inception." },
+      { t: "Fight Club", y: 1999, k: "Feature Film", r: 8.8, p: "https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg", n: "An insomniac office worker and a soapmaker form an underground fight club." },
+      { t: "Parasite", y: 2019, k: "Feature Film", r: 8.7, p: "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg", n: "A poor family schemes to become employed by a wealthy family by infiltrating their home." },
+      { t: "The Matrix", y: 1999, k: "Feature Film", r: 8.6, p: "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg", n: "Neo discovers reality is a simulated illusion created by machines feeding on humans." },
+      { t: "Game of Thrones", y: 2011, k: "TV Series", r: 8.5, p: "https://static.tvmaze.com/uploads/images/medium_portrait/190/476117.jpg", n: "Nine noble families fight for control over the Iron Throne of the mythical lands of Westeros." },
+      { t: "365 Days", y: 2020, k: "Feature Film", r: 2.1, p: "https://image.tmdb.org/t/p/w500/6KIm382tG9s6Z0Y8M0q4KSmjH4q.jpg", n: "A Sicilian mafia boss gives a fiery captive woman 365 days to fall in love with him." }
+    ];
+
+    const GOAT_STORAGE_KEY = 'cinema_files_goat_tournament_v2';
+    let goatTournament = null;
+    let activeDuelMatchId = null;
+
+    // 3. Seeding Logic from Archive
+    function getArchiveTournamentSeeds() {
+      // Sort all archive items descending by rating
+      const sortedArchive = [...ITEMS].sort((a, b) => Number(b.r || 0) - Number(a.r || 0));
+      
+      if (sortedArchive.length >= 16) {
+        return sortedArchive.slice(0, 16).map((it, idx) => ({
+          ...it,
+          seedRank: idx + 1,
+          isUserLogged: true
+        }));
+      }
+
+      // Pad with legendary seeds if fewer than 16 logged
+      const seeds = [];
+      const usedTitles = new Set();
+
+      sortedArchive.forEach((it) => {
+        usedTitles.add(it.t.toLowerCase().trim());
+        seeds.push({
+          ...it,
+          seedRank: seeds.length + 1,
+          isUserLogged: true
+        });
+      });
+
+      for (let i = 0; i < LEGENDARY_SEEDS.length && seeds.length < 16; i++) {
+        const candidate = LEGENDARY_SEEDS[i];
+        if (!usedTitles.has(candidate.t.toLowerCase().trim())) {
+          seeds.push({
+            ...candidate,
+            seedRank: seeds.length + 1,
+            isUserLogged: false
+          });
+          usedTitles.add(candidate.t.toLowerCase().trim());
+        }
+      }
+
+      return seeds.slice(0, 16);
+    }
+
+    // Build standard 15-match tree for top 16 seeds
+    function createInitialMatches(seeds) {
+      // 0..7: Round of 16 (8 matches)
+      // Left Wing:
+      // M0: Seed 1 vs Seed 16 -> QF 8 (teamA)
+      // M1: Seed 8 vs Seed 9  -> QF 8 (teamB)
+      // M2: Seed 4 vs Seed 13 -> QF 9 (teamA)
+      // M3: Seed 5 vs Seed 12 -> QF 9 (teamB)
+      // Right Wing:
+      // M4: Seed 2 vs Seed 15 -> QF 10 (teamA)
+      // M5: Seed 7 vs Seed 10 -> QF 10 (teamB)
+      // M6: Seed 3 vs Seed 14 -> QF 11 (teamA)
+      // M7: Seed 6 vs Seed 11 -> QF 11 (teamB)
+
+      const pairings = [
+        { seedA: 0, seedB: 15, targetMatch: 8, targetSlot: 'teamA', name: 'R16 • MATCH 1' },
+        { seedA: 7, seedB: 8,  targetMatch: 8, targetSlot: 'teamB', name: 'R16 • MATCH 2' },
+        { seedA: 3, seedB: 12, targetMatch: 9, targetSlot: 'teamA', name: 'R16 • MATCH 3' },
+        { seedA: 4, seedB: 11, targetMatch: 9, targetSlot: 'teamB', name: 'R16 • MATCH 4' },
+        { seedA: 1, seedB: 14, targetMatch: 10, targetSlot: 'teamA', name: 'R16 • MATCH 5' },
+        { seedA: 6, seedB: 9,  targetMatch: 10, targetSlot: 'teamB', name: 'R16 • MATCH 6' },
+        { seedA: 2, seedB: 13, targetMatch: 11, targetSlot: 'teamA', name: 'R16 • MATCH 7' },
+        { seedA: 5, seedB: 10, targetMatch: 11, targetSlot: 'teamB', name: 'R16 • MATCH 8' }
+      ];
+
+      const matches = [];
+
+      // Round of 16
+      pairings.forEach((p, idx) => {
+        matches.push({
+          id: idx,
+          round: 'r16',
+          roundLabel: 'ROUND OF 16',
+          label: p.name,
+          teamA: seeds[p.seedA] || null,
+          teamB: seeds[p.seedB] || null,
+          winner: null,
+          targetMatch: p.targetMatch,
+          targetSlot: p.targetSlot
+        });
+      });
+
+      // Quarter Finals (8..11)
+      matches.push({
+        id: 8, round: 'qf', roundLabel: 'QUARTER-FINAL 1', label: 'QF • MATCH 1',
+        teamA: null, teamB: null, winner: null, targetMatch: 12, targetSlot: 'teamA'
+      });
+      matches.push({
+        id: 9, round: 'qf', roundLabel: 'QUARTER-FINAL 2', label: 'QF • MATCH 2',
+        teamA: null, teamB: null, winner: null, targetMatch: 12, targetSlot: 'teamB'
+      });
+      matches.push({
+        id: 10, round: 'qf', roundLabel: 'QUARTER-FINAL 3', label: 'QF • MATCH 3',
+        teamA: null, teamB: null, winner: null, targetMatch: 13, targetSlot: 'teamA'
+      });
+      matches.push({
+        id: 11, round: 'qf', roundLabel: 'QUARTER-FINAL 4', label: 'QF • MATCH 4',
+        teamA: null, teamB: null, winner: null, targetMatch: 13, targetSlot: 'teamB'
+      });
+
+      // Semi Finals (12..13)
+      matches.push({
+        id: 12, round: 'sf', roundLabel: 'SEMI-FINAL 1', label: 'SF • MATCH 1',
+        teamA: null, teamB: null, winner: null, targetMatch: 14, targetSlot: 'teamA'
+      });
+      matches.push({
+        id: 13, round: 'sf', roundLabel: 'SEMI-FINAL 2', label: 'SF • MATCH 2',
+        teamA: null, teamB: null, winner: null, targetMatch: 14, targetSlot: 'teamB'
+      });
+
+      // Grand Final (14)
+      matches.push({
+        id: 14, round: 'final', roundLabel: 'THE GRAND FINAL', label: 'THE CHAMPIONSHIP DECIDER',
+        teamA: null, teamB: null, winner: null, targetMatch: null, targetSlot: null
+      });
+
+      return matches;
+    }
+
+    function initGoatTournament(forceRefresh = false) {
+      if (!forceRefresh) {
+        try {
+          const raw = localStorage.getItem(GOAT_STORAGE_KEY);
+          if (raw) {
+            const saved = JSON.parse(raw);
+            if (saved && Array.isArray(saved.matches) && saved.matches.length === 15) {
+              goatTournament = saved;
+              renderGoatSection();
+              return;
+            }
+          }
+        } catch (e) {
+          console.warn('Could not read saved GOAT tournament:', e);
+        }
+      }
+
+      const seeds = getArchiveTournamentSeeds();
+      goatTournament = {
+        seeds,
+        matches: createInitialMatches(seeds),
+        champion: null,
+        runnerUp: null,
+        createdAt: Date.now()
+      };
+
+      saveGoatTournament();
+      renderGoatSection();
+    }
+
+    function saveGoatTournament() {
+      try {
+        if (goatTournament) {
+          localStorage.setItem(GOAT_STORAGE_KEY, JSON.stringify(goatTournament));
+        }
+      } catch (e) {
+        console.warn('Error saving GOAT tournament:', e);
+      }
+    }
+
+    // Reset downstream matches if a previous choice is modified
+    function resetDownstream(matchId) {
+      if (!goatTournament) return;
+      const m = goatTournament.matches[matchId];
+      if (!m || m.targetMatch === null) {
+        goatTournament.champion = null;
+        goatTournament.runnerUp = null;
+        return;
+      }
+
+      const target = goatTournament.matches[m.targetMatch];
+      if (target) {
+        target[m.targetSlot] = null;
+        target.winner = null;
+        resetDownstream(target.id);
+      }
+    }
+
+    // Choose winner of a match
+    function chooseMatchWinner(matchId, choice) {
+      if (!goatTournament) return;
+      const match = goatTournament.matches[matchId];
+      if (!match || !match.teamA || !match.teamB) return;
+
+      const previousWinner = match.winner;
+      if (previousWinner && previousWinner !== choice) {
+        resetDownstream(matchId);
+      }
+
+      match.winner = choice;
+      const winningTeam = choice === 'A' ? match.teamA : match.teamB;
+      const losingTeam = choice === 'A' ? match.teamB : match.teamA;
+
+      if (match.targetMatch !== null) {
+        const targetMatch = goatTournament.matches[match.targetMatch];
+        if (targetMatch) {
+          targetMatch[match.targetSlot] = winningTeam;
+        }
+      }
+
+      if (match.id === 14) {
+        // Grand Final concluded!
+        goatTournament.champion = winningTeam;
+        goatTournament.runnerUp = losingTeam;
+        GoatAudio.playChampion();
+        triggerTrophyCelebration();
+      } else {
+        GoatAudio.playAdvance();
+        triggerTrophyCelebration();
+      }
+
+      saveGoatTournament();
+      renderGoatSection();
+
+      // Close duel modal if open
+      closeModals();
+
+      // If Grand Final was won, scroll to celebratory podium smoothly
+      if (match.id === 14) {
+        setTimeout(() => {
+          const celebEl = document.getElementById('goatCrownCelebration');
+          if (celebEl) celebEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 300);
+      }
+    }
+
+    // Find next active playable match
+    function getNextPlayableMatch() {
+      if (!goatTournament) return null;
+      return goatTournament.matches.find(m => m.teamA && m.teamB && !m.winner) || null;
+    }
+
+    // Render entire tournament section
+    function renderGoatSection() {
+      if (!goatTournament) return;
+
+      // Update status bar
+      updateGoatTournamentStatus();
+
+      // Update Toolbar buttons
+      const nextMatch = getNextPlayableMatch();
+      const btnPlayNext = document.getElementById('btnGoatPlayNext');
+      const btnPlayNextLabel = document.getElementById('btnGoatPlayNextLabel');
+      if (btnPlayNext && btnPlayNextLabel) {
+        if (goatTournament.champion) {
+          btnPlayNextLabel.textContent = '👑 View Champion';
+        } else if (nextMatch) {
+          btnPlayNextLabel.textContent = `Play: ${nextMatch.label}`;
+        } else {
+          btnPlayNextLabel.textContent = 'Tournament Complete';
+        }
+      }
+
+      // Render Highlight Panel
+      renderGoatHighlightPanel(nextMatch);
+
+      // Render Bracket Fixture Tree
+      renderGoatBracket();
+
+      // Render Podium if Champion exists
+      renderGoatCelebration();
+    }
+
+    function updateGoatTournamentStatus() {
+      const statusBar = document.getElementById('goatStatusBar');
+      const statusBadge = document.getElementById('goatStatusBadge');
+      const statusText = document.getElementById('goatStatusText');
+      if (!statusBar || !statusBadge || !statusText) return;
+
+      const userCount = ITEMS.length;
+      if (userCount >= 16) {
+        statusBadge.className = 'goat-status-pill ready';
+        statusBadge.textContent = 'VAULT UNLOCKED';
+        statusText.textContent = `100% Personal Archive: Seeded with your top 16 rated titles (${goatTournament?.seeds[0]?.t || 'Rank 1'} #1 vs ${goatTournament?.seeds[15]?.t || 'Rank 16'} #16)`;
+      } else if (userCount > 0) {
+        statusBadge.className = 'goat-status-pill locked';
+        statusBadge.textContent = `${userCount} / 16 TITLES LOGGED`;
+        statusText.textContent = `Active clash features ${userCount} of your titles + legendary seeds. Log ${16 - userCount} more in the console above to fully personalize!`;
+      } else {
+        statusBadge.className = 'goat-status-pill locked';
+        statusBadge.textContent = 'DEMO CLASH READY';
+        statusText.textContent = `Seeded with 16 Cinema Classics (e.g. Breaking Bad #1 vs 365 Days #16). Log titles above to substitute!`;
+      }
+    }
+
+    function renderGoatHighlightPanel(nextMatch) {
+      const panel = document.getElementById('goatHighlightPanel');
+      if (!panel || !goatTournament) return;
+
+      if (goatTournament.champion) {
+        const champ = goatTournament.champion;
+        panel.innerHTML = `
+          <div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+            <div style="display:flex; align-items:center; gap:18px;">
+              <div style="position:relative;">
+                <img src="${champ.p || ''}" style="width:60px; height:85px; border-radius:8px; object-fit:cover; border:2px solid #f2b34c; box-shadow:0 0 20px rgba(242,179,76,0.5);" />
+                <div style="position:absolute; top:-12px; left:-10px; font-size:24px;">👑</div>
+              </div>
+              <div>
+                <div style="font-family:'Space Mono', monospace; font-size:11px; letter-spacing:0.2em; color:#f2b34c; text-transform:uppercase; margin-bottom:4px;">THE CROWNED GOAT</div>
+                <h3 style="margin:0 0 4px; font-size:24px; font-family:'Cinzel', serif; color:#fff;">${champ.t}</h3>
+                <div style="font-size:12px; color:#a8a29e;">${champ.y || '—'} • ${champ.k || 'Cinema'} • ★ ${Number(champ.r || 0).toFixed(1)} / 10</div>
+              </div>
+            </div>
+            <button type="button" id="btnInspectGoatChampion" class="goat-tool-btn primary">
+              <span>View Hall of Fame</span>
+            </button>
+          </div>
+        `;
+        const btnInspect = document.getElementById('btnInspectGoatChampion');
+        if (btnInspect) {
+          btnInspect.onclick = () => {
+            const el = document.getElementById('goatCrownCelebration');
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          };
+        }
+        return;
+      }
+
+      if (nextMatch) {
+        const tA = nextMatch.teamA;
+        const tB = nextMatch.teamB;
+        panel.innerHTML = `
+          <div class="goat-active-match-bar">
+            <div>
+              <div style="font-family:'Space Mono', monospace; font-size:11px; letter-spacing:0.2em; color:#f2b34c; text-transform:uppercase; margin-bottom:6px;">
+                ${nextMatch.roundLabel}
+              </div>
+              <div class="goat-match-versus-preview">
+                <div class="goat-preview-side">
+                  <img class="goat-preview-poster" src="${tA.p || ''}" alt="" />
+                  <div>
+                    <div class="goat-preview-seed">#${pad(tA.seedRank || 1)} SEED</div>
+                    <div class="goat-preview-name">${tA.t}</div>
+                    <div class="goat-preview-rating">★ ${Number(tA.r || 0).toFixed(1)}</div>
+                  </div>
+                </div>
+
+                <div class="goat-vs-flair">VS</div>
+
+                <div class="goat-preview-side">
+                  <img class="goat-preview-poster" src="${tB.p || ''}" alt="" />
+                  <div>
+                    <div class="goat-preview-seed">#${pad(tB.seedRank || 16)} SEED</div>
+                    <div class="goat-preview-name">${tB.t}</div>
+                    <div class="goat-preview-rating">★ ${Number(tB.r || 0).toFixed(1)}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" id="btnLaunchActiveMatch" class="goat-tool-btn primary" style="padding:12px 22px;">
+              <span>⚡ Enter 3D Clash Duel</span>
+            </button>
+          </div>
+        `;
+
+        const btnLaunch = document.getElementById('btnLaunchActiveMatch');
+        if (btnLaunch) {
+          btnLaunch.onclick = () => openGoatDuelArena(nextMatch.id);
+        }
+      } else {
+        panel.innerHTML = `
+          <div style="text-align:center; padding:10px;">
+            <div style="font-family:'Space Mono', monospace; font-size:11px; color:#a8a29e; letter-spacing:0.2em; text-transform:uppercase;">
+              AWAITING RESULTS FROM PREVIOUS ROUNDS
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Helper to render an individual contender row inside a bracket match box
+    function renderContenderRow(match, slot, item, seedFallback) {
+      if (!item) {
+        return `
+          <div class="contender-slot empty">
+            <div class="contender-slot-thumb" style="display:flex; align-items:center; justify-content:center; color:#555; font-size:10px;">?</div>
+            <div class="contender-slot-meta">
+              <span class="contender-slot-name" style="color:#777; font-style:italic;">Awaiting Winner</span>
+            </div>
+          </div>
+        `;
+      }
+
+      const isWinner = match.winner === slot;
+      const isEliminated = match.winner && match.winner !== slot;
+      const statusClass = isWinner ? 'winner' : isEliminated ? 'eliminated' : '';
+      const seedNum = pad(item.seedRank || seedFallback || 1);
+      const rating = Number(item.r || 0).toFixed(1);
+
+      return `
+        <div class="contender-slot ${statusClass}" data-match-id="${match.id}" data-slot="${slot}" title="Click to advance '${item.t}'">
+          <img class="contender-slot-thumb" src="${item.p || ''}" alt="" />
+          <div class="contender-slot-meta">
+            <div class="contender-slot-top">
+              <span class="contender-slot-seed">#${seedNum}</span>
+              <span class="contender-slot-name">${item.t}</span>
+            </div>
+          </div>
+          <span class="contender-slot-score">★ ${rating}</span>
+          ${isWinner ? '<span class="contender-slot-check">✓</span>' : ''}
+        </div>
+      `;
+    }
+
+    // Helper to render an entire match box
+    function renderMatchCard(match, extraClass = '') {
+      const hasBoth = Boolean(match.teamA && match.teamB);
+      const isPlayable = hasBoth && !match.winner;
+      const activeClass = isPlayable ? 'active-duel' : match.winner ? 'completed' : '';
+
+      return `
+        <div class="match-box ${extraClass} ${activeClass}" id="matchBox_${match.id}">
+          <div class="match-header-tag">
+            <span>${match.label}</span>
+            ${hasBoth ? `<button type="button" class="match-vs-btn" data-match-id="${match.id}">⚡ VS</button>` : ''}
+          </div>
+          ${renderContenderRow(match, 'A', match.teamA, 1)}
+          ${renderContenderRow(match, 'B', match.teamB, 16)}
+        </div>
+      `;
+    }
+
+    // Render 7-column football tournament bracket tree
+    function renderGoatBracket() {
+      const fixtureEl = document.getElementById('goatBracketFixture');
+      if (!fixtureEl || !goatTournament) return;
+
+      const m = goatTournament.matches;
+
+      fixtureEl.innerHTML = `
+        <!-- COL 1: ROUND OF 16 (LEFT WING) -->
+        <div class="bracket-column">
+          <div class="bracket-round-label">Round of 16 (L)</div>
+          ${renderMatchCard(m[0])}
+          ${renderMatchCard(m[1])}
+          ${renderMatchCard(m[2])}
+          ${renderMatchCard(m[3])}
+        </div>
+
+        <!-- COL 2: QUARTER-FINALS (LEFT WING) -->
+        <div class="bracket-column">
+          <div class="bracket-round-label">Quarter-Finals</div>
+          ${renderMatchCard(m[8])}
+          ${renderMatchCard(m[9])}
+        </div>
+
+        <!-- COL 3: SEMI-FINAL 1 -->
+        <div class="bracket-column">
+          <div class="bracket-round-label">Semi-Final 1</div>
+          ${renderMatchCard(m[12])}
+        </div>
+
+        <!-- COL 4: THE GRAND FINAL (CENTER PODIUM) -->
+        <div class="bracket-column">
+          <div class="bracket-round-label final">THE GRAND FINAL</div>
+          <div class="grand-final-trophy-icon">🏆</div>
+          ${renderMatchCard(m[14], 'grand-final')}
+        </div>
+
+        <!-- COL 5: SEMI-FINAL 2 -->
+        <div class="bracket-column">
+          <div class="bracket-round-label">Semi-Final 2</div>
+          ${renderMatchCard(m[13])}
+        </div>
+
+        <!-- COL 6: QUARTER-FINALS (RIGHT WING) -->
+        <div class="bracket-column">
+          <div class="bracket-round-label">Quarter-Finals</div>
+          ${renderMatchCard(m[10])}
+          ${renderMatchCard(m[11])}
+        </div>
+
+        <!-- COL 7: ROUND OF 16 (RIGHT WING) -->
+        <div class="bracket-column">
+          <div class="bracket-round-label">Round of 16 (R)</div>
+          ${renderMatchCard(m[4])}
+          ${renderMatchCard(m[5])}
+          ${renderMatchCard(m[6])}
+          ${renderMatchCard(m[7])}
+        </div>
+      `;
+
+      // Wire up direct clicks on contender rows & VS buttons
+      fixtureEl.querySelectorAll('.contender-slot').forEach(slot => {
+        slot.onclick = (e) => {
+          e.stopPropagation();
+          const matchId = parseInt(slot.dataset.matchId, 10);
+          const choice = slot.dataset.slot;
+          if (!isNaN(matchId) && (choice === 'A' || choice === 'B')) {
+            const match = goatTournament.matches[matchId];
+            if (match && match.teamA && match.teamB) {
+              chooseMatchWinner(matchId, choice);
+            }
+          }
+        };
+      });
+
+      fixtureEl.querySelectorAll('.match-vs-btn').forEach(btn => {
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          const matchId = parseInt(btn.dataset.matchId, 10);
+          if (!isNaN(matchId)) {
+            openGoatDuelArena(matchId);
+          }
+        };
+      });
+    }
+
+    // Open the 3D Holographic Clash Arena Modal
+    function openGoatDuelArena(matchId) {
+      if (!goatTournament) return;
+      const match = goatTournament.matches[matchId];
+      if (!match || !match.teamA || !match.teamB) return;
+
+      activeDuelMatchId = matchId;
+      GoatAudio.playWhoosh();
+
+      document.getElementById('arenaRoundBadge').textContent = `${match.roundLabel} • ${match.label}`;
+
+      // Contender A
+      const tA = match.teamA;
+      document.getElementById('arenaPosterA').src = tA.p || '';
+      document.getElementById('arenaSeedA').textContent = `#${pad(tA.seedRank || 1)}`;
+      document.getElementById('arenaRatingA').textContent = `★ ${Number(tA.r || 0).toFixed(1)}`;
+      document.getElementById('arenaTitleA').textContent = tA.t;
+      document.getElementById('arenaMetaA').textContent = `${tA.y || '—'} • ${tA.k || 'Cinema'}`;
+      document.getElementById('arenaSynopsisA').textContent = tA.n || 'No archive notes recorded.';
+
+      // Contender B
+      const tB = match.teamB;
+      document.getElementById('arenaPosterB').src = tB.p || '';
+      document.getElementById('arenaSeedB').textContent = `#${pad(tB.seedRank || 16)}`;
+      document.getElementById('arenaRatingB').textContent = `★ ${Number(tB.r || 0).toFixed(1)}`;
+      document.getElementById('arenaTitleB').textContent = tB.t;
+      document.getElementById('arenaMetaB').textContent = `${tB.y || '—'} • ${tB.k || 'Cinema'}`;
+      document.getElementById('arenaSynopsisB').textContent = tB.n || 'No archive notes recorded.';
+
+      openModal('goatArenaModal');
+    }
+
+    // Render Crown Celebration & Podium
+    function renderGoatCelebration() {
+      const celebEl = document.getElementById('goatCrownCelebration');
+      if (!celebEl) return;
+
+      if (!goatTournament || !goatTournament.champion) {
+        celebEl.style.display = 'none';
+        return;
+      }
+
+      celebEl.style.display = 'block';
+
+      const champ = goatTournament.champion;
+      const runnerUp = goatTournament.runnerUp || goatTournament.matches[14]?.teamB || null;
+      
+      // Semi finalists
+      const sf1Loser = goatTournament.matches[12]?.winner === 'A' ? goatTournament.matches[12]?.teamB : goatTournament.matches[12]?.teamA;
+      const sf2Loser = goatTournament.matches[13]?.winner === 'A' ? goatTournament.matches[13]?.teamB : goatTournament.matches[13]?.teamA;
+
+      document.getElementById('championTitleText').textContent = champ.t;
+
+      const podiumGrid = document.getElementById('championPodiumGrid');
+      if (podiumGrid) {
+        podiumGrid.innerHTML = `
+          <!-- 2ND PLACE (RUNNER-UP) -->
+          ${runnerUp ? `
+            <div class="podium-slot">
+              <div class="podium-rank-badge">🥈</div>
+              <img class="podium-poster" src="${runnerUp.p || ''}" alt="" />
+              <div class="podium-name">${runnerUp.t}</div>
+              <div class="podium-score">★ ${Number(runnerUp.r || 0).toFixed(1)} / 10</div>
+              <div style="font-size:11px; color:#a8a29e; margin-top:4px;">Grand Finalist</div>
+            </div>
+          ` : ''}
+
+          <!-- 1ST PLACE (THE REAL GOAT) -->
+          <div class="podium-slot first">
+            <div class="podium-rank-badge">👑 🥇</div>
+            <img class="podium-poster" src="${champ.p || ''}" alt="" />
+            <div class="podium-name" style="font-size:18px; color:#f2b34c;">${champ.t}</div>
+            <div class="podium-score" style="font-size:14px; color:#fff;">★ ${Number(champ.r || 0).toFixed(1)} / 10</div>
+            <div style="font-size:12px; font-weight:700; color:#f2b34c; margin-top:6px; letter-spacing:0.1em; text-transform:uppercase;">
+              THE UNDISPUTED GOAT
+            </div>
+          </div>
+
+          <!-- 3RD PLACE (SEMI-FINALIST) -->
+          ${sf1Loser ? `
+            <div class="podium-slot">
+              <div class="podium-rank-badge">🥉</div>
+              <img class="podium-poster" src="${sf1Loser.p || ''}" alt="" />
+              <div class="podium-name">${sf1Loser.t}</div>
+              <div class="podium-score">★ ${Number(sf1Loser.r || 0).toFixed(1)} / 10</div>
+              <div style="font-size:11px; color:#a8a29e; margin-top:4px;">Semi-Finalist</div>
+            </div>
+          ` : ''}
+        `;
+      }
+    }
+
+    // 4. Interactive 3D Golden Reel Trophy Canvas with Three.js
+    let goatTrophyScene, goatTrophyCamera, goatTrophyRenderer, goatTrophyGroup;
+    let goatTrophyParticles, trophySpinSpeed = 0.009, celebrationBurst = 0;
+    let isTrophyDragging = false, trophyPrevPointerX = 0, trophyTargetRotY = 0;
+
+    function initGoatTrophy3D() {
+      const canvas = document.getElementById('goatTrophyCanvas');
+      if (!canvas || typeof THREE === 'undefined') return;
+
+      const rect = canvas.getBoundingClientRect();
+      const width = canvas.clientWidth || 330;
+      const height = canvas.clientHeight || 230;
+
+      goatTrophyScene = new THREE.Scene();
+      goatTrophyCamera = new THREE.PerspectiveCamera(40, width / height, 0.1, 100);
+      goatTrophyCamera.position.set(0, 0.6, 5.2);
+
+      try {
+        goatTrophyRenderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        goatTrophyRenderer.setSize(width, height);
+        goatTrophyRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      } catch (e) {
+        console.warn('WebGL Renderer error for trophy:', e);
+        return;
+      }
+
+      // Lights
+      const ambLight = new THREE.AmbientLight(0xffffff, 0.8);
+      goatTrophyScene.add(ambLight);
+
+      const goldLight = new THREE.PointLight(0xf59e0b, 2.5, 12);
+      goldLight.position.set(3, 3, 3);
+      goatTrophyScene.add(goldLight);
+
+      const rimLight = new THREE.PointLight(0x38bdf8, 1.2, 12);
+      rimLight.position.set(-3, -2, 2);
+      goatTrophyScene.add(rimLight);
+
+      // Trophy Master Group
+      goatTrophyGroup = new THREE.Group();
+      goatTrophyScene.add(goatTrophyGroup);
+
+      // Gold Metallic Material
+      const goldMat = new THREE.MeshStandardMaterial({
+        color: 0xf2b34c,
+        metalness: 0.94,
+        roughness: 0.16
+      });
+
+      const darkMat = new THREE.MeshStandardMaterial({
+        color: 0x18181b,
+        metalness: 0.85,
+        roughness: 0.3
+      });
+
+      // Pedestal
+      const baseGeo = new THREE.CylinderGeometry(1.4, 1.7, 0.3, 32);
+      const baseMesh = new THREE.Mesh(baseGeo, darkMat);
+      baseMesh.position.y = -1.3;
+      goatTrophyGroup.add(baseMesh);
+
+      const tierGeo = new THREE.CylinderGeometry(1.1, 1.3, 0.2, 32);
+      const tierMesh = new THREE.Mesh(tierGeo, goldMat);
+      tierMesh.position.y = -1.1;
+      goatTrophyGroup.add(tierMesh);
+
+      // Golden Trophy Stem
+      const stemGeo = new THREE.CylinderGeometry(0.24, 0.32, 0.9, 16);
+      const stemMesh = new THREE.Mesh(stemGeo, goldMat);
+      stemMesh.position.y = -0.65;
+      goatTrophyGroup.add(stemMesh);
+
+      // Main Cinema Film Reel (Torus + Spokes)
+      const reelGroup = new THREE.Group();
+      reelGroup.position.y = 0.4;
+      goatTrophyGroup.add(reelGroup);
+
+      const rimGeo = new THREE.TorusGeometry(1.0, 0.16, 16, 40);
+      const rimMesh = new THREE.Mesh(rimGeo, goldMat);
+      reelGroup.add(rimMesh);
+
+      // Spokes inside reel
+      for (let s = 0; s < 4; s++) {
+        const spokeGeo = new THREE.BoxGeometry(0.1, 1.85, 0.08);
+        const spokeMesh = new THREE.Mesh(spokeGeo, goldMat);
+        spokeMesh.rotation.z = (s * Math.PI) / 4;
+        reelGroup.add(spokeMesh);
+      }
+
+      // Floating Center Core Diamond / Star
+      const starGeo = new THREE.OctahedronGeometry(0.38, 0);
+      const starMat = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        metalness: 0.2,
+        roughness: 0.1,
+        emissive: 0xf59e0b,
+        emissiveIntensity: 0.6
+      });
+      const starMesh = new THREE.Mesh(starGeo, starMat);
+      reelGroup.add(starMesh);
+
+      // Floating Dust Particles
+      const particleCount = 140;
+      const partGeo = new THREE.BufferGeometry();
+      const partPos = new Float32Array(particleCount * 3);
+      for (let i = 0; i < particleCount * 3; i += 3) {
+        partPos[i] = (Math.random() - 0.5) * 4;
+        partPos[i + 1] = (Math.random() - 0.5) * 3;
+        partPos[i + 2] = (Math.random() - 0.5) * 3;
+      }
+      partGeo.setAttribute('position', new THREE.BufferAttribute(partPos, 3));
+      const partMat = new THREE.PointsMaterial({
+        color: 0xfbbf24,
+        size: 0.045,
+        transparent: true,
+        opacity: 0.75
+      });
+      goatTrophyParticles = new THREE.Points(partGeo, partMat);
+      goatTrophyScene.add(goatTrophyParticles);
+
+      // Mouse drag controls for Trophy
+      canvas.addEventListener('pointerdown', (e) => {
+        isTrophyDragging = true;
+        trophyPrevPointerX = e.clientX;
+      });
+
+      window.addEventListener('pointermove', (e) => {
+        if (!isTrophyDragging || !goatTrophyGroup) return;
+        const deltaX = e.clientX - trophyPrevPointerX;
+        trophyTargetRotY += deltaX * 0.015;
+        trophyPrevPointerX = e.clientX;
+      });
+
+      window.addEventListener('pointerup', () => {
+        isTrophyDragging = false;
+      });
+
+      // Window resize handling for trophy canvas
+      window.addEventListener('resize', () => {
+        if (!canvas || !goatTrophyCamera || !goatTrophyRenderer) return;
+        const w = canvas.clientWidth;
+        const h = canvas.clientHeight;
+        if (w > 0 && h > 0) {
+          goatTrophyCamera.aspect = w / h;
+          goatTrophyCamera.updateProjectionMatrix();
+          goatTrophyRenderer.setSize(w, h);
+        }
+      });
+
+      // Trophy Animation Loop
+      function animateTrophy() {
+        requestAnimationFrame(animateTrophy);
+
+        if (goatTrophyGroup) {
+          trophyTargetRotY += trophySpinSpeed;
+          goatTrophyGroup.rotation.y += (trophyTargetRotY - goatTrophyGroup.rotation.y) * 0.1;
+          goatTrophyGroup.rotation.x = Math.sin(Date.now() * 0.0015) * 0.08;
+          starMesh.rotation.y -= 0.02;
+          starMesh.rotation.x += 0.015;
+        }
+
+        if (goatTrophyParticles) {
+          goatTrophyParticles.rotation.y += 0.003;
+          if (celebrationBurst > 0) {
+            goatTrophyParticles.scale.setScalar(1 + celebrationBurst * 0.8);
+            celebrationBurst -= 0.02;
+          } else {
+            goatTrophyParticles.scale.set(1, 1, 1);
+          }
+        }
+
+        if (trophySpinSpeed > 0.009) {
+          trophySpinSpeed = Math.max(0.009, trophySpinSpeed - 0.001);
+        }
+
+        if (goatTrophyRenderer && goatTrophyScene && goatTrophyCamera) {
+          goatTrophyRenderer.render(goatTrophyScene, goatTrophyCamera);
+        }
+      }
+
+      animateTrophy();
+    }
+
+    function triggerTrophyCelebration() {
+      trophySpinSpeed = 0.08;
+      celebrationBurst = 1.0;
+    }
+
     function updateUIState() {
       const total = ITEMS.length;
       if (total === 0) {
@@ -4823,7 +6736,7 @@
     }
 
     function closeModals() {
-      ['searchModal', 'detailModal', 'editRatingModal', 'shareModal'].forEach(id => {
+      ['searchModal', 'detailModal', 'editRatingModal', 'shareModal', 'goatArenaModal'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.remove('active');
       });
@@ -5260,7 +7173,7 @@
       }
 
       // Close modal on backdrop click
-      ['searchModal', 'detailModal', 'editRatingModal', 'shareModal'].forEach(id => {
+      ['searchModal', 'detailModal', 'editRatingModal', 'shareModal', 'goatArenaModal'].forEach(id => {
         const m = document.getElementById(id);
         if (m) {
           m.onclick = (e) => {
@@ -5442,6 +7355,167 @@
       // Initialize Trending Cinema Quick-Picks Shelf
       initTrendingShelf();
       updateStarsDisplay(9.0);
+
+      // Initialize Real GOAT Tournament & Interactive 3D Trophy
+      initGoatTournament();
+      initGoatTrophy3D();
+
+      // Real GOAT Tournament Navigation & Actions
+      const goatSec = document.getElementById('goatSection');
+      const openGoat = () => {
+        if (goatSec) {
+          goatSec.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+
+      const btnOpenGoat = document.getElementById('btnOpenGoat');
+      if (btnOpenGoat) btnOpenGoat.onclick = openGoat;
+
+      const btnJumpToGoatFromLedger = document.getElementById('btnJumpToGoatFromLedger');
+      if (btnJumpToGoatFromLedger) btnJumpToGoatFromLedger.onclick = openGoat;
+
+      const btnGoatBackToTop = document.getElementById('btnGoatBackToTop');
+      if (btnGoatBackToTop) {
+        btnGoatBackToTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+
+      const btnGoatAutoSeed = document.getElementById('btnGoatAutoSeed');
+      if (btnGoatAutoSeed) {
+        btnGoatAutoSeed.onclick = () => {
+          initGoatTournament(true);
+          showToast('Synced Real GOAT tournament bracket with your top 16 archive seeds!');
+        };
+      }
+
+      const btnGoatPlayNext = document.getElementById('btnGoatPlayNext');
+      if (btnGoatPlayNext) {
+        btnGoatPlayNext.onclick = () => {
+          if (goatTournament?.champion) {
+            const celebEl = document.getElementById('goatCrownCelebration');
+            if (celebEl) celebEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            const nextMatch = getNextPlayableMatch();
+            if (nextMatch) {
+              openGoatDuelArena(nextMatch.id);
+            } else {
+              showToast('Complete current round battles to advance to the next round!');
+            }
+          }
+        };
+      }
+
+      const btnGoatReset = document.getElementById('btnGoatReset');
+      if (btnGoatReset) {
+        btnGoatReset.onclick = () => {
+          if (confirm('Reset tournament fixture bracket back to Round of 16?')) {
+            initGoatTournament(true);
+            showToast('Knockout tournament reset.');
+          }
+        };
+      }
+
+      const btnGoatSoundToggle = document.getElementById('btnGoatSoundToggle');
+      const goatSoundIcon = document.getElementById('goatSoundIcon');
+      const goatSoundLabel = document.getElementById('goatSoundLabel');
+      if (btnGoatSoundToggle) {
+        btnGoatSoundToggle.onclick = () => {
+          GoatAudio.enabled = !GoatAudio.enabled;
+          if (goatSoundIcon) goatSoundIcon.textContent = GoatAudio.enabled ? '🔊' : '🔇';
+          if (goatSoundLabel) goatSoundLabel.textContent = GoatAudio.enabled ? 'Sound FX: ON' : 'Sound FX: OFF';
+          showToast(GoatAudio.enabled ? 'Audio Sound FX Enabled' : 'Audio Sound FX Muted');
+        };
+      }
+
+      // Arena Duel Buttons & Keyboard support
+      const btnChooseA = document.getElementById('btnChooseA');
+      if (btnChooseA) {
+        btnChooseA.onclick = () => {
+          if (activeDuelMatchId !== null) chooseMatchWinner(activeDuelMatchId, 'A');
+        };
+      }
+
+      const btnChooseB = document.getElementById('btnChooseB');
+      if (btnChooseB) {
+        btnChooseB.onclick = () => {
+          if (activeDuelMatchId !== null) chooseMatchWinner(activeDuelMatchId, 'B');
+        };
+      }
+
+      const contenderCardA = document.getElementById('contenderCardA');
+      if (contenderCardA) {
+        contenderCardA.onclick = (e) => {
+          if (activeDuelMatchId !== null) chooseMatchWinner(activeDuelMatchId, 'A');
+        };
+      }
+
+      const contenderCardB = document.getElementById('contenderCardB');
+      if (contenderCardB) {
+        contenderCardB.onclick = (e) => {
+          if (activeDuelMatchId !== null) chooseMatchWinner(activeDuelMatchId, 'B');
+        };
+      }
+
+      const btnCloseArena = document.getElementById('btnCloseArena');
+      if (btnCloseArena) btnCloseArena.onclick = closeModals;
+
+      // Arena 3D card tilt on mouse move
+      const modalStage = document.querySelector('.goat-arena-stage');
+      if (modalStage) {
+        modalStage.addEventListener('mousemove', (e) => {
+          const rect = modalStage.getBoundingClientRect();
+          const x = (e.clientX - rect.left) / rect.width - 0.5;
+          const y = (e.clientY - rect.top) / rect.height - 0.5;
+          if (contenderCardA) {
+            contenderCardA.style.transform = `perspective(1000px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg)`;
+          }
+          if (contenderCardB) {
+            contenderCardB.style.transform = `perspective(1000px) rotateY(${x * 12}deg) rotateX(${-y * 12}deg)`;
+          }
+        });
+        modalStage.addEventListener('mouseleave', () => {
+          if (contenderCardA) contenderCardA.style.transform = 'none';
+          if (contenderCardB) contenderCardB.style.transform = 'none';
+        });
+      }
+
+      // Keyboard left/right arrows inside duel arena
+      window.addEventListener('keydown', (e) => {
+        const arenaModal = document.getElementById('goatArenaModal');
+        if (!arenaModal || !arenaModal.classList.contains('active')) return;
+        if (e.key === 'ArrowLeft' && activeDuelMatchId !== null) {
+          e.preventDefault();
+          chooseMatchWinner(activeDuelMatchId, 'A');
+        } else if (e.key === 'ArrowRight' && activeDuelMatchId !== null) {
+          e.preventDefault();
+          chooseMatchWinner(activeDuelMatchId, 'B');
+        }
+      });
+
+      // Share GOAT Champion Certificate
+      const btnShareGoatResult = document.getElementById('btnShareGoatResult');
+      if (btnShareGoatResult) {
+        btnShareGoatResult.onclick = () => {
+          if (!goatTournament?.champion) return;
+          const champ = goatTournament.champion;
+          const text = `👑 Official Cinema GOAT: "${champ.t}" (${champ.y || ''}) rated ★ ${Number(champ.r || 0).toFixed(1)}/10 on Cinema Files Reel!`;
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(text);
+            showToast('Champion verdict copied to clipboard!');
+          } else {
+            showToast(text);
+          }
+        };
+      }
+
+      const btnReplayGoat = document.getElementById('btnReplayGoat');
+      if (btnReplayGoat) {
+        btnReplayGoat.onclick = () => {
+          initGoatTournament(true);
+          const fixture = document.getElementById('goatBracketOuter');
+          if (fixture) fixture.scrollIntoView({ behavior: 'smooth' });
+          showToast('Tournament bracket initialized for replay!');
+        };
+      }
 
       // Close autocomplete dropdown when clicking outside
       document.addEventListener('click', (e) => {

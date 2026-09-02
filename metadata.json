@@ -1,6 +1,6 @@
 {
   "name": "CINEMA FILES",
-  "description": "Personal 3D spiral watchlist & cinema archive by anurag_singh.indoliya where users record films and series with ratings and authentic artwork.",
+  "description": "Personal 3D spiral watchlist, archival ledger, and 'Who is the Real GOAT?' knockout football-style tournament game by anurag_singh.indoliya.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
