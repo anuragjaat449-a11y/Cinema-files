@@ -194,11 +194,46 @@
       transition: width .1s ease-out;
     }
 
-    /* ---------- HERO ---------- */
+    /* ---------- HERO MAIN SCREEN (SEPARATED ARCHIVAL STAGE) ---------- */
+    #heroBackdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 4;
+      pointer-events: none;
+      background: 
+        radial-gradient(circle 800px at 50% 12%, rgba(242, 179, 76, 0.08), transparent 70%),
+        radial-gradient(circle 900px at 50% 90%, rgba(90, 169, 255, 0.05), transparent 75%),
+        linear-gradient(180deg, rgba(7, 8, 12, 0.92) 0%, rgba(5, 6, 9, 0.88) 60%, rgba(0, 0, 0, 0.95) 100%);
+      transition: opacity 0.4s ease-out;
+    }
+    #heroBackdrop::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 20%;
+      right: 20%;
+      height: 280px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(242, 179, 76, 0.14), rgba(255, 255, 255, 0.03) 40%, transparent 75%);
+      filter: blur(20px);
+      pointer-events: none;
+    }
+    #heroBackdrop::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      opacity: 0.6;
+      pointer-events: none;
+    }
+
     #hero {
       position: fixed;
       inset: 0;
-      z-index: 5;
+      z-index: 6;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -206,72 +241,164 @@
       text-align: center;
       pointer-events: none;
       padding: 0 20px;
+      overflow-y: auto;
+      max-height: 100vh;
+    }
+    #hero .hero-inner-stage {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 680px;
+      padding: 24px 0 32px;
     }
     #hero .kicker {
-      font-size: 11px;
-      letter-spacing: .35em;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: 'Space Mono', monospace;
+      font-size: 9.5px;
+      letter-spacing: .28em;
       text-transform: uppercase;
       color: var(--accent);
-      margin-bottom: 18px;
-      animation: rise 1.2s .2s cubic-bezier(.2, .8, .2, 1) both;
+      margin-bottom: 10px;
+      padding: 4px 14px;
+      background: rgba(242, 179, 76, 0.08);
+      border: 1px solid rgba(242, 179, 76, 0.24);
+      border-radius: 20px;
+      backdrop-filter: blur(10px);
+      animation: rise 1s .1s cubic-bezier(.2, .8, .2, 1) both;
     }
     #hero h1 {
       font-family: 'Bebas Neue', sans-serif;
       font-weight: 400;
-      font-size: clamp(54px, 10vw, 160px);
-      line-height: .92;
-      letter-spacing: .02em;
-      background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, .35));
+      font-size: clamp(52px, 8.5vw, 118px);
+      line-height: .90;
+      letter-spacing: .03em;
+      background: linear-gradient(180deg, #ffffff 30%, rgba(255, 255, 255, .7) 70%, rgba(242, 179, 76, 0.8) 100%);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+      text-shadow: 0 12px 50px rgba(0, 0, 0, 0.9);
     }
     #hero h1 span {
       display: inline-block;
-      animation: rise 1.4s cubic-bezier(.2, .8, .2, 1) both;
+      animation: rise 1.1s cubic-bezier(.2, .8, .2, 1) both;
     }
-    #hero p {
-      max-width: 580px;
-      margin-top: 18px;
-      color: var(--muted);
-      font-weight: 300;
-      font-size: 14px;
-      line-height: 1.65;
-      animation: rise 1.2s .7s cubic-bezier(.2, .8, .2, 1) both;
+    #hero .hero-subline {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: rgba(244, 244, 247, 0.55);
+      margin-top: 10px;
+      animation: rise 1.1s .3s cubic-bezier(.2, .8, .2, 1) both;
     }
 
-    /* ---------- HERO DIRECT INPUT FORM ---------- */
+    /* ---------- CINEMATIC ARCHIVAL RECORD CONSOLE (HERO) ---------- */
     .hero-record-bar {
       pointer-events: auto;
-      margin-top: 28px;
+      margin-top: 22px;
       width: 100%;
-      max-width: 620px;
-      background: rgba(13, 16, 26, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.16);
-      border-radius: 12px;
-      padding: 8px;
+      max-width: 640px;
+      background: rgba(11, 14, 22, 0.94);
+      border: 1px solid rgba(242, 179, 76, 0.28);
+      border-radius: 14px;
+      padding: 14px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
-      backdrop-filter: blur(16px);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 24px rgba(242, 179, 76, 0.1);
-      animation: rise 1.2s .9s cubic-bezier(.2, .8, .2, 1) both;
-      transition: border-color .25s, box-shadow .25s;
+      gap: 12px;
+      backdrop-filter: blur(32px);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 35px rgba(242, 179, 76, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      animation: rise 1.1s .45s cubic-bezier(.2, .8, .2, 1) both;
+      transition: all .25s cubic-bezier(.2, .8, .2, 1);
+      position: relative;
+    }
+    .hero-record-bar::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 18%;
+      right: 18%;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.85;
     }
     .hero-record-bar:focus-within {
-      border-color: var(--accent);
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), 0 0 32px rgba(242, 179, 76, 0.25);
+      border-color: rgba(242, 179, 76, 0.8);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 42px rgba(242, 179, 76, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.25);
     }
     .hero-record-bar.error-shake {
       animation: shake 0.45s ease-in-out !important;
       border-color: #ff5252 !important;
-      box-shadow: 0 0 28px rgba(255, 82, 82, 0.4) !important;
+      box-shadow: 0 0 32px rgba(255, 82, 82, 0.45) !important;
     }
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
       20%, 60% { transform: translateX(-8px); }
       40%, 80% { transform: translateX(8px); }
     }
+
+    /* Console Graphic Sprocket & Status Header */
+    .console-header-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px 4px 6px 4px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      text-transform: uppercase;
+      gap: 10px;
+    }
+    .console-status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #9cdbb2;
+      font-weight: 600;
+    }
+    .console-pulse-dot {
+      width: 7px;
+      height: 7px;
+      background: #4ecb71;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #4ecb71;
+      animation: beacon 1.8s ease-in-out infinite;
+    }
+    @keyframes beacon {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.35); opacity: 0.4; }
+    }
+    .console-sprockets {
+      display: flex;
+      gap: 4px;
+      color: rgba(255, 255, 255, 0.25);
+      letter-spacing: 0.2em;
+    }
+    .console-format-toggles {
+      display: flex;
+      gap: 4px;
+    }
+    .format-chip {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      padding: 2px 7px;
+      font-size: 9px;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .format-chip:hover, .format-chip.active {
+      background: rgba(242, 179, 76, 0.18);
+      border-color: rgba(242, 179, 76, 0.4);
+      color: var(--accent);
+    }
+
     .hero-input-row {
       display: flex;
       align-items: center;
@@ -285,13 +412,22 @@
       display: flex;
       align-items: center;
     }
+    .hero-search-icon {
+      position: absolute;
+      left: 14px;
+      color: var(--accent);
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.85;
+    }
     .hero-name-input {
       width: 100%;
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 8px;
-      padding: 12px 16px;
-      padding-right: 36px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 10px;
+      padding: 13px 40px 13px 42px;
       color: #fff;
       font-family: 'Inter', sans-serif;
       font-size: 14px;
@@ -299,15 +435,17 @@
       transition: all .2s;
     }
     .hero-name-input::placeholder {
-      color: rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.38);
+      font-weight: 300;
     }
     .hero-name-input:focus {
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.09);
+      border-color: rgba(242, 179, 76, 0.5);
+      box-shadow: 0 0 16px rgba(242, 179, 76, 0.15);
     }
     .hero-input-spinner {
       position: absolute;
-      right: 12px;
+      right: 14px;
       width: 16px;
       height: 16px;
       border: 2px solid rgba(255, 255, 255, 0.2);
@@ -318,33 +456,47 @@
       pointer-events: none;
     }
 
+    body.modal-open {
+      overflow: hidden !important;
+      touch-action: none;
+    }
+
     /* Autocomplete Suggestions Dropdown */
     .hero-suggestions-dropdown {
       position: absolute;
       top: calc(100% + 8px);
       left: 0;
       right: 0;
-      background: #0b0e17;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 10px;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(242, 179, 76, 0.15);
+      background: #090c14;
+      border: 1px solid rgba(242, 179, 76, 0.3);
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 30px rgba(242, 179, 76, 0.18);
       z-index: 50;
-      max-height: 290px;
+      max-height: 310px;
       overflow-y: auto;
+      overscroll-behavior: contain;
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
       display: none;
-      backdrop-filter: blur(20px);
+      backdrop-filter: blur(24px);
     }
     .hero-suggestions-dropdown.active {
       display: block;
+      animation: dropdownPop 0.2s cubic-bezier(.2, .8, .2, 1);
+    }
+    @keyframes dropdownPop {
+      from { opacity: 0; transform: translateY(-8px) scale(0.98); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
     .hero-suggestions-header {
-      padding: 8px 14px;
+      padding: 10px 14px;
+      font-family: 'Space Mono', monospace;
       font-size: 10px;
-      letter-spacing: .18em;
+      letter-spacing: .16em;
       text-transform: uppercase;
       color: var(--muted);
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      background: rgba(255, 255, 255, 0.02);
+      background: rgba(255, 255, 255, 0.03);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -353,24 +505,26 @@
       display: flex;
       align-items: center;
       gap: 12px;
-      padding: 8px 12px;
+      padding: 10px 14px;
       cursor: pointer;
       border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-      transition: background .15s;
+      transition: all .15s;
     }
     .suggestion-item:last-child {
       border-bottom: none;
     }
     .suggestion-item:hover, .suggestion-item.selected {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(242, 179, 76, 0.12);
+      transform: translateX(3px);
     }
     .suggestion-poster {
-      width: 38px;
-      height: 56px;
+      width: 42px;
+      height: 60px;
       object-fit: cover;
-      border-radius: 4px;
+      border-radius: 6px;
       background: #181c28;
-      border: 1px solid rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
       flex-shrink: 0;
     }
     .suggestion-info {
@@ -380,7 +534,7 @@
     }
     .suggestion-title {
       font-weight: 600;
-      font-size: 13px;
+      font-size: 14px;
       color: #fff;
       white-space: nowrap;
       overflow: hidden;
@@ -389,7 +543,7 @@
     .suggestion-meta {
       font-size: 11px;
       color: var(--muted);
-      margin-top: 2px;
+      margin-top: 3px;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -399,14 +553,31 @@
       font-weight: 700;
       letter-spacing: .08em;
       text-transform: uppercase;
-      padding: 1px 5px;
+      padding: 2px 6px;
       border-radius: 3px;
       background: rgba(242, 179, 76, 0.2);
       color: var(--accent);
       border: 1px solid rgba(242, 179, 76, 0.35);
     }
+    .suggestion-pick-btn {
+      font-size: 10px;
+      color: var(--accent);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 5px 10px;
+      border: 1px solid rgba(242, 179, 76, 0.35);
+      border-radius: 6px;
+      background: rgba(242, 179, 76, 0.08);
+      white-space: nowrap;
+      transition: all .2s;
+    }
+    .suggestion-item:hover .suggestion-pick-btn {
+      background: var(--accent);
+      color: #000;
+    }
     .suggestion-empty {
-      padding: 18px 14px;
+      padding: 20px 14px;
       text-align: center;
       color: #ff8e8e;
       font-size: 12px;
@@ -416,57 +587,32 @@
       gap: 8px;
     }
 
-    /* Verified selected badge */
-    .hero-selected-tag {
-      display: none;
-      align-items: center;
-      gap: 8px;
-      background: rgba(30, 48, 38, 0.85);
-      border: 1px solid rgba(78, 203, 113, 0.45);
-      padding: 4px 10px;
-      border-radius: 6px;
-      font-size: 11px;
-      color: #8ce6a3;
-      margin-top: 2px;
-      animation: rise 0.3s ease;
-    }
-    .hero-selected-tag.show {
-      display: flex;
-    }
-    .hero-feedback-msg {
-      display: none;
-      font-size: 11px;
-      color: #ff6b6b;
-      text-align: left;
-      padding: 2px 6px;
-      gap: 6px;
-      align-items: center;
-    }
-    .hero-feedback-msg.show {
-      display: flex;
-    }
-
+    /* Rating Input Component */
     .hero-rating-box {
       display: flex;
       align-items: center;
       gap: 6px;
       background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 10px;
       padding: 0 12px;
-      height: 44px;
+      height: 48px;
+      transition: border-color .2s;
+    }
+    .hero-rating-box:focus-within {
+      border-color: var(--accent);
     }
     .hero-rating-box span {
       color: var(--accent);
-      font-size: 14px;
+      font-size: 15px;
     }
     .hero-rating-input {
-      width: 52px;
+      width: 48px;
       background: transparent;
       border: none;
       color: #fff;
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
+      font-family: 'Space Mono', monospace;
+      font-size: 15px;
       font-weight: 700;
       text-align: center;
       outline: none;
@@ -474,37 +620,350 @@
     .hero-rating-max {
       font-size: 11px;
       color: var(--muted);
+      font-family: 'Space Mono', monospace;
     }
     .hero-submit-btn {
-      background: var(--accent);
+      background: linear-gradient(135deg, #f2b34c 0%, #e59d28 100%);
       color: #000;
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 0 20px;
-      height: 44px;
+      height: 48px;
       font-family: 'Inter', sans-serif;
       font-size: 11px;
-      font-weight: 700;
-      letter-spacing: .12em;
+      font-weight: 800;
+      letter-spacing: .14em;
       text-transform: uppercase;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
       white-space: nowrap;
-      transition: all .2s;
+      transition: all .25s;
+      box-shadow: 0 4px 18px rgba(242, 179, 76, 0.3);
     }
     .hero-submit-btn:hover {
-      background: #ffc466;
-      box-shadow: 0 0 20px rgba(242, 179, 76, 0.5);
+      background: linear-gradient(135deg, #ffd37a 0%, #f2b34c 100%);
+      box-shadow: 0 0 28px rgba(242, 179, 76, 0.6);
       transform: translateY(-1px);
     }
+
+    /* GRAPHIC FILM SLATE PREVIEW CARD (VERIFIED TITLE DECK) */
+    .hero-slate-card {
+      display: none;
+      background: linear-gradient(160deg, rgba(20, 24, 38, 0.95) 0%, rgba(10, 13, 20, 0.98) 100%);
+      border: 1px solid rgba(242, 179, 76, 0.35);
+      border-radius: 12px;
+      padding: 12px 14px;
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+      animation: slateSlide 0.35s cubic-bezier(.2, .8, .2, 1);
+    }
+    .hero-slate-card.active {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    @keyframes slateSlide {
+      from { opacity: 0; transform: translateY(-10px) scale(0.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .slate-top-row {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+    .slate-poster-wrap {
+      position: relative;
+      width: 58px;
+      height: 84px;
+      flex-shrink: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.7);
+      background: #141722;
+    }
+    .slate-poster-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .slate-reel-stamp {
+      position: absolute;
+      top: 3px;
+      right: 3px;
+      font-size: 8px;
+      font-weight: 800;
+      background: rgba(0, 0, 0, 0.75);
+      color: var(--accent);
+      padding: 1px 4px;
+      border-radius: 3px;
+      letter-spacing: 0.05em;
+      border: 1px solid rgba(242, 179, 76, 0.4);
+    }
+    .slate-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .slate-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 8px;
+    }
+    .slate-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      line-height: 1;
+      letter-spacing: 0.03em;
+      color: #fff;
+      margin: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .slate-meta-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 5px;
+      align-items: center;
+    }
+    .slate-chip {
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--muted);
+      background: rgba(255, 255, 255, 0.06);
+      padding: 2px 7px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .slate-chip.genre {
+      color: var(--accent);
+      background: rgba(242, 179, 76, 0.12);
+      border-color: rgba(242, 179, 76, 0.25);
+    }
+    .slate-synopsis {
+      font-size: 11px;
+      line-height: 1.45;
+      color: rgba(244, 244, 247, 0.7);
+      margin-top: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* 10-STAR GRAPHICAL INTERACTIVE RATING STRIP */
+    .interactive-rating-deck {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 6px 12px;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .stars-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .star-btn {
+      background: transparent;
+      border: none;
+      padding: 2px;
+      cursor: pointer;
+      color: rgba(255, 255, 255, 0.2);
+      font-size: 16px;
+      transition: all .15s;
+      line-height: 1;
+    }
+    .star-btn.lit {
+      color: var(--accent);
+      text-shadow: 0 0 10px rgba(242, 179, 76, 0.7);
+      transform: scale(1.08);
+    }
+    .star-btn:hover {
+      transform: scale(1.25);
+      color: #ffd680;
+    }
+    .rating-tier-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 4px;
+      background: rgba(242, 179, 76, 0.18);
+      color: var(--accent);
+      border: 1px solid rgba(242, 179, 76, 0.35);
+    }
+
+    /* Expandable Archival Log Drawer */
+    .slate-drawer-toggle {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 2px 0;
+      margin-top: 2px;
+      transition: color .2s;
+    }
+    .slate-drawer-toggle:hover {
+      color: #fff;
+    }
+    .slate-drawer {
+      display: none;
+      flex-direction: column;
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .slate-drawer.open {
+      display: flex;
+    }
+    .slate-tags-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .tag-choice-btn {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      color: var(--muted);
+      padding: 3px 8px;
+      font-size: 10px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .tag-choice-btn:hover, .tag-choice-btn.selected {
+      background: rgba(242, 179, 76, 0.15);
+      border-color: rgba(242, 179, 76, 0.4);
+      color: #fff;
+    }
+    .slate-note-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 6px 10px;
+      font-size: 11px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+    }
+    .slate-note-input:focus {
+      border-color: var(--accent);
+    }
+
+    /* TRENDING CINEMA QUICK-PICKS SHELF */
+    .trending-shelf {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-top: 4px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+    }
+    .trending-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .trending-scroll-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 4px 2px 6px 2px;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+    }
+    .trending-scroll-row::-webkit-scrollbar {
+      height: 3px;
+    }
+    .trending-scroll-row::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+    }
+    .trending-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 4px 9px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: all .2s;
+    }
+    .trending-chip:hover {
+      background: rgba(242, 179, 76, 0.15);
+      border-color: rgba(242, 179, 76, 0.45);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+    }
+    .trending-chip-img {
+      width: 18px;
+      height: 24px;
+      border-radius: 3px;
+      object-fit: cover;
+      background: #1a1e2c;
+    }
+    .trending-chip-title {
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+    }
+    .trending-chip-type {
+      font-size: 9px;
+      color: var(--muted);
+    }
+
+    /* Feedback & Error Messages */
+    .hero-feedback-msg {
+      display: none;
+      font-size: 11px;
+      color: #ff6b6b;
+      text-align: left;
+      padding: 4px 8px;
+      gap: 6px;
+      align-items: center;
+      background: rgba(255, 80, 80, 0.1);
+      border: 1px solid rgba(255, 80, 80, 0.25);
+      border-radius: 6px;
+    }
+    .hero-feedback-msg.show {
+      display: flex;
+    }
+
     .hero-slider-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding: 2px 8px 4px 8px;
+      padding: 2px 4px;
       font-size: 11px;
       color: var(--muted);
     }
@@ -515,27 +974,69 @@
       height: 4px;
     }
 
-    #hero .hint {
-      position: absolute;
-      bottom: 30px;
+    /* Hero Explore & Separate Reel Trigger Actions */
+    .hero-explore-actions {
+      pointer-events: auto;
+      margin-top: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      font-size: 10px;
-      letter-spacing: .3em;
-      text-transform: uppercase;
-      color: var(--muted);
-      animation: rise 1.2s 1.1s cubic-bezier(.2, .8, .2, 1) both;
+      gap: 12px;
+      animation: rise 1.2s 1.05s cubic-bezier(.2, .8, .2, 1) both;
     }
-    #hero .hint .line {
+    .hero-enter-reel-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 30px;
+      padding: 10px 22px;
+      color: #ffffff;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5), 0 0 16px rgba(242, 179, 76, 0.1);
+      transition: all .25s cubic-bezier(.2, .8, .2, 1);
+    }
+    .hero-enter-reel-btn svg {
+      transition: transform .25s cubic-bezier(.2, .8, .2, 1);
+      color: var(--accent);
+    }
+    .hero-enter-reel-btn:hover {
+      background: linear-gradient(135deg, rgba(242, 179, 76, 0.22) 0%, rgba(242, 179, 76, 0.08) 100%);
+      border-color: rgba(242, 179, 76, 0.6);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7), 0 0 24px rgba(242, 179, 76, 0.35);
+      color: var(--accent);
+    }
+    .hero-enter-reel-btn:hover svg {
+      transform: translateY(3px);
+    }
+
+    .hero-scroll-cue {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.4);
+    }
+    .hero-scroll-line {
       width: 1px;
-      height: 46px;
+      height: 32px;
       background: rgba(255, 255, 255, .15);
       position: relative;
       overflow: hidden;
     }
-    #hero .hint .line::after {
+    .hero-scroll-line::after {
       content: '';
       position: absolute;
       left: 0;
@@ -1194,6 +1695,7 @@
       padding: 24px;
       opacity: 0;
       visibility: hidden;
+      overscroll-behavior: contain;
       transition: opacity .35s cubic-bezier(.2, .8, .2, 1), visibility .35s;
     }
     .modal-backdrop.active {
@@ -1213,6 +1715,7 @@
       transform: translateY(20px) scale(0.98);
       transition: transform .35s cubic-bezier(.2, .8, .2, 1);
       overflow: hidden;
+      overscroll-behavior: contain;
     }
     .modal-backdrop.active .modal-card {
       transform: translateY(0) scale(1);
@@ -1252,6 +1755,9 @@
       padding: 24px;
       overflow-y: auto;
       flex: 1;
+      overscroll-behavior: contain;
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
     }
     .search-bar-wrap {
       display: flex;
@@ -1295,6 +1801,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
       gap: 16px;
+      overscroll-behavior: contain;
     }
     .result-item {
       background: rgba(255, 255, 255, 0.03);
@@ -1614,6 +2121,74 @@
       border-radius: 3px;
       margin-right: 6px;
     }
+    .index-meta-pill.movie-pill {
+      background: rgba(242, 179, 76, 0.22);
+      color: #92400e;
+      border: 1px solid rgba(242, 179, 76, 0.4);
+    }
+    .index-meta-pill.series-pill {
+      background: rgba(77, 150, 255, 0.18);
+      color: #1e40af;
+      border: 1px solid rgba(77, 150, 255, 0.35);
+    }
+    .index-row-delete-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      color: #a8a29e;
+      border-radius: 6px;
+      padding: 6px 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all .2s cubic-bezier(.2, .8, .2, 1);
+      margin-left: 6px;
+      flex-shrink: 0;
+    }
+    .index-row-delete-btn:hover {
+      background: rgba(239, 68, 68, 0.12);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #dc2626;
+      transform: scale(1.1);
+    }
+    .ledger-format-filter-group {
+      display: inline-flex;
+      align-items: center;
+      background: #e2dbcd;
+      border-radius: 8px;
+      padding: 3px;
+      gap: 3px;
+    }
+    .ledger-format-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: transparent;
+      border: none;
+      color: #57534e;
+      padding: 6px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all .2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .ledger-format-btn:hover {
+      color: #1c1917;
+      background: rgba(27, 25, 23, 0.05);
+    }
+    .ledger-format-btn.active {
+      background: #1c1917;
+      color: #eee8dc;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+    }
+    .ledger-format-count {
+      font-size: 9px;
+      opacity: 0.75;
+    }
     .index-rating {
       font-family: 'Fraunces', serif;
       font-size: 18px;
@@ -1886,87 +2461,185 @@
     </div>
   </nav>
 
-  <!-- HERO -->
+  <!-- HERO SEPARATED ARCHIVAL MAIN STAGE -->
+  <div id="heroBackdrop"></div>
+
   <section id="hero">
-    <div class="kicker" id="heroKicker">CINEMA FILES • ARCHIVAL 3D REEL BY ANURAG SINGH INDOLIYA</div>
-    <h1 id="heroTitle">CINEMA FILES</h1>
-    <p id="heroDesc">Record every movie and TV series you've watched. Enter any title with your personal rating to preserve it in your 3D spiral cinema archive.</p>
+    <div class="hero-inner-stage">
+      <div class="kicker" id="heroKicker">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span>ARCHIVAL 35MM CHRONICLE • BY ANURAG SINGH INDOLIYA</span>
+      </div>
+      <h1 id="heroTitle">CINEMA FILES</h1>
+      <div class="hero-subline" id="heroDesc">3D SPIRAL HELIX • PERSONAL RATINGS LEDGER</div>
 
-    <!-- DIRECT SINGLE-NAME INPUT & RATING FORM -->
-    <form id="heroRecordForm" class="hero-record-bar" onsubmit="event.preventDefault(); submitDirectRecord();">
-      <div class="hero-input-row">
-        <div class="hero-input-wrap">
-          <input
-            type="text"
-            id="heroNameInput"
-            class="hero-name-input"
-            placeholder="Type movie or series name (e.g. Inception, Breaking Bad)..."
-            required
-            autocomplete="off"
-            spellcheck="false"
-          />
-          <div class="hero-input-spinner" id="heroInputSpinner"></div>
-
-          <!-- LIVE AUTOCOMPLETE DROPDOWN -->
-          <div class="hero-suggestions-dropdown" id="heroSuggestions">
-            <div class="hero-suggestions-header">
-              <span>Related Movies & Series</span>
-              <span style="font-size:9px; color:rgba(255,255,255,0.4);">Click to pick</span>
-            </div>
-            <div id="suggestionsList"></div>
+      <!-- DIRECT SINGLE-NAME INPUT & RATING FORM -->
+      <form id="heroRecordForm" class="hero-record-bar" onsubmit="event.preventDefault(); submitDirectRecord();">
+        <!-- CONSOLE SPROCKET HEADER -->
+        <div class="console-header-bar">
+          <div class="console-status-pill">
+            <span class="console-pulse-dot"></span>
+            <span>ARCHIVAL SCANNER READY</span>
+          </div>
+          <div class="console-sprockets">░ ░ ░ ░ ░ ░</div>
+          <div class="console-format-toggles">
+            <button type="button" class="format-chip active" data-format="all">ALL</button>
+            <button type="button" class="format-chip" data-format="movies">🎬 MOVIES</button>
+            <button type="button" class="format-chip" data-format="series">📺 SERIES</button>
           </div>
         </div>
 
-        <div class="hero-rating-box">
-          <span>★</span>
+        <!-- MAIN INPUT ROW -->
+        <div class="hero-input-row">
+          <div class="hero-input-wrap">
+            <div class="hero-search-icon">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            </div>
+            <input
+              type="text"
+              id="heroNameInput"
+              class="hero-name-input"
+              placeholder="Type any movie or TV series (e.g. Inception, Breaking Bad)..."
+              required
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <div class="hero-input-spinner" id="heroInputSpinner"></div>
+
+            <!-- LIVE AUTOCOMPLETE DROPDOWN -->
+            <div class="hero-suggestions-dropdown" id="heroSuggestions">
+              <div class="hero-suggestions-header">
+                <span>Verified Cinema Database Results</span>
+                <span style="font-size:9px; color:rgba(255,255,255,0.4);">Click to pick & preview</span>
+              </div>
+              <div id="suggestionsList"></div>
+            </div>
+          </div>
+
+          <div class="hero-rating-box" title="Your personal rating score (0 - 10)">
+            <span>★</span>
+            <input
+              type="number"
+              id="heroRatingInput"
+              class="hero-rating-input"
+              value="9.0"
+              min="0"
+              max="10"
+              step="0.1"
+            />
+            <span class="hero-rating-max">/10</span>
+          </div>
+          <button type="submit" class="hero-submit-btn" id="heroSubmitBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <span>Record Title</span>
+          </button>
+        </div>
+
+        <!-- GRAPHIC FILM SLATE PREVIEW CARD (VERIFIED TITLE DECK) -->
+        <div id="heroSlateCard" class="hero-slate-card">
+          <div class="slate-top-row">
+            <div class="slate-poster-wrap">
+              <img id="slatePosterImg" class="slate-poster-img" src="" alt="Poster Preview" />
+              <div class="slate-reel-stamp">35MM</div>
+            </div>
+            <div class="slate-info">
+              <div class="slate-title-row">
+                <h4 id="slateTitleText" class="slate-title">Title</h4>
+                <button type="button" id="slateResetBtn" style="background:transparent; border:none; color:var(--muted); font-size:12px; cursor:pointer; padding:2px 6px;" title="Reset selection">✕</button>
+              </div>
+              <div class="slate-meta-chips">
+                <span id="slateYearChip" class="slate-chip">2024</span>
+                <span id="slateTypeChip" class="slate-chip">Feature Film</span>
+                <span id="slateGenreChip" class="slate-chip genre">Cinema</span>
+                <span id="slateDurationChip" class="slate-chip">120 min</span>
+              </div>
+              <p id="slateSynopsisText" class="slate-synopsis">Synopsis preview will appear here.</p>
+            </div>
+          </div>
+
+          <!-- 10-STAR GRAPHICAL INTERACTIVE RATING STRIP -->
+          <div class="interactive-rating-deck">
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span style="font-size:10px; font-family:'Space Mono',monospace; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Rate:</span>
+              <div class="stars-strip" id="heroStarsStrip">
+                <button type="button" class="star-btn" data-star="1">★</button>
+                <button type="button" class="star-btn" data-star="2">★</button>
+                <button type="button" class="star-btn" data-star="3">★</button>
+                <button type="button" class="star-btn" data-star="4">★</button>
+                <button type="button" class="star-btn" data-star="5">★</button>
+                <button type="button" class="star-btn" data-star="6">★</button>
+                <button type="button" class="star-btn" data-star="7">★</button>
+                <button type="button" class="star-btn" data-star="8">★</button>
+                <button type="button" class="star-btn" data-star="9">★</button>
+                <button type="button" class="star-btn" data-star="10">★</button>
+              </div>
+            </div>
+            <span id="ratingTierTag" class="rating-tier-tag">MASTERPIECE</span>
+          </div>
+
+          <!-- EXPANDABLE ARCHIVAL LOG DRAWER -->
+          <button type="button" id="slateDrawerToggle" class="slate-drawer-toggle">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+            <span>+ Add Viewing Format & Personal Memo (Optional)</span>
+          </button>
+          <div id="slateDrawer" class="slate-drawer">
+            <div class="slate-tags-row" id="viewingFormatChips">
+              <button type="button" class="tag-choice-btn selected" data-format="IMAX / 70mm">🎟️ IMAX / 70mm</button>
+              <button type="button" class="tag-choice-btn" data-format="4K HDR Home">✨ 4K HDR</button>
+              <button type="button" class="tag-choice-btn" data-format="Cinema Theater">🍿 Theater</button>
+              <button type="button" class="tag-choice-btn" data-format="35mm Vintage">💿 35mm Vintage</button>
+              <button type="button" class="tag-choice-btn" data-format="Streaming">📺 Streaming</button>
+            </div>
+            <input type="text" id="slateCustomMemo" class="slate-note-input" placeholder="Personal note or quote (e.g. Masterclass cinematography, watched in IMAX with friends)..." maxlength="160" />
+          </div>
+        </div>
+
+        <!-- FEEDBACK MESSAGE (WHEN NO RELATED TITLE FOUND) -->
+        <div id="heroFeedbackMsg" class="hero-feedback-msg">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+          <span id="heroFeedbackText">No related movie or series found. Please check spelling.</span>
+        </div>
+
+        <!-- SLIDER AND STEPPERS -->
+        <div class="hero-slider-row">
+          <button type="button" id="btnRatingMinus" class="rating-stepper-btn" title="Decrease rating">−</button>
+          <span style="font-size:10px; font-family:'Space Mono',monospace; letter-spacing:0.1em; color:var(--muted); text-transform:uppercase;">Score Slider:</span>
           <input
-            type="number"
-            id="heroRatingInput"
-            class="hero-rating-input"
-            value="9.0"
+            type="range"
+            id="heroRatingSlider"
             min="0"
             max="10"
             step="0.1"
-            title="Your personal rating (0.0 - 10.0)"
+            value="9.0"
           />
-          <span class="hero-rating-max">/10</span>
+          <button type="button" id="btnRatingPlus" class="rating-stepper-btn" title="Increase rating">+</button>
+          <span id="sliderValDisplay" style="font-family:'Space Mono',monospace; font-weight:700; color:var(--accent); width:34px; text-align:right;">9.0</span>
         </div>
-        <button type="submit" class="hero-submit-btn" id="heroSubmitBtn">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          <span>Record to Cinema Files</span>
+
+        <!-- TRENDING CINEMA QUICK-PICKS SHELF -->
+        <div class="trending-shelf">
+          <div class="trending-header">
+            <span>POPULAR CLASSICS TO RECORD</span>
+            <span style="color:rgba(255,255,255,0.3);">Tap any to load</span>
+          </div>
+          <div class="trending-scroll-row" id="trendingPicksRow">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </form>
+
+      <!-- EXPLORE REEL ACTIONS -->
+      <div class="hero-explore-actions">
+        <button type="button" id="btnEnterReel" class="hero-enter-reel-btn">
+          <span>DESCEND TO 3D VAULT</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 13l5 5 5-5M7 6l5 5 5-5"/></svg>
         </button>
+        <div class="hero-scroll-cue" id="heroHint">
+          <span>SCROLL TO THREAD REEL</span>
+          <div class="hero-scroll-line"></div>
+        </div>
       </div>
-
-      <!-- SELECTED VERIFIED TITLE PILL -->
-      <div id="heroSelectedTag" class="hero-selected-tag">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
-        <span id="heroSelectedText" style="font-weight:600; flex:1;">Verified Title</span>
-        <button type="button" id="heroClearSelectedBtn" style="background:transparent; border:none; color:#aaa; cursor:pointer; font-size:12px; padding:0 4px; line-height:1;" title="Clear selected title">✕</button>
-      </div>
-
-      <!-- FEEDBACK MESSAGE (WHEN NO RELATED TITLE FOUND) -->
-      <div id="heroFeedbackMsg" class="hero-feedback-msg">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
-        <span id="heroFeedbackText">No related movie or series found. Please check spelling.</span>
-      </div>
-
-      <div class="hero-slider-row">
-        <button type="button" id="btnRatingMinus" class="rating-stepper-btn" title="Decrease rating">−</button>
-        <span style="font-size:11px; color:var(--muted);">Slide Rating:</span>
-        <input
-          type="range"
-          id="heroRatingSlider"
-          min="0"
-          max="10"
-          step="0.1"
-          value="9.0"
-        />
-        <button type="button" id="btnRatingPlus" class="rating-stepper-btn" title="Increase rating">+</button>
-        <span id="sliderValDisplay" style="font-weight:700; color:var(--accent); width:32px; text-align:right;">9.0</span>
-      </div>
-    </form>
-
-    <div class="hint" id="heroHint"><span>Scroll to explore archive</span><div class="line"></div></div>
+    </div>
   </section>
 
   <!-- ACTIVE ITEM INFO PANEL -->
@@ -2103,14 +2776,36 @@
       </div>
 
       <!-- SORT / FILTER BAR -->
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #d6cebf; flex-wrap:wrap; gap:12px;">
-        <span id="indexRankLabel" style="font-family:'Space Mono', monospace; font-size:11px; color:#78716c; text-transform:uppercase; letter-spacing:0.15em;">
-          Ranked by your personal rating (Highest → Lowest)
-        </span>
-        <div style="display:flex; gap:8px;">
-          <button id="btnSortRating" class="paper-btn" style="background:#1b1917; color:#eee8dc;">★ By Rating</button>
-          <button id="btnSortTitle" class="paper-btn">A–Z</button>
-          <button id="btnSortYear" class="paper-btn">Year</button>
+      <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid #d6cebf;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <!-- Format Filter Tabs (All / Movies / Series) -->
+          <div class="ledger-format-filter-group" id="ledgerFormatFilterGroup">
+            <button type="button" id="btnFilterAll" class="ledger-format-btn active" data-filter="all">
+              <span>All Titles</span>
+              <span class="ledger-format-count" id="drawerCountAll">(0)</span>
+            </button>
+            <button type="button" id="btnFilterMovies" class="ledger-format-btn" data-filter="movies">
+              <span>🎬 Movies</span>
+              <span class="ledger-format-count" id="drawerCountMovies">(0)</span>
+            </button>
+            <button type="button" id="btnFilterSeries" class="ledger-format-btn" data-filter="series">
+              <span>📺 Series</span>
+              <span class="ledger-format-count" id="drawerCountSeries">(0)</span>
+            </button>
+          </div>
+
+          <!-- Sort Modes -->
+          <div style="display:flex; gap:6px; align-items:center;">
+            <span style="font-family:'Space Mono', monospace; font-size:10px; color:#a8a29e; text-transform:uppercase; letter-spacing:0.1em; margin-right:2px;">Sort:</span>
+            <button id="btnSortRating" class="paper-btn" style="background:#1b1917; color:#eee8dc;">★ Rating</button>
+            <button id="btnSortTitle" class="paper-btn">A–Z</button>
+            <button id="btnSortYear" class="paper-btn">Year</button>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; font-family:'Space Mono', monospace; font-size:11px; color:#78716c; text-transform:uppercase; letter-spacing:0.12em; flex-wrap:wrap; gap:8px;">
+          <span id="indexRankLabel">Ranked by your personal rating (Highest → Lowest)</span>
+          <span id="indexShowingCount" style="font-size:10px; color:#8c827a; font-weight:700;">Showing 0 titles</span>
         </div>
       </div>
 
@@ -2497,82 +3192,124 @@
           x.restore();
         }
 
-        // Crisp frame border accent
+        // Crisp 35mm celluloid frame borders and sprocket perforations
+        const marginW = 28;
+        x.fillStyle = 'rgba(6, 8, 14, 0.98)';
+        // Left & right celluloid tracks
+        x.fillRect(0, 0, marginW, H);
+        x.fillRect(W - marginW, 0, marginW, H);
+
+        // Draw physical 35mm film sprockets
+        const numSprockets = 16;
+        const sprockH = 26;
+        const sprockW = 14;
+        const sprockGap = H / numSprockets;
+        for (let s = 0; s < numSprockets; s++) {
+          const sy = s * sprockGap + (sprockGap - sprockH) / 2;
+          // Left sprocket hole
+          x.fillStyle = '#010204';
+          x.beginPath();
+          x.roundRect ? x.roundRect(7, sy, sprockW, sprockH, 3) : x.rect(7, sy, sprockW, sprockH);
+          x.fill();
+          x.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+          x.lineWidth = 1;
+          x.stroke();
+
+          // Right sprocket hole
+          x.beginPath();
+          x.roundRect ? x.roundRect(W - marginW + 7, sy, sprockW, sprockH, 3) : x.rect(W - marginW + 7, sy, sprockW, sprockH);
+          x.fill();
+          x.stroke();
+        }
+
+        // Inner golden optical frame border
         x.strokeStyle = item.c || '#f2b34c';
-        x.globalAlpha = .75;
-        x.lineWidth = 3;
-        x.strokeRect(18, 18, W - 36, H - 36);
+        x.globalAlpha = 0.65;
+        x.lineWidth = 2.5;
+        x.strokeRect(marginW + 8, 14, W - (marginW * 2 + 16), H - 28);
         x.globalAlpha = 1;
 
-        // Watermark Index Number
-        x.font = '400 300px "Bebas Neue"';
-        x.fillStyle = 'rgba(255,255,255,.07)';
-        x.fillText(pad(i + 1), 32, H * .58);
+        // Top Celluloid Code Ribbon
+        x.font = '700 11px "Space Mono", monospace';
+        x.fillStyle = 'rgba(242, 179, 76, 0.75)';
+        x.fillText('EASTMAN 5219 • 35MM EXR', marginW + 18, 34);
+
+        // Top Right Frame Stamp
+        x.textAlign = 'right';
+        x.fillStyle = 'rgba(255, 255, 255, 0.65)';
+        x.fillText(`FRAME ${pad(i + 1)}`, W - marginW - 18, 34);
+        x.textAlign = 'left';
+
+        // Watermark Index Number in background
+        x.font = '400 280px "Bebas Neue"';
+        x.fillStyle = 'rgba(255,255,255,.05)';
+        x.fillText(pad(i + 1), marginW + 16, H * .58);
 
         // Type Badge
         x.fillStyle = item.c || '#f2b34c';
-        const badgeLabel = (item.k || 'WATCHED').toUpperCase().split('').join(' ');
-        const badgeW = (item.k || 'WATCHED').length * 15 + 36;
-        x.fillRect(44, 44, badgeW, 34);
+        const isSeries = (item.k || '').toLowerCase().includes('series');
+        const badgeLabel = isSeries ? 'SERIES' : 'FEATURE FILM';
+        const badgeW = badgeLabel.length * 11 + 28;
+        x.fillRect(marginW + 16, 52, badgeW, 28);
         x.fillStyle = '#07080c';
-        x.font = '700 14px Inter';
-        x.fillText(badgeLabel, 60, 67);
+        x.font = '800 12px "Space Mono", monospace';
+        x.fillText(badgeLabel, marginW + 30, 71);
 
         // Personal Rating display (Top Right)
         x.save();
-        x.shadowColor = 'rgba(0,0,0,0.9)';
-        x.shadowBlur = 10;
+        x.shadowColor = 'rgba(0,0,0,0.95)';
+        x.shadowBlur = 12;
         x.textAlign = 'right';
-        x.fillStyle = '#ffffff';
-        x.font = '400 84px "Bebas Neue"';
-        x.fillText(Number(item.r || 0).toFixed(1), W - 44, 114);
-        x.font = '600 12px Inter';
-        x.fillStyle = 'rgba(255,255,255,.9)';
-        x.fillText('M Y   R A T I N G', W - 44, 138);
+        x.fillStyle = item.c || '#f2b34c';
+        x.font = '400 76px "Bebas Neue"';
+        x.fillText(`★ ${Number(item.r || 0).toFixed(1)}`, W - marginW - 16, 114);
+        x.font = '700 10px "Space Mono", monospace';
+        x.fillStyle = 'rgba(255,255,255,.85)';
+        x.fillText('PERSONAL SCORE', W - marginW - 16, 134);
         x.restore();
 
         // Title at bottom with high contrast shadow
         x.save();
-        x.shadowColor = 'rgba(0,0,0,0.95)';
-        x.shadowBlur = 14;
+        x.shadowColor = 'rgba(0,0,0,0.98)';
+        x.shadowBlur = 16;
         x.textAlign = 'left';
         x.fillStyle = '#ffffff';
-        let fs = 96;
+        let fs = 92;
         x.font = `400 ${fs}px "Bebas Neue"`;
-        let lines = wrapText(x, (item.t || '').toUpperCase(), W - 90);
+        let lines = wrapText(x, (item.t || '').toUpperCase(), W - (marginW * 2 + 36));
         if (lines.length > 3) {
-          fs = 74;
+          fs = 70;
           x.font = `400 ${fs}px "Bebas Neue"`;
-          lines = wrapText(x, (item.t || '').toUpperCase(), W - 90);
+          lines = wrapText(x, (item.t || '').toUpperCase(), W - (marginW * 2 + 36));
         }
         const lh = fs * .94;
-        let ty = H - 180 - (lines.length - 1) * lh;
+        let ty = H - 170 - (lines.length - 1) * lh;
         lines.forEach(l => {
-          x.fillText(l, 44, ty);
+          x.fillText(l, marginW + 18, ty);
           ty += lh;
         });
         x.restore();
 
         // Accent divider line
         x.fillStyle = item.c || '#f2b34c';
-        x.fillRect(44, H - 150, 72, 4);
+        x.fillRect(marginW + 18, H - 142, 64, 3);
 
         // Metadata line
-        x.font = '600 19px Inter';
-        x.fillStyle = 'rgba(255,255,255,.92)';
-        const yr = item.y ? `${item.y}   •   ` : '';
-        const gn = item.g ? `${item.g.toUpperCase()}   •   ` : '';
-        const dr = item.d || 'Watched';
-        x.fillText(`${yr}${gn}${dr}`, 44, H - 110);
+        x.font = '600 17px Inter, sans-serif';
+        x.fillStyle = 'rgba(255,255,255,.94)';
+        const yr = item.y ? `${item.y}  •  ` : '';
+        const gn = item.g ? `${item.g.toUpperCase()}  •  ` : '';
+        const dr = item.d || (isSeries ? 'Series' : 'Feature');
+        x.fillText(`${yr}${gn}${dr}`, marginW + 18, H - 108);
 
         // Stars
         const stars = Math.min(5, Math.max(1, Math.round((item.r || 0) / 2)));
         for (let s = 0; s < 5; s++) {
-          x.fillStyle = s < stars ? (item.c || '#f2b34c') : 'rgba(255,255,255,.25)';
+          x.fillStyle = s < stars ? (item.c || '#f2b34c') : 'rgba(255,255,255,.22)';
           x.beginPath();
-          const cx = 54 + s * 28, cy = H - 68;
+          const cx = marginW + 28 + s * 26, cy = H - 70;
           for (let k = 0; k < 10; k++) {
-            const rr = k % 2 ? 4.5 : 9.8, an = k * Math.PI / 5 - Math.PI / 2;
+            const rr = k % 2 ? 4.2 : 9.2, an = k * Math.PI / 5 - Math.PI / 2;
             x.lineTo(cx + Math.cos(an) * rr, cy + Math.sin(an) * rr);
           }
           x.closePath();
@@ -2717,6 +3454,8 @@
           posterGeo,
           new THREE.MeshBasicMaterial({
             map: tex,
+            transparent: true,
+            opacity: 1,
             toneMapped: true
           })
         );
@@ -2830,19 +3569,19 @@
 
       document.getElementById('c-tot').textContent = '/ ' + pad(total || 1);
 
-      // Hero description update based on count
+      // Hero technical telemetry update
       const heroKicker = document.getElementById('heroKicker');
       const heroDesc = document.getElementById('heroDesc');
       const heroHint = document.getElementById('heroHint');
 
       if (total === 0) {
-        heroKicker.textContent = 'A personal archive • No titles recorded yet';
-        heroDesc.textContent = 'Your watchlist is currently empty. Enter the name of any movie or series you’ve watched, set your personal rating, and click Record to start your 3D spiral reel.';
-        heroHint.style.display = 'none';
+        heroKicker.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>ARCHIVAL 35MM CHRONICLE • READY TO INITIALIZE</span>`;
+        heroDesc.textContent = '3D SPIRAL HELIX • RECORD YOUR FIRST TITLE ABOVE';
+        if (heroHint) heroHint.style.display = 'none';
       } else {
-        heroKicker.textContent = `A personal archive • ${total} title${total > 1 ? 's' : ''} recorded`;
-        heroDesc.textContent = `You have recorded ${total} title${total > 1 ? 's' : ''} in your 3D spiral reel. Scroll to fall through each memory or record another watched title directly above.`;
-        heroHint.style.display = 'flex';
+        heroKicker.innerHTML = `<svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg><span>ARCHIVAL 35MM CHRONICLE • ${total} TITLES ON FILE</span>`;
+        heroDesc.textContent = `${total} TITLES • ${films} FILMS • ${series} SERIES • ${avg} MEAN RATING`;
+        if (heroHint) heroHint.style.display = 'flex';
       }
 
       // Render the Editorial Paper Ledger & Ratings Index
@@ -2851,6 +3590,50 @@
 
     /* ================= EDITORIAL PAPER RATINGS LEDGER & INDEX ================= */
     let currentSortMode = 'rating'; // 'rating' (default - ordered by rating given by user), 'title', 'year'
+    let currentIndexFilter = 'all'; // 'all', 'movies', 'series'
+
+    function isMovieItem(item) {
+      if (!item) return true;
+      const k = (item.k || '').toLowerCase();
+      return k.includes('movie') || k.includes('film') || k === 'feature';
+    }
+
+    function removeItemByIndex(origIdx, title) {
+      if (origIdx < 0 || origIdx >= ITEMS.length) return;
+      const targetTitle = title || ITEMS[origIdx].t;
+      if (!confirm(`Are you sure you want to remove "${targetTitle}" from your cinema archive?`)) {
+        return;
+      }
+
+      ITEMS.splice(origIdx, 1);
+      saveWatchlist(ITEMS);
+      rebuildScene();
+      renderLedgerSection();
+      showToast(`Removed "${targetTitle}" from archive.`);
+
+      if (ITEMS.length > 0) {
+        goTo(Math.min(origIdx, ITEMS.length - 1));
+      } else {
+        updateUIState();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function updateIndexFilterButtons() {
+      const btnAll = document.getElementById('btnFilterAll');
+      const btnMovies = document.getElementById('btnFilterMovies');
+      const btnSeries = document.getElementById('btnFilterSeries');
+      if (!btnAll || !btnMovies || !btnSeries) return;
+
+      [btnAll, btnMovies, btnSeries].forEach(b => b.classList.remove('active'));
+      if (currentIndexFilter === 'movies') {
+        btnMovies.classList.add('active');
+      } else if (currentIndexFilter === 'series') {
+        btnSeries.classList.add('active');
+      } else {
+        btnAll.classList.add('active');
+      }
+    }
 
     function renderLedgerSection() {
       const total = ITEMS.length;
@@ -2876,28 +3659,39 @@
 
       hoursEl.textContent = totalHours;
 
-      // 2. Titles Breakdown
-      const filmsCount = ITEMS.filter(i => i.k === 'Movie').length;
+      // 2. Titles Breakdown & Filter Badges
+      const filmsCount = ITEMS.filter(i => isMovieItem(i)).length;
       const seriesCount = total - filmsCount;
       countEl.textContent = total;
-      breakdownEl.textContent = `${filmsCount} FILMS · ${seriesCount} SERIES · ZERO REGRETS`;
+      breakdownEl.textContent = `${filmsCount} FILMS · ${seriesCount} SERIES LOGGED`;
+
+      const drawerCountAll = document.getElementById('drawerCountAll');
+      const drawerCountMovies = document.getElementById('drawerCountMovies');
+      const drawerCountSeries = document.getElementById('drawerCountSeries');
+      const indexShowingCount = document.getElementById('indexShowingCount');
+
+      if (drawerCountAll) drawerCountAll.textContent = `(${total})`;
+      if (drawerCountMovies) drawerCountMovies.textContent = `(${filmsCount})`;
+      if (drawerCountSeries) drawerCountSeries.textContent = `(${seriesCount})`;
+
+      updateIndexFilterButtons();
 
       // 3. Mean Rating & Quip
       const avg = total > 0 ? (ITEMS.reduce((a, i) => a + Number(i.r || 0), 0) / total) : 0;
       meanScoreEl.textContent = avg > 0 ? avg.toFixed(1) : '0.0';
 
       if (total === 0) {
-        ratingQuipEl.textContent = 'record titles above to compute';
+        ratingQuipEl.textContent = 'Awaiting initial entries';
       } else if (avg >= 9.5) {
-        ratingQuipEl.textContent = 'pure masterpieces, undeniably';
+        ratingQuipEl.textContent = 'Masterpiece tier average';
       } else if (avg >= 9.0) {
-        ratingQuipEl.textContent = 'a harsh crowd, apparently';
+        ratingQuipEl.textContent = 'Essential cinema standard';
       } else if (avg >= 8.0) {
-        ratingQuipEl.textContent = 'high standards, respected';
+        ratingQuipEl.textContent = 'High critical threshold';
       } else if (avg >= 7.0) {
-        ratingQuipEl.textContent = 'a balanced cinematic palate';
+        ratingQuipEl.textContent = 'Balanced critical appraisal';
       } else {
-        ratingQuipEl.textContent = 'tough critics across the board';
+        ratingQuipEl.textContent = 'Rigorous critique standard';
       }
 
       // 4. Years Spanned
@@ -2907,10 +3701,10 @@
         const maxYear = Math.max(...validYears);
         const span = (maxYear - minYear) + 1;
         yearsSpanEl.textContent = span;
-        yearsDetailEl.textContent = `${minYear} – ${maxYear}, one reel at a time`;
+        yearsDetailEl.textContent = `${minYear} – ${maxYear} chronological span`;
       } else {
         yearsSpanEl.textContent = '0';
-        yearsDetailEl.textContent = '—, one reel at a time';
+        yearsDetailEl.textContent = 'Awaiting entries';
       }
 
       // 5. Genre Tally (Proportional horizontal bars)
@@ -2952,6 +3746,7 @@
             No titles recorded in your reel yet. Record a movie or TV series above to populate the ledger index.
           </div>
         `;
+        if (indexShowingCount) indexShowingCount.textContent = 'Showing 0 titles';
         return;
       }
 
@@ -2969,17 +3764,50 @@
         if (indexRankLabel) indexRankLabel.textContent = 'Ordered by Release Year (Newest → Oldest)';
       }
 
-      indexListEl.innerHTML = indexedItems.map(({ item, originalIndex }, rankIdx) => {
+      // Filter according to active format filter (All, Movies, Series)
+      let filteredItems = indexedItems;
+      if (currentIndexFilter === 'movies') {
+        filteredItems = indexedItems.filter(({ item }) => isMovieItem(item));
+      } else if (currentIndexFilter === 'series') {
+        filteredItems = indexedItems.filter(({ item }) => !isMovieItem(item));
+      }
+
+      if (indexShowingCount) {
+        if (currentIndexFilter === 'all') {
+          indexShowingCount.textContent = `Showing all ${filteredItems.length} title${filteredItems.length !== 1 ? 's' : ''}`;
+        } else if (currentIndexFilter === 'movies') {
+          indexShowingCount.textContent = `Showing ${filteredItems.length} movie${filteredItems.length !== 1 ? 's' : ''} (Filtered)`;
+        } else {
+          indexShowingCount.textContent = `Showing ${filteredItems.length} series (Filtered)`;
+        }
+      }
+
+      if (filteredItems.length === 0) {
+        indexListEl.innerHTML = `
+          <div style="padding:40px 12px; text-align:center; font-family:'Fraunces', serif; font-style:italic; font-size:18px; color:#78716c;">
+            No ${currentIndexFilter === 'movies' ? 'movies' : 'series'} recorded in your archive yet.
+          </div>
+        `;
+        return;
+      }
+
+      indexListEl.innerHTML = filteredItems.map(({ item, originalIndex }, rankIdx) => {
         const numStr = pad(rankIdx + 1);
         const score = Number(item.r || 0).toFixed(1);
         const safeTitle = item.t.replace(/"/g, '&quot;');
+        const isMov = isMovieItem(item);
+        const badgeLabel = isMov ? '🎬 FILM' : '📺 SERIES';
+        const badgeClass = isMov ? 'movie-pill' : 'series-pill';
         return `
-          <div class="index-row" data-orig="${originalIndex}" data-title="${safeTitle}" data-poster="${item.p || ''}" data-score="${score}" data-sub="${item.y || ''} • ${item.k || 'Movie'} • ${item.g || 'Cinema'}">
+          <div class="index-row" data-orig="${originalIndex}" data-title="${safeTitle}" data-poster="${item.p || ''}" data-score="${score}" data-sub="${item.y || ''} • ${item.k || (isMov ? 'Movie' : 'Series')} • ${item.g || 'Cinema'}">
             <span class="index-num">${numStr}</span>
             <span class="index-title">${item.t}</span>
-            <span class="index-meta-pill">${item.k || 'FILM'}</span>
+            <span class="index-meta-pill ${badgeClass}">${badgeLabel}</span>
             <span class="index-meta-pill">${item.y || '—'}</span>
-            <span class="index-rating">${score}</span>
+            <span class="index-rating">★ ${score}</span>
+            <button type="button" class="index-row-delete-btn" data-orig="${originalIndex}" data-title="${safeTitle}" title="Remove '${safeTitle}' from archive">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+            </button>
           </div>
         `;
       }).join('');
@@ -2995,9 +3823,12 @@
       rows.forEach(row => {
         const origIdx = parseInt(row.dataset.orig, 10);
         
-        row.onclick = () => {
+        row.onclick = (e) => {
+          if (e.target.closest('.index-row-delete-btn')) return;
           if (!isNaN(origIdx) && origIdx >= 0 && origIdx < ITEMS.length) {
             goTo(origIdx);
+            document.getElementById('drawer').classList.remove('open');
+            document.getElementById('backdrop').classList.remove('open');
           }
         };
 
@@ -3027,6 +3858,16 @@
 
         row.onmouseleave = () => {
           previewEl.classList.remove('show');
+        };
+      });
+
+      // Direct delete buttons in index list
+      indexListEl.querySelectorAll('.index-row-delete-btn').forEach(btn => {
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          const origIdx = parseInt(btn.dataset.orig, 10);
+          const targetTitle = btn.dataset.title;
+          removeItemByIndex(origIdx, targetTitle);
         };
       });
     }
@@ -3083,98 +3924,407 @@
     let searchDebounceTimer = null;
     let activeSuggestionIndex = -1;
     let currentSuggestions = [];
+    let currentFormatFilter = 'all'; // 'all', 'movies', 'series'
+    let selectedViewingFormat = '🎟️ IMAX / 70mm';
 
-    // Aggregated Movie & Series Search (TVMaze + iTunes Movies)
+    // POPULAR CURATED CINEMA CLASSICS FOR INSTANT 1-CLICK RECORDING
+    const POPULAR_CLASSICS = [
+      {
+        t: 'Inception',
+        y: 2010,
+        k: 'Movie',
+        g: 'Sci-Fi',
+        genres: ['Sci-Fi', 'Action'],
+        c: '#4ecb71',
+        d: '148 min',
+        h: 2,
+        p: 'https://m.media-amazon.com/images/M/MV5BMjAxMzY3NjcxNF5BMl5BanBnXkFtZTcwNTI5OTM0Mw@@._V1_FMjpg_UX1000_.jpg',
+        tvmazeId: null,
+        n: 'A thief who steals corporate secrets through dream-sharing technology is given the inverse task of planting an idea.',
+        rating: 9.8
+      },
+      {
+        t: 'Oppenheimer',
+        y: 2023,
+        k: 'Movie',
+        g: 'Drama',
+        genres: ['Drama', 'History'],
+        c: '#f2b34c',
+        d: '180 min',
+        h: 3,
+        p: 'https://m.media-amazon.com/images/M/MV5BN2JkMDc5MGQtZjg3YS00NmFiLWIyZmQtZTJmNTM5MjVmYTQ4XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
+        tvmazeId: null,
+        n: 'The story of American scientist J. Robert Oppenheimer and his role in the development of the atomic bomb.',
+        rating: 9.6
+      },
+      {
+        t: 'Interstellar',
+        y: 2014,
+        k: 'Movie',
+        g: 'Sci-Fi',
+        genres: ['Sci-Fi', 'Adventure'],
+        c: '#4d96ff',
+        d: '169 min',
+        h: 3,
+        p: 'https://m.media-amazon.com/images/M/MV5BYzdjMDAxZGItMjI2My00ODA1LTlkNzItOWFjMDU5ZDJlYWY3XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
+        tvmazeId: null,
+        n: 'When Earth becomes uninhabitable in the future, a farmer and ex-NASA pilot is tasked to pilot a spacecraft.',
+        rating: 9.9
+      },
+      {
+        t: 'Breaking Bad',
+        y: 2008,
+        k: 'Series',
+        g: 'Crime',
+        genres: ['Crime', 'Drama'],
+        c: '#e056fd',
+        d: '47m/ep',
+        h: 15,
+        p: 'https://static.tvmaze.com/uploads/images/medium_portrait/0/2400.jpg',
+        tvmazeId: 169,
+        n: 'A chemistry teacher diagnosed with inoperable lung cancer turns to manufacturing and selling methamphetamine.',
+        rating: 10.0
+      },
+      {
+        t: 'Dune: Part Two',
+        y: 2024,
+        k: 'Movie',
+        g: 'Sci-Fi',
+        genres: ['Sci-Fi', 'Adventure'],
+        c: '#f2b34c',
+        d: '166 min',
+        h: 3,
+        p: 'https://m.media-amazon.com/images/M/MV5BNTc0YmQxMjEtODI5MC00NDdjLTgwOGQtNDNkMGY2NzFmMGYzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
+        tvmazeId: null,
+        n: 'Paul Atreides unites with Chani and the Fremen while seeking revenge against the conspirators who destroyed his family.',
+        rating: 9.5
+      },
+      {
+        t: 'Succession',
+        y: 2018,
+        k: 'Series',
+        g: 'Drama',
+        genres: ['Drama'],
+        c: '#f2b34c',
+        d: '60m/ep',
+        h: 12,
+        p: 'https://static.tvmaze.com/uploads/images/medium_portrait/456/1141443.jpg',
+        tvmazeId: 30452,
+        n: 'The Roy family is known for controlling the biggest media and entertainment company in the world.',
+        rating: 9.7
+      },
+      {
+        t: 'The Dark Knight',
+        y: 2008,
+        k: 'Movie',
+        g: 'Action',
+        genres: ['Action', 'Crime'],
+        c: '#4d96ff',
+        d: '152 min',
+        h: 3,
+        p: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_FMjpg_UX1000_.jpg',
+        tvmazeId: null,
+        n: 'When the menace known as the Joker wreaks havoc and chaos on the people of Gotham, Batman must accept one of the greatest tests.',
+        rating: 9.9
+      },
+      {
+        t: 'Severance',
+        y: 2022,
+        k: 'Series',
+        g: 'Mystery',
+        genres: ['Mystery', 'Sci-Fi'],
+        c: '#4ecb71',
+        d: '55m/ep',
+        h: 8,
+        p: 'https://static.tvmaze.com/uploads/images/medium_portrait/529/1324317.jpg',
+        tvmazeId: 44458,
+        n: 'Mark leads a team of office workers whose memories have been surgically divided between their work and personal lives.',
+        rating: 9.4
+      },
+      {
+        t: 'Spirited Away',
+        y: 2001,
+        k: 'Movie',
+        g: 'Animation',
+        genres: ['Animation', 'Fantasy'],
+        c: '#ff7675',
+        d: '125 min',
+        h: 2,
+        p: 'https://m.media-amazon.com/images/M/MV5BNTEyNmEwOWUtYzkyOC00ZTQ4LTllZmUtMjk0Y2Y5ZWZmNzJmXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg',
+        tvmazeId: null,
+        cinemetaId: null,
+        n: 'During her family\'s move to the suburbs, a sullen 10-year-old girl wanders into a world ruled by gods, witches, and spirits.',
+        rating: 9.6
+      },
+      {
+        t: 'Iron Man',
+        y: 2008,
+        k: 'Movie',
+        g: 'Action',
+        genres: ['Action', 'Sci-Fi', 'Adventure'],
+        c: '#e63946',
+        d: '126 min',
+        h: 2,
+        p: 'https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX600.jpg',
+        tvmazeId: null,
+        cinemetaId: 'tt0371746',
+        n: 'After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil as Iron Man.',
+        rating: 9.4
+      }
+    ];
+
+    function getRatingTier(score) {
+      if (score >= 9.5) return '★ MASTERPIECE';
+      if (score >= 8.5) return 'ESSENTIAL CINEMA';
+      if (score >= 7.5) return 'EXCELLENT';
+      if (score >= 6.0) return 'RECOMMENDED';
+      if (score >= 4.0) return 'AVERAGE';
+      return 'MEDIOCRE';
+    }
+
+    function updateStarsDisplay(score) {
+      const rounded = Math.round(score);
+      const starBtns = document.querySelectorAll('#heroStarsStrip .star-btn');
+      starBtns.forEach(btn => {
+        const starNum = parseInt(btn.getAttribute('data-star'));
+        btn.classList.toggle('lit', starNum <= rounded);
+      });
+
+      const tierTag = document.getElementById('ratingTierTag');
+      if (tierTag) {
+        tierTag.textContent = getRatingTier(score);
+      }
+    }
+
+    function initTrendingShelf() {
+      const row = document.getElementById('trendingPicksRow');
+      if (!row) return;
+
+      row.innerHTML = POPULAR_CLASSICS.map((item, idx) => `
+        <div class="trending-chip" data-idx="${idx}">
+          <img src="${item.p}" class="trending-chip-img" alt="${item.t}" loading="lazy" />
+          <span class="trending-chip-title">${item.t}</span>
+          <span class="trending-chip-type">(${item.y} • ${item.k})</span>
+        </div>
+      `).join('');
+
+      row.querySelectorAll('.trending-chip').forEach(chip => {
+        chip.onclick = (e) => {
+          e.preventDefault();
+          const idx = parseInt(chip.getAttribute('data-idx'));
+          const item = POPULAR_CLASSICS[idx];
+          selectSuggestion(item);
+        };
+      });
+    }
+
+    // Aggregated Movie & Series Search (Cinemeta IMDb Database + TVMaze + iTunes Fallback)
     async function fetchRelatedMedia(query) {
       const q = query.trim();
       if (!q || q.length < 2) return [];
 
       const results = [];
-      const seenTitles = new Set();
+      const seenKeys = new Set();
 
-      // Parallel fetch from TVMaze (Series) and iTunes (Movies)
-      const [tvmazeRes, itunesRes] = await Promise.allSettled([
-        fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(q)}`),
-        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&entity=movie&limit=6`)
-      ]);
+      const shouldFetchSeries = currentFormatFilter === 'all' || currentFormatFilter === 'series';
+      const shouldFetchMovies = currentFormatFilter === 'all' || currentFormatFilter === 'movies';
 
-      // Parse TVMaze results (Series, Mini-series, Specials)
-      if (tvmazeRes.status === 'fulfilled' && tvmazeRes.value.ok) {
-        try {
-          const tvList = await tvmazeRes.value.json();
-          if (Array.isArray(tvList)) {
-            tvList.slice(0, 5).forEach(({ show }) => {
-              if (!show || !show.name) return;
-              const titleKey = show.name.toLowerCase().trim();
-              if (seenTitles.has(titleKey)) return;
-              seenTitles.add(titleKey);
+      // 1. Check instant popular catalog for fast response
+      const qLower = q.toLowerCase();
+      POPULAR_CLASSICS.forEach(item => {
+        const itemType = (item.k || '').toLowerCase();
+        if (currentFormatFilter === 'movies' && itemType !== 'movie') return;
+        if (currentFormatFilter === 'series' && itemType !== 'series') return;
 
-              const year = show.premiered ? parseInt(show.premiered.slice(0, 4)) : 2024;
-              const genre = (show.genres && show.genres[0]) || 'Drama';
-              const color = getGenreColor(show.genres || []);
-              const poster = (show.image && (show.image.medium || show.image.original)) || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png';
-              const synopsis = cleanHtml(show.summary) || `Official TV series: ${show.name}`;
-
-              results.push({
-                t: show.name,
-                y: year,
-                k: 'Series',
-                g: genre,
-                genres: show.genres || [genre],
-                c: color,
-                d: show.averageRuntime ? `${show.averageRuntime}m/ep` : 'Series',
-                h: Math.max(2, Math.round((show.weight || 30) / 3)),
-                p: poster,
-                tvmazeId: show.id,
-                n: synopsis,
-                rating: (show.rating && show.rating.average) ? show.rating.average : 8.5
-              });
-            });
+        if (item.t.toLowerCase().includes(qLower)) {
+          const key = `${item.t.toLowerCase()}-${item.y}-${item.k}`;
+          if (!seenKeys.has(key)) {
+            seenKeys.add(key);
+            results.push({ ...item });
           }
-        } catch (e) {
-          console.warn('TVMaze parse error:', e);
         }
+      });
+
+      // 2. Parallel fetch from live cinema & TV providers
+      const fetchPromises = [];
+
+      // Cinemeta Movie Search (Complete IMDb Film Catalog, reliable & CORS friendly)
+      if (shouldFetchMovies) {
+        fetchPromises.push(
+          fetch(`https://v3-cinemeta.strem.io/catalog/movie/top/search=${encodeURIComponent(q)}.json`)
+            .then(res => res.ok ? res.json() : { metas: [] })
+            .then(data => ({ type: 'cinemeta_movie', data: data.metas || [] }))
+            .catch(() => ({ type: 'cinemeta_movie', data: [] }))
+        );
       }
 
-      // Parse iTunes Movie results (Feature Films)
-      if (itunesRes.status === 'fulfilled' && itunesRes.value.ok) {
-        try {
-          const itunesData = await itunesRes.value.json();
-          if (itunesData && Array.isArray(itunesData.results)) {
-            itunesData.results.forEach(m => {
-              if (!m || !m.trackName) return;
-              const titleKey = m.trackName.toLowerCase().trim();
-              if (seenTitles.has(titleKey)) return;
-              seenTitles.add(titleKey);
-
-              const year = m.releaseDate ? parseInt(m.releaseDate.slice(0, 4)) : 2024;
-              const genre = m.primaryGenreName || 'Cinema';
-              const color = getGenreColor([genre]);
-              let poster = m.artworkUrl100 || '';
-              if (poster) poster = poster.replace('100x100bb', '600x600bb');
-              const synopsis = m.longDescription || m.shortDescription || `Feature Film: ${m.trackName}`;
-              const runtimeMins = m.trackTimeMillis ? Math.round(m.trackTimeMillis / 60000) : 120;
-
-              results.push({
-                t: m.trackName,
-                y: year,
-                k: 'Movie',
-                g: genre,
-                genres: [genre],
-                c: color,
-                d: `${runtimeMins} min`,
-                h: Math.max(2, Math.round(runtimeMins / 60)),
-                p: poster || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png',
-                tvmazeId: null,
-                n: synopsis,
-                rating: 8.5
-              });
-            });
-          }
-        } catch (e) {
-          console.warn('iTunes parse error:', e);
-        }
+      // Cinemeta Series Search
+      if (shouldFetchSeries) {
+        fetchPromises.push(
+          fetch(`https://v3-cinemeta.strem.io/catalog/series/top/search=${encodeURIComponent(q)}.json`)
+            .then(res => res.ok ? res.json() : { metas: [] })
+            .then(data => ({ type: 'cinemeta_series', data: data.metas || [] }))
+            .catch(() => ({ type: 'cinemeta_series', data: [] }))
+        );
       }
+
+      // TVMaze Series Search
+      if (shouldFetchSeries) {
+        fetchPromises.push(
+          fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(q)}`)
+            .then(res => res.ok ? res.json() : [])
+            .then(tvList => ({ type: 'tvmaze', data: tvList }))
+            .catch(() => ({ type: 'tvmaze', data: [] }))
+        );
+      }
+
+      // iTunes Movie Search
+      if (shouldFetchMovies) {
+        fetchPromises.push(
+          fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&entity=movie&limit=6`)
+            .then(res => res.ok ? res.json() : { results: [] })
+            .then(itunesData => ({ type: 'itunes', data: itunesData.results || [] }))
+            .catch(() => ({ type: 'itunes', data: [] }))
+        );
+      }
+
+      const settled = await Promise.all(fetchPromises);
+
+      settled.forEach(resp => {
+        // Cinemeta Movies (e.g. Iron Man 1, 2, 3, Avengers, etc.)
+        if (resp.type === 'cinemeta_movie' && Array.isArray(resp.data)) {
+          resp.data.slice(0, 8).forEach(m => {
+            if (!m || !m.name) return;
+            const year = parseInt(m.releaseInfo) || (m.year ? parseInt(m.year) : 2024);
+            const key = `${m.name.toLowerCase().trim()}-${year}-Movie`;
+            if (seenKeys.has(key)) return;
+            seenKeys.add(key);
+
+            let poster = m.poster || '';
+            if (poster) {
+              poster = poster.replace('_SX250.jpg', '_SX600.jpg').replace('_SX300.jpg', '_SX600.jpg');
+            }
+            const genres = (m.genres && m.genres.length) ? m.genres : ['Action', 'Cinema'];
+            const genre = genres[0] || 'Cinema';
+            const color = getGenreColor(genres);
+            const synopsis = m.description || `Feature film (${year}) directed for cinema: ${m.name}.`;
+
+            results.push({
+              t: m.name,
+              y: year,
+              k: 'Movie',
+              g: genre,
+              genres: genres,
+              c: color,
+              d: m.runtime || '120 min',
+              h: 2,
+              p: poster || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png',
+              tvmazeId: null,
+              cinemetaId: m.id || null,
+              n: synopsis,
+              rating: (m.imdbRating && !isNaN(parseFloat(m.imdbRating))) ? parseFloat(m.imdbRating) : 8.8
+            });
+          });
+        }
+
+        // TVMaze Shows
+        if (resp.type === 'tvmaze' && Array.isArray(resp.data)) {
+          resp.data.slice(0, 5).forEach(({ show }) => {
+            if (!show || !show.name) return;
+            const year = show.premiered ? parseInt(show.premiered.slice(0, 4)) : 2024;
+            const key = `${show.name.toLowerCase().trim()}-${year}-Series`;
+            if (seenKeys.has(key)) return;
+            seenKeys.add(key);
+
+            const genre = (show.genres && show.genres[0]) || 'Drama';
+            const color = getGenreColor(show.genres || []);
+            const poster = (show.image && (show.image.medium || show.image.original)) || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png';
+            const synopsis = cleanHtml(show.summary) || `Official TV series: ${show.name}`;
+
+            results.push({
+              t: show.name,
+              y: year,
+              k: 'Series',
+              g: genre,
+              genres: show.genres || [genre],
+              c: color,
+              d: show.averageRuntime ? `${show.averageRuntime}m/ep` : 'Series',
+              h: Math.max(2, Math.round((show.weight || 30) / 3)),
+              p: poster,
+              tvmazeId: show.id,
+              cinemetaId: null,
+              n: synopsis,
+              rating: (show.rating && show.rating.average) ? show.rating.average : 8.5
+            });
+          });
+        }
+
+        // Cinemeta Series
+        if (resp.type === 'cinemeta_series' && Array.isArray(resp.data)) {
+          resp.data.slice(0, 4).forEach(s => {
+            if (!s || !s.name) return;
+            const year = parseInt(s.releaseInfo) || (s.year ? parseInt(s.year) : 2024);
+            const key = `${s.name.toLowerCase().trim()}-${year}-Series`;
+            if (seenKeys.has(key)) return;
+            seenKeys.add(key);
+
+            let poster = s.poster || '';
+            if (poster) {
+              poster = poster.replace('_SX250.jpg', '_SX600.jpg').replace('_SX300.jpg', '_SX600.jpg');
+            }
+
+            results.push({
+              t: s.name,
+              y: year,
+              k: 'Series',
+              g: 'Drama',
+              genres: ['Drama', 'Television'],
+              c: '#4ecb71',
+              d: 'Series',
+              h: 8,
+              p: poster || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png',
+              tvmazeId: null,
+              cinemetaId: s.id || null,
+              n: s.description || `Television series (${year}): ${s.name}`,
+              rating: 8.5
+            });
+          });
+        }
+
+        // iTunes Movies
+        if (resp.type === 'itunes' && Array.isArray(resp.data)) {
+          resp.data.forEach(m => {
+            if (!m || !m.trackName) return;
+            const year = m.releaseDate ? parseInt(m.releaseDate.slice(0, 4)) : 2024;
+            const key = `${m.trackName.toLowerCase().trim()}-${year}-Movie`;
+            if (seenKeys.has(key)) return;
+            seenKeys.add(key);
+
+            const genre = m.primaryGenreName || 'Cinema';
+            const color = getGenreColor([genre]);
+            let poster = m.artworkUrl100 || '';
+            if (poster) poster = poster.replace('100x100bb', '600x600bb');
+            const synopsis = m.longDescription || m.shortDescription || `Feature Film: ${m.trackName}`;
+            const runtimeMins = m.trackTimeMillis ? Math.round(m.trackTimeMillis / 60000) : 120;
+
+            results.push({
+              t: m.trackName,
+              y: year,
+              k: 'Movie',
+              g: genre,
+              genres: [genre],
+              c: color,
+              d: `${runtimeMins} min`,
+              h: Math.max(2, Math.round(runtimeMins / 60)),
+              p: poster || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png',
+              tvmazeId: null,
+              cinemetaId: null,
+              n: synopsis,
+              rating: 8.5
+            });
+          });
+        }
+      });
 
       return results;
     }
@@ -3195,7 +4345,7 @@
         listContainer.innerHTML = `
           <div class="suggestion-empty">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-            <span>No related movie or series found for "${query}"</span>
+            <span>No matching movie or TV series found for "${query}"</span>
           </div>
         `;
         dropdown.classList.add('active');
@@ -3214,7 +4364,7 @@
               <span>${item.g}</span>
             </div>
           </div>
-          <span style="font-size:11px; color:var(--accent); font-weight:600; padding:4px 8px; border:1px solid rgba(242,179,76,0.3); border-radius:4px;">Select</span>
+          <button type="button" class="suggestion-pick-btn">Pick & Preview</button>
         </div>
       `).join('');
 
@@ -3238,18 +4388,28 @@
       const dropdown = document.getElementById('heroSuggestions');
       dropdown.classList.remove('active');
 
-      const tag = document.getElementById('heroSelectedTag');
-      const text = document.getElementById('heroSelectedText');
-      text.textContent = `Verified: ${item.t} (${item.y} • ${item.k} • ${item.g})`;
-      tag.classList.add('show');
+      // Populate Graphic Film Slate Card
+      const slate = document.getElementById('heroSlateCard');
+      document.getElementById('slatePosterImg').src = item.p;
+      document.getElementById('slateTitleText').textContent = item.t;
+      document.getElementById('slateYearChip').textContent = item.y;
+      document.getElementById('slateTypeChip').textContent = item.k === 'Series' ? 'TV Series' : 'Feature Film';
+      document.getElementById('slateGenreChip').textContent = item.g || 'Cinema';
+      document.getElementById('slateDurationChip').textContent = item.d || '120 min';
+      document.getElementById('slateSynopsisText').textContent = item.n || 'No synopsis available.';
 
-      // Clear any previous error
+      // Sync stars
+      const currentRating = parseFloat(document.getElementById('heroRatingInput').value) || 9.0;
+      updateStarsDisplay(currentRating);
+
+      slate.classList.add('active');
       hideHeroError();
     }
 
     function clearSelectedSuggestion() {
       selectedMediaObj = null;
-      document.getElementById('heroSelectedTag').classList.remove('show');
+      const slate = document.getElementById('heroSlateCard');
+      if (slate) slate.classList.remove('active');
     }
 
     function showHeroError(msg) {
@@ -3269,7 +4429,7 @@
 
     function hideHeroError() {
       const feedback = document.getElementById('heroFeedbackMsg');
-      feedback.classList.remove('show');
+      if (feedback) feedback.classList.remove('show');
     }
 
     async function submitDirectRecord() {
@@ -3277,6 +4437,7 @@
       const ratingInput = document.getElementById('heroRatingInput');
       const submitBtn = document.getElementById('heroSubmitBtn');
       const spinner = document.getElementById('heroInputSpinner');
+      const memoInput = document.getElementById('slateCustomMemo');
 
       const typedTitle = nameInput.value.trim();
       if (!typedTitle) return;
@@ -3297,7 +4458,6 @@
         try {
           const matches = await fetchRelatedMedia(typedTitle);
           if (matches && matches.length > 0) {
-            // Find closest match or take top match
             const exact = matches.find(m => m.t.toLowerCase() === typedTitle.toLowerCase());
             mediaToAdd = exact || matches[0];
           }
@@ -3312,8 +4472,8 @@
       if (!mediaToAdd) {
         submitBtn.disabled = false;
         submitBtn.innerHTML = `
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-          <span>Record to Vault</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span>Record Title</span>
         `;
         showHeroError(`"${typedTitle}" does not match any known movie or series. Please check spelling or select from suggestions.`);
         return;
@@ -3321,6 +4481,11 @@
 
       // Valid verified title found: Proceed to add
       hideHeroError();
+
+      const personalMemo = (memoInput && memoInput.value.trim()) ? memoInput.value.trim() : '';
+      const finalNote = personalMemo 
+        ? `${selectedViewingFormat} • "${personalMemo}"`
+        : (mediaToAdd.n || `Archived to Cinema Files at ${userRating.toFixed(1)}/10.`);
 
       const newItem = {
         t: mediaToAdd.t,
@@ -3333,7 +4498,7 @@
         h: mediaToAdd.h || (mediaToAdd.k === 'Series' ? 12 : 2),
         p: mediaToAdd.p,
         tvmazeId: mediaToAdd.tvmazeId,
-        n: mediaToAdd.n || `Watched and rated ${userRating.toFixed(1)}/10 by you.`
+        n: finalNote
       };
 
       ITEMS.push(newItem);
@@ -3342,18 +4507,19 @@
       // Rebuild 3D spiral
       rebuildScene();
 
-      // Reset form & state
+      // Reset form & slate state
       nameInput.value = '';
+      if (memoInput) memoInput.value = '';
       clearSelectedSuggestion();
       document.getElementById('heroSuggestions').classList.remove('active');
 
       submitBtn.disabled = false;
       submitBtn.innerHTML = `
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        <span>Record to Vault</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span>Record Title</span>
       `;
 
-      showToast(`Recorded "${newItem.t}" (${userRating.toFixed(1)}★)`);
+      showToast(`★ Archived "${newItem.t}" (${userRating.toFixed(1)}/10) to Reel!`);
 
       // Smoothly navigate to newly recorded item
       setTimeout(() => {
@@ -3367,13 +4533,16 @@
     const sliderDisplay = document.getElementById('sliderValDisplay');
 
     heroSlider.addEventListener('input', e => {
-      heroRatingIn.value = parseFloat(e.target.value).toFixed(1);
-      sliderDisplay.textContent = heroRatingIn.value;
+      const val = parseFloat(e.target.value);
+      heroRatingIn.value = val.toFixed(1);
+      sliderDisplay.textContent = val.toFixed(1);
+      updateStarsDisplay(val);
     });
     heroRatingIn.addEventListener('input', e => {
       const v = clamp(parseFloat(e.target.value) || 0, 0, 10);
       heroSlider.value = v;
       sliderDisplay.textContent = v.toFixed(1);
+      updateStarsDisplay(v);
     });
 
     /* ================= EDIT RATING & DELETE ACTIONS ================= */
@@ -3390,7 +4559,7 @@
       document.getElementById('editRatingSlider').value = Number(it.r || 0);
       document.getElementById('editNoteInput').value = it.n || '';
 
-      document.getElementById('editRatingModal').classList.add('active');
+      openModal('editRatingModal');
     }
 
     document.getElementById('editRatingSlider').addEventListener('input', e => {
@@ -3420,74 +4589,96 @@
       const idx = clamp(Math.round(curP), 0, ITEMS.length - 1);
       if (idx < 0 || idx >= ITEMS.length) return;
       const title = ITEMS[idx].t;
+      if (!confirm(`Are you sure you want to remove "${title}" from your cinema archive?`)) {
+        return;
+      }
 
       ITEMS.splice(idx, 1);
       saveWatchlist(ITEMS);
       rebuildScene();
-      showToast(`Removed "${title}" from watchlist.`);
+      renderLedgerSection();
+      showToast(`Removed "${title}" from archive.`);
 
       if (ITEMS.length > 0) {
         goTo(Math.min(idx, ITEMS.length - 1));
       } else {
+        updateUIState();
         window.scrollTo({ top: 0, behavior: 'smooth' });
       }
     }
 
-    /* ================= TVMAZE SEARCH & MODAL HELPERS ================= */
+    /* ================= GLOBAL MEDIA SEARCH (CINEMETA + TVMAZE + ITUNES) ================= */
     async function handleTvmazeSearch() {
       const q = document.getElementById('searchInput').value.trim();
       const statusEl = document.getElementById('searchStatus');
       const resultsEl = document.getElementById('searchResults');
       if (!q) return;
 
-      statusEl.textContent = `Searching TVMaze for "${q}"...`;
+      statusEl.textContent = `Searching movies and TV series for "${q}"...`;
       resultsEl.innerHTML = '';
 
       try {
-        const res = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(q)}`);
-        const list = await res.json();
-        if (!list || list.length === 0) {
-          statusEl.textContent = `No TVMaze shows found for "${q}".`;
+        const matches = await fetchRelatedMedia(q);
+        if (!matches || matches.length === 0) {
+          statusEl.textContent = `No movies or series found for "${q}". Try another title or check spelling.`;
           return;
         }
 
-        statusEl.textContent = `Found ${list.length} show${list.length > 1 ? 's' : ''} on TVMaze:`;
-        list.forEach(({ show }) => {
-          const posterUrl = (show.image && (show.image.medium || show.image.original)) || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png';
-          const year = show.premiered ? show.premiered.slice(0, 4) : '—';
-          const defaultRating = (show.rating && show.rating.average) ? show.rating.average.toFixed(1) : '8.5';
-          const genre = (show.genres && show.genres.length) ? show.genres.join(', ') : 'Drama';
-          const network = (show.network && show.network.name) || (show.webChannel && show.webChannel.name) || 'TV';
-          const synopsis = cleanHtml(show.summary) || 'No summary provided by TVMaze.';
-
+        statusEl.textContent = `Found ${matches.length} verified title${matches.length > 1 ? 's' : ''} for "${q}":`;
+        matches.forEach((item, idx) => {
+          const defaultRating = (item.rating && !isNaN(item.rating)) ? Number(item.rating).toFixed(1) : '8.8';
           const card = document.createElement('div');
           card.className = 'result-item';
+          const isMov = isMovieItem(item);
           card.innerHTML = `
-            <img src="${posterUrl}" class="result-poster" alt="${show.name}" loading="lazy" />
+            <img src="${item.p}" class="result-poster" alt="${item.t}" loading="lazy" />
             <div class="result-info">
               <div>
-                <div class="result-title">${show.name}</div>
-                <div class="result-meta"><span>${year}</span> • <span>${network}</span> • <span>${genre}</span></div>
-                <div class="result-desc">${synopsis}</div>
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+                  <span class="result-title">${item.t}</span>
+                  <span style="font-size:9px; font-weight:700; font-family:'Space Mono', monospace; padding:2px 6px; border-radius:4px; ${isMov ? 'background:rgba(242,179,76,0.22); color:#f2b34c; border:1px solid rgba(242,179,76,0.4);' : 'background:rgba(77,150,255,0.2); color:#4d96ff; border:1px solid rgba(77,150,255,0.4);'}">${isMov ? '🎬 FILM' : '📺 SERIES'}</span>
+                </div>
+                <div class="result-meta"><span>${item.y || '—'}</span> • <span>${item.g || 'Cinema'}</span> • <span>${item.d || 'Feature'}</span></div>
+                <div class="result-desc">${item.n || 'Verified cinema entry.'}</div>
               </div>
               <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
                 <label style="font-size:10px; color:var(--muted); text-transform:uppercase;">Rating:</label>
-                <input type="number" id="rate-${show.id}" value="${defaultRating}" min="0" max="10" step="0.1" style="width:48px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:#fff; font-size:11px; padding:3px; text-align:center;" />
-                <button class="result-add-btn" id="add-${show.id}">+ Add</button>
-                <button class="result-add-btn" style="border-color:rgba(255,255,255,0.25); color:#fff;" id="det-${show.id}">Details</button>
+                <input type="number" id="rate-res-${idx}" value="${defaultRating}" min="0" max="10" step="0.1" style="width:48px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:#fff; font-size:11px; padding:3px; text-align:center;" />
+                <button class="result-add-btn" id="add-res-${idx}">+ Archive to Reel</button>
               </div>
             </div>
           `;
           resultsEl.appendChild(card);
 
-          card.querySelector(`#add-${show.id}`).onclick = () => {
-            const userRate = parseFloat(card.querySelector(`#rate-${show.id}`).value) || 8.5;
-            addShowToWatchlist(show, userRate);
+          card.querySelector(`#add-res-${idx}`).onclick = () => {
+            const userRate = parseFloat(card.querySelector(`#rate-res-${idx}`).value) || 8.8;
+            const newItem = {
+              t: item.t,
+              y: item.y || 2024,
+              k: item.k || 'Movie',
+              g: item.g || 'Cinema',
+              r: userRate,
+              c: item.c || getGenreColor(item.genres || [item.g]),
+              d: item.d || 'Watched',
+              h: item.h || 2,
+              p: item.p,
+              tvmazeId: item.tvmazeId || null,
+              cinemetaId: item.cinemetaId || null,
+              n: item.n || `Archived to Cinema Files at ${userRate.toFixed(1)}/10.`
+            };
+            ITEMS.push(newItem);
+            saveWatchlist(ITEMS);
+            rebuildScene();
+            renderLedgerSection();
+            closeModals();
+            showToast(`★ Archived "${newItem.t}" (${userRate.toFixed(1)}/10) to Reel!`);
+            setTimeout(() => {
+              goTo(ITEMS.length - 1);
+            }, 300);
           };
-          card.querySelector(`#det-${show.id}`).onclick = () => openTvmazeDetails(show.id);
         });
       } catch (err) {
-        statusEl.textContent = 'Failed to connect to TVMaze API. Please check your connection.';
+        statusEl.textContent = 'Search failed. Please verify your connection.';
         console.error(err);
       }
     }
@@ -3528,7 +4719,7 @@
       const titleEl = document.getElementById('detailTitle');
       const badgeEl = document.getElementById('detailBadge');
 
-      modal.classList.add('active');
+      openModal('detailModal');
       body.innerHTML = '<div style="padding:40px; text-align:center; color:var(--muted); font-size:14px;">Fetching show overview & cast...</div>';
 
       let showId = tvmazeIdOrCurrent;
@@ -3623,10 +4814,20 @@
       }
     }
 
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.classList.add('active');
+        document.body.classList.add('modal-open');
+      }
+    }
+
     function closeModals() {
-      document.getElementById('searchModal').classList.remove('active');
-      document.getElementById('detailModal').classList.remove('active');
-      document.getElementById('editRatingModal').classList.remove('active');
+      ['searchModal', 'detailModal', 'editRatingModal', 'shareModal'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active');
+      });
+      document.body.classList.remove('modal-open');
     }
 
     /* ================= THREE.JS INITIALIZATION ================= */
@@ -3706,10 +4907,57 @@
         }
       });
 
+      // Isolate scroll containers so scrolling search results never moves the main screen
+      function isolateScrollContainer(element) {
+        if (!element) return;
+
+        element.addEventListener('wheel', (e) => {
+          const delta = e.deltaY;
+          const scrollHeight = element.scrollHeight;
+          const clientHeight = element.clientHeight;
+          const maxScroll = scrollHeight - clientHeight;
+
+          if (maxScroll <= 0) {
+            e.preventDefault();
+            e.stopPropagation();
+            return;
+          }
+
+          const isAtTop = element.scrollTop <= 0 && delta < 0;
+          const isAtBottom = element.scrollTop >= maxScroll - 1 && delta > 0;
+
+          if (isAtTop || isAtBottom) {
+            e.preventDefault();
+            e.stopPropagation();
+          } else {
+            element.scrollTop += delta;
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }, { passive: false });
+
+        element.addEventListener('touchmove', (e) => {
+          e.stopPropagation();
+        }, { passive: true });
+      }
+
+      // Wire up search result scroll isolation
+      const heroSuggestionsEl = document.getElementById('heroSuggestions');
+      const searchModalBody = document.querySelector('#searchModal .modal-body');
+      const searchResultsEl = document.getElementById('searchResults');
+      const detailBodyEl = document.getElementById('detailBody');
+      const editRatingBodyEl = document.querySelector('#editRatingModal .modal-body');
+
+      isolateScrollContainer(heroSuggestionsEl);
+      isolateScrollContainer(searchModalBody);
+      isolateScrollContainer(searchResultsEl);
+      isolateScrollContainer(detailBodyEl);
+      isolateScrollContainer(editRatingBodyEl);
+
       // Mobile Touch Drag Gesture on 3D Canvas
       let touchStartY = 0, touchStartX = 0, isTouchDragging = false;
       window.addEventListener('touchstart', e => {
-        if (e.touches && e.touches.length === 1 && !e.target.closest('button, input, a, .modal-card, .ledger-container')) {
+        if (e.touches && e.touches.length === 1 && !e.target.closest('button, input, a, .modal-card, .modal-backdrop, .modal-body, .ledger-container, .hero-suggestions-dropdown, #heroSuggestions, #suggestionsList, .results-grid, .result-item, .suggestion-item')) {
           touchStartY = e.touches[0].clientY;
           touchStartX = e.touches[0].clientX;
           isTouchDragging = true;
@@ -3802,6 +5050,29 @@
         };
       }
 
+      // Format Filter toggles for The Index (All / Movies / Series)
+      const btnFilterAll = document.getElementById('btnFilterAll');
+      if (btnFilterAll) {
+        btnFilterAll.onclick = () => {
+          currentIndexFilter = 'all';
+          renderLedgerSection();
+        };
+      }
+      const btnFilterMovies = document.getElementById('btnFilterMovies');
+      if (btnFilterMovies) {
+        btnFilterMovies.onclick = () => {
+          currentIndexFilter = 'movies';
+          renderLedgerSection();
+        };
+      }
+      const btnFilterSeries = document.getElementById('btnFilterSeries');
+      if (btnFilterSeries) {
+        btnFilterSeries.onclick = () => {
+          currentIndexFilter = 'series';
+          renderLedgerSection();
+        };
+      }
+
       // Sort button toggles for The Index
       const btnSortRating = document.getElementById('btnSortRating');
       if (btnSortRating) {
@@ -3845,7 +5116,7 @@
       };
 
       document.getElementById('btnOpenSearch').onclick = () => {
-        document.getElementById('searchModal').classList.add('active');
+        openModal('searchModal');
         document.getElementById('searchInput').focus();
       };
       document.getElementById('btnCloseSearch').onclick = closeModals;
@@ -3865,7 +5136,7 @@
         const shareUrl = `${window.location.origin}${window.location.pathname}#share=${encoded}`;
         
         document.getElementById('shareLinkInput').value = shareUrl;
-        document.getElementById('shareModal').classList.add('active');
+        openModal('shareModal');
       }
 
       const btnNavShare = document.getElementById('btnNavShare');
@@ -4055,12 +5326,122 @@
         }
       });
 
-      // Clear selected tag button
-      document.getElementById('heroClearSelectedBtn').onclick = () => {
-        clearSelectedSuggestion();
-        heroNameInput.value = '';
-        heroNameInput.focus();
-      };
+      // Format toggle buttons (ALL, MOVIES, SERIES)
+      document.querySelectorAll('.console-format-toggles .format-chip').forEach(chip => {
+        chip.onclick = () => {
+          document.querySelectorAll('.console-format-toggles .format-chip').forEach(c => c.classList.remove('active'));
+          chip.classList.add('active');
+          currentFormatFilter = chip.getAttribute('data-format');
+          const val = heroNameInput.value.trim();
+          if (val.length >= 2) {
+            fetchRelatedMedia(val).then(res => renderSuggestions(res, val));
+          }
+        };
+      });
+
+      // Interactive 10-Star Rating Strip
+      const starBtns = document.querySelectorAll('#heroStarsStrip .star-btn');
+      starBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const starNum = parseFloat(btn.getAttribute('data-star'));
+          const ratingIn = document.getElementById('heroRatingInput');
+          const ratingSlider = document.getElementById('heroRatingSlider');
+          const sliderDisp = document.getElementById('sliderValDisplay');
+          ratingIn.value = starNum.toFixed(1);
+          ratingSlider.value = starNum;
+          sliderDisp.textContent = starNum.toFixed(1);
+          updateStarsDisplay(starNum);
+        });
+        btn.addEventListener('mouseenter', () => {
+          const starNum = parseInt(btn.getAttribute('data-star'));
+          starBtns.forEach(b => {
+            const s = parseInt(b.getAttribute('data-star'));
+            b.classList.toggle('lit', s <= starNum);
+          });
+          const tierTag = document.getElementById('ratingTierTag');
+          if (tierTag) tierTag.textContent = getRatingTier(starNum);
+        });
+      });
+
+      const starsStrip = document.getElementById('heroStarsStrip');
+      if (starsStrip) {
+        starsStrip.addEventListener('mouseleave', () => {
+          const currentVal = parseFloat(document.getElementById('heroRatingInput').value) || 9.0;
+          updateStarsDisplay(currentVal);
+        });
+      }
+
+      // Steppers (- / +) for fine-grained rating adjust
+      const btnMinus = document.getElementById('btnRatingMinus');
+      const btnPlus = document.getElementById('btnRatingPlus');
+      if (btnMinus) {
+        btnMinus.onclick = () => {
+          const inEl = document.getElementById('heroRatingInput');
+          const cur = parseFloat(inEl.value) || 9.0;
+          const next = Math.max(0, parseFloat((cur - 0.5).toFixed(1)));
+          inEl.value = next.toFixed(1);
+          document.getElementById('heroRatingSlider').value = next;
+          document.getElementById('sliderValDisplay').textContent = next.toFixed(1);
+          updateStarsDisplay(next);
+        };
+      }
+      if (btnPlus) {
+        btnPlus.onclick = () => {
+          const inEl = document.getElementById('heroRatingInput');
+          const cur = parseFloat(inEl.value) || 9.0;
+          const next = Math.min(10, parseFloat((cur + 0.5).toFixed(1)));
+          inEl.value = next.toFixed(1);
+          document.getElementById('heroRatingSlider').value = next;
+          document.getElementById('sliderValDisplay').textContent = next.toFixed(1);
+          updateStarsDisplay(next);
+        };
+      }
+
+      // Slate Reset Button
+      const slateReset = document.getElementById('slateResetBtn');
+      if (slateReset) {
+        slateReset.onclick = () => {
+          clearSelectedSuggestion();
+          heroNameInput.value = '';
+          heroNameInput.focus();
+        };
+      }
+
+      // Expandable Slate Drawer & Viewing Format Choice
+      const drawerToggle = document.getElementById('slateDrawerToggle');
+      const slateDrawer = document.getElementById('slateDrawer');
+      if (drawerToggle && slateDrawer) {
+        drawerToggle.onclick = () => {
+          slateDrawer.classList.toggle('open');
+          drawerToggle.querySelector('span').textContent = slateDrawer.classList.contains('open') 
+            ? '− Hide Viewing Format & Memo' 
+            : '+ Add Viewing Format & Personal Memo (Optional)';
+        };
+      }
+
+      document.querySelectorAll('#viewingFormatChips .tag-choice-btn').forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll('#viewingFormatChips .tag-choice-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          selectedViewingFormat = btn.getAttribute('data-format');
+        };
+      });
+
+      // Enter 3D Reel Action from Hero Main Screen
+      const btnEnterReel = document.getElementById('btnEnterReel');
+      if (btnEnterReel) {
+        btnEnterReel.onclick = () => {
+          if (ITEMS.length > 0) {
+            goTo(0);
+          } else {
+            showToast('Record at least one title to explore your 3D spiral vault');
+          }
+        };
+      }
+
+      // Initialize Trending Cinema Quick-Picks Shelf
+      initTrendingShelf();
+      updateStarsDisplay(9.0);
 
       // Close autocomplete dropdown when clicking outside
       document.addEventListener('click', (e) => {
@@ -4097,7 +5478,7 @@
 
     /* ---------- UI SYNC ---------- */
     const el = id => document.getElementById(id);
-    const heroEl = el('hero'), infoEl = el('info'), counterEl = el('counter'), endEl = el('end'), dotsEl = el('dots'), progEl = el('progress');
+    const heroEl = el('hero'), backdropEl = el('heroBackdrop'), infoEl = el('info'), counterEl = el('counter'), endEl = el('end'), dotsEl = el('dots'), progEl = el('progress');
 
     function setInfo(i) {
       const it = ITEMS[i];
@@ -4139,9 +5520,14 @@
         setInfo(idx);
       }
 
-      const hf = clamp((p + 1) / .6, 0, 1);
+      const hf = clamp((p + 1) / .65, 0, 1);
       heroEl.style.opacity = 1 - hf;
-      heroEl.style.transform = `translateY(${-hf * 80}px) scale(${1 - hf * .08})`;
+      heroEl.style.transform = `translateY(${-hf * 90}px) scale(${1 - hf * .06})`;
+      heroEl.style.pointerEvents = hf > 0.8 ? 'none' : 'auto';
+
+      if (backdropEl) {
+        backdropEl.style.opacity = 1 - hf;
+      }
 
       const inf = clamp((p + .35) / .45, 0, 1) * clamp((total - .55 - p) / .45, 0, 1);
       infoEl.style.opacity = inf;
@@ -4170,6 +5556,7 @@
       mouse.y += (mouse.ty - mouse.y) * .06;
 
       const total = ITEMS.length;
+      const reelReveal = smooth(clamp((curP + 0.75) / 0.75, 0, 1));
 
       if (total > 0) {
         const aEnd = (total - 1) * STEP_ANGLE, yEnd = -(total - 1) * STEP_Y;
@@ -4193,27 +5580,53 @@
           camTgt.lerpVectors(A.tgt, END.tgt, s);
         }
 
-        // cards animation
-        const speed = Math.min(Math.abs(vel) * 4, 1);
-        for (let i = 0; i < total; i++) {
-          const c = cards[i];
-          if (!c) continue;
-          const d = i - curP, ad = Math.abs(d);
-          const f = smooth(clamp(1 - ad, 0, 1));
-          const hov = hovered === i ? 1 : 0;
+        // Toggle visibility and opacity for cards & rails based on reelReveal
+        if (reelReveal <= 0.005) {
+          for (let i = 0; i < total; i++) {
+            const c = cards[i];
+            if (c) {
+              c.group.visible = false;
+              if (c.ring) c.ring.visible = false;
+            }
+          }
+          helixRailMeshes.forEach(m => { m.visible = false; });
+          if (perfPoints) perfPoints.visible = false;
+        } else {
+          helixRailMeshes.forEach(m => {
+            m.visible = true;
+            m.material.opacity = 0.85 * reelReveal;
+          });
+          if (perfPoints) {
+            perfPoints.visible = true;
+            perfPoints.material.opacity = 0.7 * reelReveal;
+          }
 
-          c.group.position.copy(c.base).addScaledVector(c.inward, .95 * f);
-          c.group.position.y += Math.sin(t * .9 + i * .7) * .045;
+          // cards animation
+          const speed = Math.min(Math.abs(vel) * 4, 1);
+          for (let i = 0; i < total; i++) {
+            const c = cards[i];
+            if (!c) continue;
+            c.group.visible = true;
+            if (c.ring) c.ring.visible = true;
 
-          const s = 1 + .14 * f + .03 * hov;
-          c.pivot.scale.set(s, s, s);
-          c.pivot.rotation.y = clamp(d * .32, -.7, .7) * (1 - f) + mouse.x * .16 * f + vel * .6 * (1 - f);
-          c.pivot.rotation.x = -mouse.y * .1 * f + Math.sin(t * .5 + i) * .02;
-          c.pivot.rotation.z = clamp(-vel * .8, -.15, .15) * (1 - f);
+            const d = i - curP, ad = Math.abs(d);
+            const f = smooth(clamp(1 - ad, 0, 1));
+            const hov = hovered === i ? 1 : 0;
 
-          c.frame.material.opacity = .22 + .7 * f + .3 * hov;
-          c.glow.material.opacity = .05 + .32 * f + .1 * hov + speed * .05 * (1 - f);
-          c.ring.material.opacity = .12 + .5 * f;
+            c.group.position.copy(c.base).addScaledVector(c.inward, .95 * f);
+            c.group.position.y += Math.sin(t * .9 + i * .7) * .045;
+
+            const s = 1 + .14 * f + .03 * hov;
+            c.pivot.scale.set(s, s, s);
+            c.pivot.rotation.y = clamp(d * .32, -.7, .7) * (1 - f) + mouse.x * .16 * f + vel * .6 * (1 - f);
+            c.pivot.rotation.x = -mouse.y * .1 * f + Math.sin(t * .5 + i) * .02;
+            c.pivot.rotation.z = clamp(-vel * .8, -.15, .15) * (1 - f);
+
+            c.poster.material.opacity = reelReveal;
+            c.frame.material.opacity = (.22 + .7 * f + .3 * hov) * reelReveal;
+            c.glow.material.opacity = (.05 + .32 * f + .1 * hov + speed * .05 * (1 - f)) * reelReveal;
+            if (c.ring) c.ring.material.opacity = (.12 + .5 * f) * reelReveal;
+          }
         }
       } else {
         // Empty state idle camera
@@ -4237,8 +5650,8 @@
       particles.rotation.y = t * .02;
       particles.position.y = Math.sin(t * .3) * .3;
 
-      // Raycasting Hover
-      if (pointer.x > -5 && posterMeshes.length > 0) {
+      // Raycasting Hover (only active when reel is visible and scrolled in)
+      if (curP > -0.4 && pointer.x > -5 && posterMeshes.length > 0) {
         raycaster.setFromCamera(pointer, camera);
         const hit = raycaster.intersectObjects(posterMeshes)[0];
         const nh = hit ? hit.object.userData.i : -1;
@@ -4248,6 +5661,7 @@
         }
       } else {
         hovered = -1;
+        if (renderer && renderer.domElement) renderer.domElement.style.cursor = 'default';
       }
 
       updateUI(curP);
