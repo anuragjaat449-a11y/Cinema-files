@@ -1,0 +1,4273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CINEMA FILES — 3D Spiral Watchlist & Cinema Archive</title>
+  <meta name="description" content="A personal 3D spiral cinema archive by anurag_singh.indoliya for tracking watched movies and series with authentic artwork and custom ratings." />
+  <meta property="og:title" content="CINEMA FILES — 3D Spiral Watchlist & Cinema Archive" />
+  <meta property="og:description" content="A personal 3D spiral cinema archive by anurag_singh.indoliya for tracking watched movies and series with authentic artwork and custom ratings." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #000000;
+      --fg: #f4f4f7;
+      --muted: rgba(244, 244, 247, .55);
+      --accent: #f2b34c;
+      --unit: 70vh;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+    body {
+      background: #000000;
+      color: var(--fg);
+      font-family: 'Inter', system-ui, sans-serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    ::selection {
+      background: var(--accent);
+      color: #000;
+    }
+
+    #scene {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      z-index: 0;
+      pointer-events: none;
+    }
+    #vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, .8) 100%),
+        linear-gradient(to bottom, rgba(0, 0, 0, .75), rgba(0, 0, 0, 0) 18%, rgba(0, 0, 0, 0) 80%, rgba(0, 0, 0, .9));
+    }
+    #grain {
+      position: fixed;
+      inset: -50%;
+      z-index: 2;
+      pointer-events: none;
+      opacity: .045;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+      animation: grain 1.2s steps(6) infinite;
+    }
+    @keyframes grain {
+      0% { transform: translate(0, 0); }
+      20% { transform: translate(-5%, 3%); }
+      40% { transform: translate(4%, -6%); }
+      60% { transform: translate(-3%, -2%); }
+      80% { transform: translate(6%, 4%); }
+      100% { transform: translate(0, 0); }
+    }
+
+    /* ---------- NAV & BUTTON ORGANIZATION ---------- */
+    #nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 40;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 28px;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.3) 70%, transparent 100%);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    #logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      letter-spacing: .22em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+      cursor: pointer;
+      user-select: none;
+      color: #fff;
+      transition: transform .2s ease;
+    }
+    #logo:hover {
+      transform: scale(1.02);
+    }
+    #logo i {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 16px var(--accent);
+      display: inline-block;
+      animation: pulse 2.4s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(.7); opacity: .6; }
+    }
+
+    .nav-cluster {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+    }
+    .nav-tool-group {
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      padding: 3px;
+      gap: 3px;
+      backdrop-filter: blur(12px);
+    }
+    .nav-btn-iconic {
+      background: transparent;
+      border: none;
+      color: rgba(244, 244, 247, 0.85);
+      padding: 6px 12px;
+      border-radius: 16px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: .08em;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .nav-btn-iconic:hover {
+      background: rgba(255, 255, 255, 0.14);
+      color: #fff;
+    }
+    .nav-btn-iconic.active {
+      background: rgba(242, 179, 76, 0.2);
+      color: var(--accent);
+    }
+    .nav-auth-wrap {
+      display: flex;
+      align-items: center;
+    }
+
+    #nav .stats {
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      gap: 14px;
+      margin-left: 6px;
+      padding-left: 12px;
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    #nav .stats b {
+      color: var(--fg);
+      font-weight: 600;
+    }
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 2px;
+      width: 0%;
+      z-index: 50;
+      background: linear-gradient(90deg, var(--accent), #fff);
+      box-shadow: 0 0 12px var(--accent);
+      transition: width .1s ease-out;
+    }
+
+    /* ---------- HERO ---------- */
+    #hero {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+      padding: 0 20px;
+    }
+    #hero .kicker {
+      font-size: 11px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+      animation: rise 1.2s .2s cubic-bezier(.2, .8, .2, 1) both;
+    }
+    #hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 400;
+      font-size: clamp(54px, 10vw, 160px);
+      line-height: .92;
+      letter-spacing: .02em;
+      background: linear-gradient(180deg, #fff 30%, rgba(255, 255, 255, .35));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    #hero h1 span {
+      display: inline-block;
+      animation: rise 1.4s cubic-bezier(.2, .8, .2, 1) both;
+    }
+    #hero p {
+      max-width: 580px;
+      margin-top: 18px;
+      color: var(--muted);
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 1.65;
+      animation: rise 1.2s .7s cubic-bezier(.2, .8, .2, 1) both;
+    }
+
+    /* ---------- HERO DIRECT INPUT FORM ---------- */
+    .hero-record-bar {
+      pointer-events: auto;
+      margin-top: 28px;
+      width: 100%;
+      max-width: 620px;
+      background: rgba(13, 16, 26, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 12px;
+      padding: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.6), 0 0 24px rgba(242, 179, 76, 0.1);
+      animation: rise 1.2s .9s cubic-bezier(.2, .8, .2, 1) both;
+      transition: border-color .25s, box-shadow .25s;
+    }
+    .hero-record-bar:focus-within {
+      border-color: var(--accent);
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), 0 0 32px rgba(242, 179, 76, 0.25);
+    }
+    .hero-record-bar.error-shake {
+      animation: shake 0.45s ease-in-out !important;
+      border-color: #ff5252 !important;
+      box-shadow: 0 0 28px rgba(255, 82, 82, 0.4) !important;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .hero-input-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      position: relative;
+    }
+    .hero-input-wrap {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+    }
+    .hero-name-input {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 12px 16px;
+      padding-right: 36px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: all .2s;
+    }
+    .hero-name-input::placeholder {
+      color: rgba(255, 255, 255, 0.35);
+    }
+    .hero-name-input:focus {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .hero-input-spinner {
+      position: absolute;
+      right: 12px;
+      width: 16px;
+      height: 16px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      display: none;
+      pointer-events: none;
+    }
+
+    /* Autocomplete Suggestions Dropdown */
+    .hero-suggestions-dropdown {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: #0b0e17;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 10px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 24px rgba(242, 179, 76, 0.15);
+      z-index: 50;
+      max-height: 290px;
+      overflow-y: auto;
+      display: none;
+      backdrop-filter: blur(20px);
+    }
+    .hero-suggestions-dropdown.active {
+      display: block;
+    }
+    .hero-suggestions-header {
+      padding: 8px 14px;
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .suggestion-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: background .15s;
+    }
+    .suggestion-item:last-child {
+      border-bottom: none;
+    }
+    .suggestion-item:hover, .suggestion-item.selected {
+      background: rgba(255, 255, 255, 0.08);
+    }
+    .suggestion-poster {
+      width: 38px;
+      height: 56px;
+      object-fit: cover;
+      border-radius: 4px;
+      background: #181c28;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      flex-shrink: 0;
+    }
+    .suggestion-info {
+      flex: 1;
+      min-width: 0;
+      text-align: left;
+    }
+    .suggestion-title {
+      font-weight: 600;
+      font-size: 13px;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .suggestion-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .suggestion-badge {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 1px 5px;
+      border-radius: 3px;
+      background: rgba(242, 179, 76, 0.2);
+      color: var(--accent);
+      border: 1px solid rgba(242, 179, 76, 0.35);
+    }
+    .suggestion-empty {
+      padding: 18px 14px;
+      text-align: center;
+      color: #ff8e8e;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    /* Verified selected badge */
+    .hero-selected-tag {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      background: rgba(30, 48, 38, 0.85);
+      border: 1px solid rgba(78, 203, 113, 0.45);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: #8ce6a3;
+      margin-top: 2px;
+      animation: rise 0.3s ease;
+    }
+    .hero-selected-tag.show {
+      display: flex;
+    }
+    .hero-feedback-msg {
+      display: none;
+      font-size: 11px;
+      color: #ff6b6b;
+      text-align: left;
+      padding: 2px 6px;
+      gap: 6px;
+      align-items: center;
+    }
+    .hero-feedback-msg.show {
+      display: flex;
+    }
+
+    .hero-rating-box {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 0 12px;
+      height: 44px;
+    }
+    .hero-rating-box span {
+      color: var(--accent);
+      font-size: 14px;
+    }
+    .hero-rating-input {
+      width: 52px;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      outline: none;
+    }
+    .hero-rating-max {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .hero-submit-btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      padding: 0 20px;
+      height: 44px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+      transition: all .2s;
+    }
+    .hero-submit-btn:hover {
+      background: #ffc466;
+      box-shadow: 0 0 20px rgba(242, 179, 76, 0.5);
+      transform: translateY(-1px);
+    }
+    .hero-slider-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 2px 8px 4px 8px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .hero-slider-row input[type="range"] {
+      flex: 1;
+      accent-color: var(--accent);
+      cursor: pointer;
+      height: 4px;
+    }
+
+    #hero .hint {
+      position: absolute;
+      bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      font-size: 10px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--muted);
+      animation: rise 1.2s 1.1s cubic-bezier(.2, .8, .2, 1) both;
+    }
+    #hero .hint .line {
+      width: 1px;
+      height: 46px;
+      background: rgba(255, 255, 255, .15);
+      position: relative;
+      overflow: hidden;
+    }
+    #hero .hint .line::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: -50%;
+      width: 100%;
+      height: 50%;
+      background: linear-gradient(to bottom, transparent, var(--accent));
+      animation: drop 1.8s ease-in-out infinite;
+    }
+    @keyframes drop {
+      0% { top: -50%; }
+      100% { top: 110%; }
+    }
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- INFO PANEL ---------- */
+    #info {
+      position: fixed;
+      left: 48px;
+      bottom: 48px;
+      z-index: 5;
+      max-width: 480px;
+      pointer-events: none;
+      transition: opacity .4s ease;
+    }
+    #info .kicker {
+      font-size: 11px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    #info .kicker .badge {
+      background: var(--accent);
+      color: #05060a;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 3px;
+      letter-spacing: .15em;
+    }
+    #info h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(38px, 6vw, 76px);
+      line-height: .92;
+      letter-spacing: .02em;
+      color: #fff;
+      text-shadow: 0 0 40px rgba(0, 0, 0, .8);
+    }
+    #info .meta {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 12px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 12px 0 14px;
+    }
+    #info .meta i {
+      width: 3px;
+      height: 3px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+    }
+    #info .rating {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    #info .rating .bar {
+      width: 120px;
+      height: 4px;
+      background: rgba(255, 255, 255, .15);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    #info .rating .bar span {
+      display: block;
+      height: 100%;
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      transition: width .6s cubic-bezier(.2, .8, .2, 1);
+    }
+    #info .rating b {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      color: #fff;
+      letter-spacing: .05em;
+    }
+    #info .rating small {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: .1em;
+    }
+    #info p {
+      font-size: 13px;
+      line-height: 1.6;
+      color: rgba(244, 244, 247, .75);
+      font-weight: 300;
+      border-left: 2px solid var(--accent);
+      padding-left: 14px;
+      margin-top: 6px;
+      max-height: 70px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+    #info .actions-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+    #info .a {
+      transition: opacity .4s ease, transform .4s ease;
+    }
+    #info.switch .a {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+
+    /* ---------- COUNTER & DOTS ---------- */
+    #counter {
+      position: fixed;
+      right: 48px;
+      bottom: 48px;
+      z-index: 5;
+      font-family: 'Bebas Neue', sans-serif;
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      pointer-events: none;
+      transition: opacity .4s ease;
+    }
+    #counter span {
+      font-size: clamp(64px, 11vw, 140px);
+      line-height: .85;
+      color: #fff;
+      text-shadow: 0 0 50px rgba(0, 0, 0, .9);
+    }
+    #counter small {
+      font-size: 18px;
+      color: var(--muted);
+      letter-spacing: .2em;
+    }
+    #dots {
+      position: fixed;
+      right: 48px;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      pointer-events: auto;
+      transition: opacity .4s ease;
+      max-height: 60vh;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    #dots::-webkit-scrollbar {
+      width: 3px;
+    }
+    #dots::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 2px;
+    }
+    #dots .d {
+      width: 4px;
+      height: 4px;
+      background: rgba(255, 255, 255, .25);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all .3s;
+      position: relative;
+    }
+    #dots .d:hover {
+      background: #fff;
+      transform: scale(2);
+    }
+    #dots .d.on {
+      background: var(--accent);
+      box-shadow: 0 0 10px var(--accent);
+      transform: scale(2.4);
+    }
+    #dots .d::after {
+      content: attr(data-t);
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #fff;
+      white-space: nowrap;
+      background: rgba(5, 6, 10, .9);
+      padding: 3px 8px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 255, 255, .1);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .2s;
+    }
+    #dots .d:hover::after {
+      opacity: 1;
+    }
+
+    /* ---------- END SECTION ---------- */
+    #end {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .5s ease, transform .5s ease;
+      padding: 0 20px;
+    }
+    #end .kicker {
+      font-size: 11px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    #end h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(48px, 10vw, 130px);
+      line-height: .9;
+      letter-spacing: .02em;
+      color: #fff;
+    }
+    #end .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px 48px;
+      margin-top: 36px;
+      max-width: 600px;
+    }
+    #end .grid div b {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 54px;
+      font-weight: 400;
+      line-height: 1;
+    }
+    #end .grid div small {
+      font-size: 10px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    #end button {
+      margin-top: 38px;
+      pointer-events: auto;
+      cursor: pointer;
+      background: transparent;
+      color: var(--fg);
+      border: 1px solid rgba(255, 255, 255, .25);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      padding: 14px 30px;
+      border-radius: 40px;
+      transition: all .4s;
+      position: relative;
+      overflow: hidden;
+    }
+    #end button:hover {
+      border-color: var(--accent);
+      color: #000;
+      background: var(--accent);
+      box-shadow: 0 0 30px rgba(242, 179, 76, .5);
+    }
+
+    /* ---------- LOADER ---------- */
+    #loader {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 18px;
+      transition: opacity .9s ease, visibility .9s;
+    }
+    #loader.hide {
+      opacity: 0;
+      visibility: hidden;
+    }
+    #loader .reel {
+      width: 54px;
+      height: 54px;
+      border-radius: 50%;
+      border: 2px dashed rgba(255, 255, 255, .4);
+      animation: spin 3s linear infinite;
+      position: relative;
+    }
+    #loader .reel::after {
+      content: '';
+      position: absolute;
+      inset: 16px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 20px var(--accent);
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    #loader span {
+      font-size: 10px;
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    #scroller {
+      position: relative;
+      z-index: -1;
+      width: 1px;
+      pointer-events: none;
+    }
+
+    /* ---------- BUTTONS & MODALS ---------- */
+    .nav-btn {
+      pointer-events: auto;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--fg);
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      cursor: pointer;
+      backdrop-filter: blur(8px);
+      transition: all .25s cubic-bezier(.2, .8, .2, 1);
+      white-space: nowrap;
+    }
+    .nav-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+      box-shadow: 0 0 20px rgba(242, 179, 76, .45);
+      transform: translateY(-1px);
+    }
+    .nav-btn.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+      font-weight: 700;
+      box-shadow: 0 0 14px rgba(242, 179, 76, 0.25);
+    }
+    .nav-btn.primary:hover {
+      background: #ffc466;
+      box-shadow: 0 0 22px rgba(242, 179, 76, .6);
+    }
+    .info-action-btn {
+      pointer-events: auto;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      color: var(--fg);
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all .2s;
+      white-space: nowrap;
+    }
+    .info-action-btn:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #000;
+    }
+    .info-action-btn.danger {
+      border-color: rgba(255, 80, 80, 0.35);
+      color: #ff9b9b;
+    }
+    .info-action-btn.danger:hover {
+      background: #e04545;
+      border-color: #e04545;
+      color: #fff;
+    }
+
+    /* DEVELOPER BADGE LINK */
+    .dev-badge-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: .04em;
+      color: rgba(255, 255, 255, 0.75);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 5px 10px;
+      border-radius: 16px;
+      text-decoration: none;
+      transition: all .2s;
+      white-space: nowrap;
+      pointer-events: auto;
+    }
+    .dev-badge-link:hover {
+      color: #fff;
+      border-color: #f43f5e;
+      background: rgba(244, 63, 94, 0.18);
+      transform: scale(1.02);
+    }
+    .dev-badge-link svg {
+      color: #f43f5e;
+    }
+
+    .developer-footer-credit {
+      margin-top: 48px;
+      padding-top: 24px;
+      border-top: 1px solid #d6cebf;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      color: #78716c;
+      letter-spacing: 0.05em;
+    }
+    .developer-footer-credit a {
+      color: #b91c1c;
+      text-decoration: none;
+      font-weight: 700;
+      transition: color .2s;
+    }
+    .developer-footer-credit a:hover {
+      color: #000;
+      text-decoration: underline;
+    }
+
+    /* STEPPER BUTTONS FOR HERO RATING */
+    .rating-stepper-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all .2s;
+      line-height: 1;
+    }
+    .rating-stepper-btn:hover {
+      background: var(--accent);
+      color: #000;
+    }
+
+    /* ---------- RESPONSIVE BREAKPOINTS (MOBILE & TABLET) ---------- */
+    @media (max-width: 900px) {
+      #nav { padding: 12px 18px; }
+      #nav .stats { display: none; }
+      .nav-btn-iconic span.btn-text { display: none; }
+      .nav-btn-iconic { padding: 6px 9px; }
+      .dev-badge-link span { display: none; }
+      .dev-badge-link { padding: 6px 8px; }
+    }
+
+    @media (max-width: 768px) {
+      #nav {
+        padding: 10px 14px;
+      }
+      #logo {
+        font-size: 20px;
+        letter-spacing: .16em;
+      }
+      #btnNavRecord {
+        padding: 6px 10px;
+        font-size: 10px;
+      }
+      .nav-cluster {
+        gap: 6px;
+      }
+      .auth-btn {
+        padding: 6px 9px;
+        font-size: 10px;
+      }
+      .auth-label {
+        display: none;
+      }
+      .user-name {
+        max-width: 65px;
+        font-size: 11px;
+      }
+      .sync-badge {
+        display: none;
+      }
+
+      /* HERO ON MOBILE */
+      #hero {
+        padding: 0 16px;
+        justify-content: center;
+      }
+      #hero h1 {
+        font-size: clamp(40px, 12vw, 80px);
+        margin-top: 4px;
+      }
+      #hero .kicker {
+        font-size: 9px;
+        letter-spacing: .22em;
+        margin-bottom: 6px;
+      }
+      #hero p {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-top: 8px;
+        max-width: 100%;
+      }
+      .hero-record-bar {
+        margin-top: 18px;
+        padding: 8px;
+      }
+      .hero-input-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .hero-input-wrap {
+        width: 100%;
+      }
+      .hero-rating-box {
+        height: 38px;
+        justify-content: center;
+      }
+      .hero-submit-btn {
+        width: 100%;
+        justify-content: center;
+        height: 42px;
+      }
+
+      /* CLEAN INFO OVERLAY - NO BLANK BOX ON MOBILE */
+      #info {
+        left: 20px;
+        right: 20px;
+        bottom: 24px;
+        max-width: calc(100vw - 40px);
+        background: transparent;
+        border: none;
+        padding: 0;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        box-shadow: none;
+        pointer-events: none;
+      }
+      #info .actions-row {
+        pointer-events: auto;
+        margin-top: 8px;
+        gap: 6px;
+      }
+      #info .info-action-btn {
+        padding: 6px 10px;
+        font-size: 10px;
+      }
+      #info p {
+        display: none; /* Keep poster visual clear and unblocked */
+      }
+      #info h2 {
+        font-size: clamp(32px, 8.5vw, 56px);
+      }
+      #info .meta {
+        font-size: 11px;
+        margin: 6px 0 10px;
+      }
+
+      /* COUNTER ON MOBILE */
+      #counter {
+        right: 20px;
+        bottom: 20px;
+        gap: 4px;
+      }
+      #counter span {
+        font-size: 64px;
+      }
+      #counter small {
+        font-size: 14px;
+      }
+      #dots {
+        display: none;
+      }
+
+      /* MODALS ON MOBILE */
+      .modal-backdrop {
+        padding: 0;
+        align-items: flex-end;
+      }
+      .modal-card {
+        max-height: 90vh;
+        border-radius: 20px 20px 0 0;
+        border-bottom: none;
+      }
+      .results-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* LEDGER SECTION ON MOBILE */
+      .ledger-inner {
+        padding: 36px 16px 80px;
+      }
+      .ledger-stat-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+      .ledger-stat-right {
+        margin-left: 0;
+        text-align: left;
+      }
+    }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(5, 6, 10, 0.88);
+      backdrop-filter: blur(14px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .35s cubic-bezier(.2, .8, .2, 1), visibility .35s;
+    }
+    .modal-backdrop.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-card {
+      background: #0d101a;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 780px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 24px 64px rgba(0, 0, 0, .8), 0 0 30px rgba(242, 179, 76, .12);
+      transform: translateY(20px) scale(0.98);
+      transition: transform .35s cubic-bezier(.2, .8, .2, 1);
+      overflow: hidden;
+    }
+    .modal-backdrop.active .modal-card {
+      transform: translateY(0) scale(1);
+    }
+    .modal-header {
+      padding: 20px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-header h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 26px;
+      letter-spacing: .08em;
+      color: #fff;
+    }
+    .modal-close {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 22px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all .2s;
+    }
+    .modal-close:hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+    }
+    .modal-body {
+      padding: 24px;
+      overflow-y: auto;
+      flex: 1;
+    }
+    .search-bar-wrap {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .search-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      padding: 12px 18px;
+      color: #fff;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .search-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 12px rgba(242, 179, 76, .25);
+    }
+    .search-btn {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      padding: 0 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: opacity .2s;
+    }
+    .search-btn:hover {
+      opacity: .9;
+    }
+    .results-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
+    }
+    .result-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      gap: 14px;
+      transition: all .2s;
+    }
+    .result-item:hover {
+      border-color: rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.06);
+    }
+    .result-poster {
+      width: 72px;
+      height: 106px;
+      border-radius: 4px;
+      object-fit: cover;
+      background: #171b26;
+      flex-shrink: 0;
+    }
+    .result-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+    }
+    .result-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20px;
+      letter-spacing: .04em;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .result-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .result-desc {
+      font-size: 12px;
+      color: rgba(244, 244, 247, 0.65);
+      line-height: 1.4;
+      margin-top: 6px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .result-add-btn {
+      margin-top: 8px;
+      align-self: flex-start;
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .result-add-btn:hover {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .toast-msg {
+      position: fixed;
+      top: 28px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: #101420;
+      border: 1px solid var(--accent);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 30px;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      z-index: 300;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .6), 0 0 15px rgba(242, 179, 76, .35);
+      opacity: 0;
+      visibility: hidden;
+      transition: all .3s cubic-bezier(.2, .8, .2, 1);
+      pointer-events: none;
+    }
+    .toast-msg.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* ---------- EDITORIAL RATINGS LEDGER & INDEX SECTION (CREAM PAPER ARCHIVE) ---------- */
+    .ledger-container {
+      position: relative;
+      z-index: 25;
+      width: 100%;
+      background: #eee8dc;
+      color: #1b1917;
+      font-family: 'Inter', sans-serif;
+      box-shadow: 0 -24px 60px rgba(0, 0, 0, 0.85);
+      border-top: 1px solid #d5cebf;
+      padding-top: 30px;
+    }
+    .ledger-inner {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 60px 24px 120px;
+    }
+    .ledger-top-jump-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 18px;
+      margin-bottom: 40px;
+      background: rgba(27, 25, 23, 0.05);
+      border: 1px solid #d8d0c2;
+      border-radius: 8px;
+    }
+    .ledger-kicker {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: #78716c;
+      margin-bottom: 22px;
+    }
+    .ledger-kicker-square {
+      width: 8px;
+      height: 8px;
+      background: #b8532f;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .ledger-main-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(38px, 6vw, 64px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -.02em;
+      color: #1b1917;
+      margin-bottom: 12px;
+    }
+    .ledger-rust {
+      color: #b8532f;
+    }
+    .ledger-subtitle {
+      font-family: 'Fraunces', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(16px, 2vw, 20px);
+      font-weight: 300;
+      line-height: 1.55;
+      color: #57534e;
+      margin-bottom: 42px;
+    }
+    .ledger-divider {
+      border: none;
+      border-top: 1px solid #d6cebf;
+      margin: 32px 0;
+    }
+    .ledger-stat-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0;
+      gap: 20px;
+    }
+    .ledger-stat-left {
+      display: flex;
+      align-items: baseline;
+      gap: 22px;
+    }
+    .ledger-stat-right {
+      display: flex;
+      align-items: baseline;
+      gap: 22px;
+      margin-left: auto;
+      text-align: right;
+    }
+    .ledger-stat-number {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(52px, 7vw, 82px);
+      font-weight: 800;
+      line-height: 0.88;
+      color: #1b1917;
+      letter-spacing: -.03em;
+    }
+    .ledger-stat-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .ledger-stat-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #78716c;
+    }
+    .ledger-stat-sub {
+      font-family: 'Fraunces', serif;
+      font-style: italic;
+      font-size: clamp(14px, 1.8vw, 17px);
+      color: #44403c;
+      letter-spacing: .02em;
+    }
+
+    /* GENRE TALLY BARS */
+    .ledger-tally-header {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: #78716c;
+      margin-bottom: 24px;
+    }
+    .genre-tally-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .genre-tally-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .genre-tally-name {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      color: #292524;
+      width: 120px;
+      flex-shrink: 0;
+    }
+    .genre-tally-track {
+      flex: 1;
+      height: 2px;
+      background: #dcd5c7;
+      position: relative;
+    }
+    .genre-tally-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: #1b1917;
+      transition: width .8s ease;
+    }
+    .genre-tally-fill.accent {
+      background: #b8532f;
+    }
+    .genre-tally-count {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: #78716c;
+      width: 40px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    /* THE INDEX TABLE */
+    .index-table {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+    }
+    .index-row {
+      display: flex;
+      align-items: center;
+      padding: 16px 8px;
+      border-bottom: 1px solid #dfd8cb;
+      cursor: pointer;
+      transition: background .2s, padding-left .2s;
+      gap: 16px;
+    }
+    .index-row:hover {
+      background: rgba(27, 25, 23, 0.04);
+      padding-left: 14px;
+    }
+    .index-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: #a8a29e;
+      width: 28px;
+      flex-shrink: 0;
+    }
+    .index-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(17px, 2.2vw, 21px);
+      font-weight: 600;
+      color: #1c1917;
+      flex: 1;
+      letter-spacing: -.01em;
+    }
+    .index-meta-pill {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      background: #e2dbcd;
+      color: #57534e;
+      border-radius: 3px;
+      margin-right: 6px;
+    }
+    .index-rating {
+      font-family: 'Fraunces', serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #1b1917;
+      letter-spacing: -.02em;
+      min-width: 44px;
+      text-align: right;
+    }
+
+    /* FLOATING POSTER PREVIEW */
+    #indexPosterPreview {
+      position: fixed;
+      z-index: 999;
+      width: 170px;
+      pointer-events: none;
+      background: #191c26;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 8px;
+      padding: 8px;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.65);
+      opacity: 0;
+      visibility: hidden;
+      transform: translate(16px, 16px) scale(0.96);
+      transition: opacity .18s ease, transform .18s ease, visibility .18s;
+    }
+    #indexPosterPreview.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translate(16px, 16px) scale(1);
+    }
+    #indexPosterPreview img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      border-radius: 5px;
+      display: block;
+      background: #0f1118;
+    }
+    #indexPosterPreview .preview-caption {
+      margin-top: 6px;
+      color: #fff;
+    }
+    #indexPosterPreview .preview-title {
+      font-family: 'Fraunces', serif;
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #indexPosterPreview .preview-score {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+    #indexPosterPreview .preview-sub {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-top: 2px;
+    }
+
+    .paper-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      padding: 7px 14px;
+      border: 1px solid #1b1917;
+      background: transparent;
+      color: #1b1917;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: all .2s;
+    }
+    .paper-btn:hover {
+      background: #1b1917;
+      color: #eee8dc;
+    }
+
+    /* GOOGLE AUTH & USER PROFILE */
+    .auth-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      cursor: pointer;
+      backdrop-filter: blur(12px);
+      transition: all .2s ease;
+    }
+    .auth-btn:hover {
+      background: rgba(255, 255, 255, 0.16);
+      border-color: rgba(255, 255, 255, 0.4);
+      transform: translateY(-1px);
+    }
+    .user-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 10px 4px 4px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      font-size: 12px;
+      color: #f4f4f7;
+    }
+    .user-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1.5px solid var(--accent);
+      background: #232733;
+    }
+    .user-name {
+      font-weight: 600;
+      max-width: 110px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .user-signout {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 11px;
+      padding: 2px 4px;
+      border-radius: 4px;
+      transition: color .15s;
+    }
+    .user-signout:hover {
+      color: #ff6b6b;
+    }
+    .sync-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #55df8c;
+      margin-left: 2px;
+    }
+    .sync-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #55df8c;
+      box-shadow: 0 0 6px rgba(85, 223, 140, 0.8);
+      animation: pulseDot 2.2s infinite ease-in-out;
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 0.4; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    /* SHARE MODAL STYLING */
+    .share-link-box {
+      display: flex;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 8px 12px;
+      align-items: center;
+      margin: 16px 0;
+    }
+    .share-link-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      outline: none;
+      user-select: all;
+    }
+    .share-options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .share-opt-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .share-opt-btn:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+    }
+  </style>
+</head>
+<body>
+  <div id="loader"><div class="reel"></div><span>Threading the reel</span></div>
+  <canvas id="scene"></canvas>
+  <div id="vignette"></div>
+  <div id="grain"></div>
+  <div id="progress"></div>
+
+  <!-- TOP NAV -->
+  <nav id="nav">
+    <div id="logo" title="Back to top"><i></i><span>CINEMA FILES</span></div>
+    
+    <div class="nav-cluster">
+      <!-- Developer Credit Instagram Pill -->
+      <a href="https://instagram.com/anurag_singh.indoliya" target="_blank" rel="noopener noreferrer" class="dev-badge-link" title="Developer Instagram: @anurag_singh.indoliya">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        <span>by @anurag_singh.indoliya</span>
+      </a>
+
+      <!-- Primary Action -->
+      <button id="btnNavRecord" class="nav-btn primary" title="Record title to archive">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>+ Record Title</span>
+      </button>
+
+      <!-- Segmented Tool Group -->
+      <div class="nav-tool-group">
+        <button id="btnOpenSearch" class="nav-btn-iconic" title="Search TV & Movies (TVMaze Live Search)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span class="btn-text">Search</span>
+        </button>
+        <button id="btnOpenLedger" class="nav-btn-iconic" title="Archival Ledger & Ratings Index">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          <span class="btn-text">The Ledger</span>
+        </button>
+        <button id="btnNavShare" class="nav-btn-iconic" title="Share your Watchlist Reel">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+          <span class="btn-text">Share</span>
+        </button>
+      </div>
+
+      <!-- Cloud Sync / Auth Cluster -->
+      <div id="authContainer" class="nav-auth-wrap">
+        <button id="btnGoogleSignIn" class="auth-btn">
+          <svg width="13" height="13" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.9C6.2 7.2 8.9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/><path fill="#FBBC05" d="M5.3 14.7c-.2-.7-.4-1.5-.4-2.7s.1-2 .4-2.7L1.6 6.4C.6 8.3 0 10.1 0 12s.6 3.7 1.6 5.6l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.2-6.7-5.3L1.6 16c1.9 3.8 5.8 7 10.4 7z"/></svg>
+          <span class="auth-label">Sign In</span>
+        </button>
+        <div id="userProfile" class="user-chip" style="display:none;">
+          <img id="userAvatarImg" class="user-avatar" src="" alt="User" />
+          <span id="userNameText" class="user-name"></span>
+          <span class="sync-badge"><span class="sync-dot"></span> Cloud</span>
+          <button id="btnSignOut" class="user-signout" title="Sign Out">Sign Out</button>
+        </div>
+      </div>
+
+      <div class="stats" id="navstats"></div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="kicker" id="heroKicker">CINEMA FILES • ARCHIVAL 3D REEL BY ANURAG SINGH INDOLIYA</div>
+    <h1 id="heroTitle">CINEMA FILES</h1>
+    <p id="heroDesc">Record every movie and TV series you've watched. Enter any title with your personal rating to preserve it in your 3D spiral cinema archive.</p>
+
+    <!-- DIRECT SINGLE-NAME INPUT & RATING FORM -->
+    <form id="heroRecordForm" class="hero-record-bar" onsubmit="event.preventDefault(); submitDirectRecord();">
+      <div class="hero-input-row">
+        <div class="hero-input-wrap">
+          <input
+            type="text"
+            id="heroNameInput"
+            class="hero-name-input"
+            placeholder="Type movie or series name (e.g. Inception, Breaking Bad)..."
+            required
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <div class="hero-input-spinner" id="heroInputSpinner"></div>
+
+          <!-- LIVE AUTOCOMPLETE DROPDOWN -->
+          <div class="hero-suggestions-dropdown" id="heroSuggestions">
+            <div class="hero-suggestions-header">
+              <span>Related Movies & Series</span>
+              <span style="font-size:9px; color:rgba(255,255,255,0.4);">Click to pick</span>
+            </div>
+            <div id="suggestionsList"></div>
+          </div>
+        </div>
+
+        <div class="hero-rating-box">
+          <span>★</span>
+          <input
+            type="number"
+            id="heroRatingInput"
+            class="hero-rating-input"
+            value="9.0"
+            min="0"
+            max="10"
+            step="0.1"
+            title="Your personal rating (0.0 - 10.0)"
+          />
+          <span class="hero-rating-max">/10</span>
+        </div>
+        <button type="submit" class="hero-submit-btn" id="heroSubmitBtn">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>Record to Cinema Files</span>
+        </button>
+      </div>
+
+      <!-- SELECTED VERIFIED TITLE PILL -->
+      <div id="heroSelectedTag" class="hero-selected-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"></polyline></svg>
+        <span id="heroSelectedText" style="font-weight:600; flex:1;">Verified Title</span>
+        <button type="button" id="heroClearSelectedBtn" style="background:transparent; border:none; color:#aaa; cursor:pointer; font-size:12px; padding:0 4px; line-height:1;" title="Clear selected title">✕</button>
+      </div>
+
+      <!-- FEEDBACK MESSAGE (WHEN NO RELATED TITLE FOUND) -->
+      <div id="heroFeedbackMsg" class="hero-feedback-msg">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+        <span id="heroFeedbackText">No related movie or series found. Please check spelling.</span>
+      </div>
+
+      <div class="hero-slider-row">
+        <button type="button" id="btnRatingMinus" class="rating-stepper-btn" title="Decrease rating">−</button>
+        <span style="font-size:11px; color:var(--muted);">Slide Rating:</span>
+        <input
+          type="range"
+          id="heroRatingSlider"
+          min="0"
+          max="10"
+          step="0.1"
+          value="9.0"
+        />
+        <button type="button" id="btnRatingPlus" class="rating-stepper-btn" title="Increase rating">+</button>
+        <span id="sliderValDisplay" style="font-weight:700; color:var(--accent); width:32px; text-align:right;">9.0</span>
+      </div>
+    </form>
+
+    <div class="hint" id="heroHint"><span>Scroll to explore archive</span><div class="line"></div></div>
+  </section>
+
+  <!-- ACTIVE ITEM INFO PANEL -->
+  <section id="info">
+    <div class="kicker a"><span class="badge" id="i-type">Movie</span><span id="i-idx">01 / 01</span></div>
+    <h2 class="a" id="i-title"> </h2>
+    <div class="meta a"><span id="i-year"></span><i></i><span id="i-genre"></span><i></i><span id="i-dur"></span></div>
+    <div class="rating a"><div class="bar"><span id="i-bar"></span></div><b id="i-score">0.0</b><small>/ 10 (My Rating)</small></div>
+    <p class="a" id="i-note"></p>
+    <div class="actions-row a">
+      <button id="btnTvmazeDetails" class="info-action-btn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        <span>Details & Synopsis</span>
+      </button>
+      <button id="btnEditRating" class="info-action-btn">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <span>Edit Rating</span>
+      </button>
+      <button id="btnShareCurrent" class="info-action-btn" style="border-color:rgba(255,255,255,0.22);">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+        <span>Share</span>
+      </button>
+      <button id="btnDeleteWatch" class="info-action-btn danger">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+        <span>Delete</span>
+      </button>
+    </div>
+  </section>
+
+  <div id="counter"><span id="c-num">01</span><small id="c-tot">/ 01</small></div>
+  <div id="dots"></div>
+
+  <!-- END SUMMARY SECTION -->
+  <section id="end">
+    <div class="kicker">Archive Complete</div>
+    <h2>THAT'S YOUR REEL.</h2>
+    <div class="grid" id="endgrid"></div>
+    <div style="display:flex; gap:14px; margin-top:36px; flex-wrap:wrap; justify-content:center;">
+      <button id="btnViewLedger" style="margin-top:0; background:#eee8dc; color:#1b1917; border-color:#eee8dc; font-weight:700; cursor:pointer;">The Ledger & Index ↓</button>
+      <button id="btnEndShare" style="margin-top:0; background:rgba(255,255,255,0.12); border-color:rgba(255,255,255,0.3); color:#fff; cursor:pointer;" class="nav-btn">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+        <span>Share Watchlist</span>
+      </button>
+      <button id="btnRecordAnother" style="margin-top:0;" class="nav-btn primary">+ Record Another</button>
+      <button id="rewind" style="margin-top:0;">Rewind to Top</button>
+    </div>
+  </section>
+
+  <div id="scroller"></div>
+
+  <!-- EDITORIAL PAPER RATINGS LEDGER & INDEX (REEL TWO & THREE) -->
+  <section id="ledgerSection" class="ledger-container">
+    <div class="ledger-inner">
+      
+      <!-- TOP JUMP BAR -->
+      <div class="ledger-top-jump-bar">
+        <div style="font-family:'Space Mono', monospace; font-size:11px; letter-spacing:0.18em; text-transform:uppercase; color:#78716c;">
+          ARCHIVAL LEDGER & RATINGS INDEX
+        </div>
+        <button id="btnJumpToReel" class="paper-btn">↑ Back to 3D Reel</button>
+      </div>
+
+      <!-- REEL TWO: END OF THE DARK -->
+      <div class="ledger-kicker">
+        <span class="ledger-kicker-square"></span>
+        <span>REEL TWO · END OF THE DARK</span>
+      </div>
+
+      <h2 class="ledger-main-title" id="ledgerHoursTitle">
+        <span class="ledger-rust" id="ledgerHoursNum">0</span> hours in the dark.
+      </h2>
+      <div class="ledger-subtitle">
+        Give or take a few double-features. You come out blinking, and somehow lighter.
+      </div>
+
+      <hr class="ledger-divider" />
+
+      <!-- METRIC 1: TITLES ON FILE -->
+      <div class="ledger-stat-row">
+        <div class="ledger-stat-left">
+          <div class="ledger-stat-number" id="ledgerTitlesCount">0</div>
+          <div class="ledger-stat-meta">
+            <span class="ledger-stat-label">Titles on file</span>
+            <span class="ledger-stat-sub" id="ledgerTitlesBreakdown">0 FILMS · 0 SERIES · ZERO REGRETS</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="ledger-divider" />
+
+      <!-- METRIC 2: MEAN RATING -->
+      <div class="ledger-stat-row">
+        <div class="ledger-stat-right">
+          <div class="ledger-stat-meta">
+            <span class="ledger-stat-label">Mean rating</span>
+            <span class="ledger-stat-sub" id="ledgerRatingQuip">a harsh crowd, apparently</span>
+          </div>
+          <div class="ledger-stat-number" id="ledgerMeanScore">0.0</div>
+        </div>
+      </div>
+
+      <hr class="ledger-divider" />
+
+      <!-- METRIC 3: YEARS SPANNED -->
+      <div class="ledger-stat-row">
+        <div class="ledger-stat-left">
+          <div class="ledger-stat-number" id="ledgerYearsSpan">0</div>
+          <div class="ledger-stat-meta">
+            <span class="ledger-stat-label">Years spanned</span>
+            <span class="ledger-stat-sub" id="ledgerYearsDetail">—, one reel at a time</span>
+          </div>
+        </div>
+      </div>
+
+      <hr class="ledger-divider" />
+
+      <!-- GENRE TALLY -->
+      <div class="ledger-tally-header">The ledger · genre tally</div>
+      <div id="ledgerGenreList" class="genre-tally-list">
+        <!-- Dynamically rendered -->
+      </div>
+
+      <hr class="ledger-divider" style="margin-top: 54px; margin-bottom: 54px;" />
+
+      <!-- REEL THREE: FULL CREDITS / THE INDEX -->
+      <div class="ledger-kicker">
+        <span class="ledger-kicker-square"></span>
+        <span>REEL THREE · FULL CREDITS</span>
+      </div>
+
+      <h2 class="ledger-main-title" style="font-size: clamp(34px, 5.5vw, 54px); margin-bottom: 8px;">The index.</h2>
+      <div class="ledger-subtitle" style="margin-bottom: 24px;">
+        Hover a row to preview its poster. Click to jump back into the reel.
+      </div>
+
+      <!-- SORT / FILTER BAR -->
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #d6cebf; flex-wrap:wrap; gap:12px;">
+        <span id="indexRankLabel" style="font-family:'Space Mono', monospace; font-size:11px; color:#78716c; text-transform:uppercase; letter-spacing:0.15em;">
+          Ranked by your personal rating (Highest → Lowest)
+        </span>
+        <div style="display:flex; gap:8px;">
+          <button id="btnSortRating" class="paper-btn" style="background:#1b1917; color:#eee8dc;">★ By Rating</button>
+          <button id="btnSortTitle" class="paper-btn">A–Z</button>
+          <button id="btnSortYear" class="paper-btn">Year</button>
+        </div>
+      </div>
+
+      <!-- THE INDEX TABLE ROWS (SORTED BY RATING) -->
+      <div id="indexList" class="index-table">
+        <!-- populated dynamically with sorted titles -->
+      </div>
+
+      <!-- ARCHIVAL FOOTER & DEVELOPER CREDIT -->
+      <div class="developer-footer-credit">
+        <div>CINEMA FILES ARCHIVE · CURATED & DEVELOPED BY <strong>ANURAG SINGH INDOLIYA</strong></div>
+        <div style="margin-top:6px;">
+          <a href="https://instagram.com/anurag_singh.indoliya" target="_blank" rel="noopener noreferrer" style="display:inline-flex; align-items:center; gap:5px; text-decoration:none;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            <span>Instagram: @anurag_singh.indoliya</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FLOATING POSTER PREVIEW TOOLTIP -->
+  <div id="indexPosterPreview">
+    <img id="prevImg" src="" alt="" />
+    <div class="preview-caption">
+      <div class="preview-title" id="prevTitle"></div>
+      <div class="preview-score" id="prevScore"></div>
+      <div class="preview-sub" id="prevSub"></div>
+    </div>
+  </div>
+
+  <!-- TVMaze Search & Add Modal -->
+  <div id="searchModal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div>
+          <span style="font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--accent);">TVMaze Live Search</span>
+          <h3 style="margin-top:2px;">SEARCH & ADD TO WATCHLIST</h3>
+        </div>
+        <button id="btnCloseSearch" class="modal-close">×</button>
+      </div>
+      <div class="modal-body">
+        <form id="searchForm" class="search-bar-wrap" onsubmit="event.preventDefault(); handleTvmazeSearch();">
+          <input type="text" id="searchInput" class="search-input" placeholder="Search any TV series or show (e.g. Fargo, Succession, Dexter)..." autofocus />
+          <button type="submit" class="search-btn">Search</button>
+        </form>
+        <div id="searchStatus" style="font-size:12px; color:var(--muted); margin-bottom:12px;"></div>
+        <div id="searchResults" class="results-grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TVMaze Detail Modal -->
+  <div id="detailModal" class="modal-backdrop">
+    <div class="modal-card" style="max-width:680px;">
+      <div class="modal-header">
+        <div>
+          <span id="detailBadge" style="font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--accent);">TVMaze Information</span>
+          <h3 id="detailTitle" style="margin-top:2px;">SHOW DETAILS</h3>
+        </div>
+        <button id="btnCloseDetail" class="modal-close">×</button>
+      </div>
+      <div class="modal-body" id="detailBody">
+        <!-- populated dynamically -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Rating Modal -->
+  <div id="editRatingModal" class="modal-backdrop">
+    <div class="modal-card" style="max-width:440px;">
+      <div class="modal-header">
+        <div>
+          <span style="font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--accent);">Update Watch Record</span>
+          <h3 style="margin-top:2px;" id="editModalTitle">EDIT RATING</h3>
+        </div>
+        <button id="btnCloseEdit" class="modal-close">×</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div>
+            <label style="font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:8px;">Your Rating (0.0 to 10.0)</label>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <input type="number" id="editRatingInput" min="0" max="10" step="0.1" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); border-radius:8px; padding:10px 14px; font-size:18px; font-weight:700; color:#fff; width:100px; text-align:center; outline:none;" />
+              <input type="range" id="editRatingSlider" min="0" max="10" step="0.1" style="flex:1; accent-color:var(--accent);" />
+            </div>
+          </div>
+          <div>
+            <label style="font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:8px;">Personal Thought / Note</label>
+            <textarea id="editNoteInput" rows="3" style="width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.18); border-radius:8px; padding:10px 14px; font-size:13px; color:#fff; font-family:'Inter',sans-serif; outline:none; resize:none;" placeholder="What did you think about this film or series?"></textarea>
+          </div>
+          <button id="btnSaveEdit" class="search-btn" style="height:44px; margin-top:8px;">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Share Watchlist Modal -->
+  <div id="shareModal" class="modal-backdrop">
+    <div class="modal-card" style="max-width:500px;">
+      <div class="modal-header">
+        <div>
+          <span style="font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--accent);">Share Your Archive</span>
+          <h3 style="margin-top:2px;" id="shareModalTitle">SHARE WATCHLIST</h3>
+        </div>
+        <button id="btnCloseShare" class="modal-close">×</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:12px;">
+          Share your 3D spiral reel and ratings ledger with friends. Anyone with the link can view your curated watchlist.
+        </p>
+        <div class="share-link-box">
+          <input type="text" id="shareLinkInput" class="share-link-input" readonly />
+          <button id="btnCopyShareLink" class="nav-btn primary" style="padding:6px 14px; font-size:11px;">Copy Link</button>
+        </div>
+        <div class="share-options-grid">
+          <button id="btnShareNative" class="share-opt-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"></path><polyline points="16 6 12 2 8 6"></polyline><line x1="12" y1="2" x2="12" y2="15"></line></svg>
+            <span>Device Share</span>
+          </button>
+          <button id="btnShareTwitter" class="share-opt-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            <span>Share to X</span>
+          </button>
+          <button id="btnShareWhatsApp" class="share-opt-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 2c-5.508 0-9.985 4.477-9.985 9.985 0 1.761.459 3.479 1.332 4.995L2 22.5l5.688-1.309a9.92 9.92 0 0 0 4.343 1.009c5.508 0 9.985-4.477 9.985-9.985C22.016 6.477 17.539 2 12.031 2zm0 18.271a8.27 8.27 0 0 1-4.223-1.152l-.303-.18-3.137.722.839-3.058-.197-.314a8.26 8.26 0 0 1-1.264-4.304c0-4.57 3.715-8.285 8.285-8.285 4.57 0 8.285 3.715 8.285 8.285 0 4.57-3.715 8.285-8.285 8.285z"/></svg>
+            <span>WhatsApp</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast-msg">Saved to Watchlist!</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/EffectComposer.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/RenderPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/ShaderPass.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/CopyShader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/shaders/LuminosityHighPassShader.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/postprocessing/UnrealBloomPass.js"></script>
+
+  <!-- FIREBASE SDK v10 (COMPAT) -->
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    /* ================= FIREBASE & STORAGE CONFIGURATION ================= */
+    const STORAGE_KEY = 'reelvault_watchlist_items_v2';
+    const FIREBASE_CONFIG = {
+      projectId: "gen-lang-client-0068639537",
+      appId: "1:1055797670766:web:4732c7efd763783cfcc77f",
+      apiKey: "AIzaSyAqw8NGPckoyYLpG2yFcOcoomUt13zhtiM",
+      authDomain: "gen-lang-client-0068639537.firebaseapp.com",
+      storageBucket: "gen-lang-client-0068639537.firebasestorage.app",
+      messagingSenderId: "1055797670766"
+    };
+
+    let currentUser = null;
+    let auth = null;
+    let db = null;
+    let isCloudSyncing = false;
+
+    // Initialize Firebase
+    try {
+      if (window.firebase) {
+        firebase.initializeApp(FIREBASE_CONFIG);
+        auth = firebase.auth();
+        db = firebase.firestore();
+      }
+    } catch (err) {
+      console.warn('Firebase init error:', err);
+    }
+
+    function loadLocalWatchlist() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) return parsed;
+        }
+      } catch (e) {
+        console.warn('Storage read error:', e);
+      }
+      return []; // NO DEMO DATA by default
+    }
+
+    function saveLocalWatchlist(items) {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+      } catch (e) {
+        console.warn('Storage save error:', e);
+      }
+    }
+
+    async function saveWatchlist(items) {
+      saveLocalWatchlist(items);
+      if (currentUser && db) {
+        try {
+          isCloudSyncing = true;
+          await db.collection('users').doc(currentUser.uid).set({
+            email: currentUser.email,
+            displayName: currentUser.displayName || '',
+            photoURL: currentUser.photoURL || '',
+            watchlist: items,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+          }, { merge: true });
+        } catch (err) {
+          console.error('Firestore save error:', err);
+        } finally {
+          isCloudSyncing = false;
+        }
+      }
+    }
+
+    function parseSharedWatchlistFromUrl() {
+      try {
+        const hash = window.location.hash;
+        if (hash && hash.startsWith('#share=')) {
+          const b64 = hash.slice(7);
+          const jsonStr = decodeURIComponent(escape(atob(b64)));
+          const shared = JSON.parse(jsonStr);
+          if (Array.isArray(shared) && shared.length > 0) {
+            return shared;
+          }
+        }
+      } catch (e) {
+        console.warn('Could not parse shared link data:', e);
+      }
+      return null;
+    }
+
+    const sharedFromUrl = parseSharedWatchlistFromUrl();
+    let ITEMS = sharedFromUrl || loadLocalWatchlist();
+    const UNIT = 0.7; // viewport heights per item
+    const R = 5.2, STEP_ANGLE = 0.58, STEP_Y = 1.18;
+
+    /* ================= HELPERS ================= */
+    const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+    const smooth = t => t * t * (3 - 2 * t);
+    const pad = n => String(n).padStart(2, '0');
+    function shade(hex, f) {
+      const c = new THREE.Color(hex || '#f2b34c');
+      c.multiplyScalar(f);
+      return c.getStyle();
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 3200);
+    }
+
+    function cleanHtml(html) {
+      if (!html) return '';
+      const div = document.createElement('div');
+      div.innerHTML = html;
+      return div.textContent || div.innerText || '';
+    }
+
+    function getGenreColor(genres) {
+      const map = {
+        'Drama': '#5aa9ff', 'Crime': '#6fd37a', 'Sci-Fi': '#f2b34c', 'Science-Fiction': '#f2b34c',
+        'Comedy': '#ffb1c1', 'Thriller': '#7fe3d8', 'Animation': '#c86bff', 'Action': '#ff8a3d',
+        'Mystery': '#a3b1ff', 'Horror': '#ff5c8a', 'Fantasy': '#7fd1ff', 'Romance': '#9ad0b0',
+        'Biography': '#ff7b4a', 'Adventure': '#ff6fb5', 'Historical': '#c9a86a'
+      };
+      if (genres && genres.length) {
+        for (const g of genres) {
+          if (map[g]) return map[g];
+        }
+      }
+      return '#f2b34c';
+    }
+
+    /* ================= THREE SCENE STATE ================= */
+    let scene, camera, renderer, composer, clock, keyLight, rimLight, particles;
+    let cards = [], posterMeshes = [], helixRailMeshes = [], perfPoints = null;
+    let targetP = -1, curP = -1, prevP = -1, vel = 0;
+    const pointer = new THREE.Vector2(-10, -10);
+    const mouse = { x: 0, y: 0, tx: 0, ty: 0 };
+    let hovered = -1, currentIdx = -1, started = false;
+    const raycaster = new THREE.Raycaster();
+
+    const HERO = { pos: new THREE.Vector3(-1.8, 8.8, -4.6), tgt: new THREE.Vector3(1.2, -2.4, 1.2) };
+    const A = { pos: new THREE.Vector3(), tgt: new THREE.Vector3() };
+    const camPos = new THREE.Vector3(), camTgt = new THREE.Vector3();
+
+    function getCam(p, out) {
+      const a = p * STEP_ANGLE, y = -p * STEP_Y;
+      out.pos.set(Math.cos(a) * -1.5, y + 0.08, Math.sin(a) * -1.5);
+      out.tgt.set(Math.cos(a) * R, y, Math.sin(a) * R);
+    }
+
+    /* ---------- poster texture generation ---------- */
+    function wrapText(ctx, text, maxW) {
+      const words = text.split(' '), lines = [];
+      let line = '';
+      words.forEach(w => {
+        const test = line ? line + ' ' + w : w;
+        if (ctx.measureText(test).width > maxW && line) {
+          lines.push(line);
+          line = w;
+        } else {
+          line = test;
+        }
+      });
+      if (line) lines.push(line);
+      return lines;
+    }
+
+    function makePoster(item, i) {
+      const W = 768, H = 1152, c = document.createElement('canvas');
+      c.width = W; c.height = H;
+      const x = c.getContext('2d');
+      x.imageSmoothingEnabled = true;
+      x.imageSmoothingQuality = 'high';
+
+      const tex = new THREE.CanvasTexture(c);
+      if (renderer) tex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+      tex.minFilter = THREE.LinearMipmapLinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      tex.generateMipmaps = true;
+
+      function render(loadedImg) {
+        x.clearRect(0, 0, W, H);
+
+        if (loadedImg && loadedImg.complete && (loadedImg.naturalWidth > 0 || loadedImg.width > 0)) {
+          const nw = loadedImg.naturalWidth || loadedImg.width;
+          const nh = loadedImg.naturalHeight || loadedImg.height;
+
+          // Object-fit cover with centered anchor to keep movie poster artwork clear & sharp
+          const imgAspect = nw / nh;
+          const targetAspect = W / H;
+          let sx = 0, sy = 0, sw = nw, sh = nh;
+          if (imgAspect > targetAspect) {
+            sw = sh * targetAspect;
+            sx = (nw - sw) / 2;
+          } else {
+            sh = sw / targetAspect;
+            sy = (nh - sh) / 2;
+          }
+
+          x.drawImage(loadedImg, sx, sy, sw, sh, 0, 0, W, H);
+
+          // Subtle top gradient for type badge readability
+          const topGrad = x.createLinearGradient(0, 0, 0, H * 0.14);
+          topGrad.addColorStop(0, 'rgba(0, 0, 0, 0.60)');
+          topGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+          x.fillStyle = topGrad;
+          x.fillRect(0, 0, W, H * 0.14);
+
+          // Clean bottom gradient behind title & ratings
+          const bottomGrad = x.createLinearGradient(0, H * 0.62, 0, H);
+          bottomGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+          bottomGrad.addColorStop(0.35, 'rgba(0, 0, 0, 0.40)');
+          bottomGrad.addColorStop(0.75, 'rgba(0, 0, 0, 0.85)');
+          bottomGrad.addColorStop(1, 'rgba(0, 0, 0, 0.96)');
+          x.fillStyle = bottomGrad;
+          x.fillRect(0, H * 0.62, W, H * 0.38);
+        } else {
+          // Cinematic procedural artwork fallback
+          const g = x.createLinearGradient(0, 0, 0, H);
+          g.addColorStop(0, shade(item.c, .85));
+          g.addColorStop(.45, '#121622');
+          g.addColorStop(1, '#06070a');
+          x.fillStyle = g;
+          x.fillRect(0, 0, W, H);
+
+          x.save();
+          x.globalAlpha = .35;
+          x.strokeStyle = item.c || '#f2b34c';
+          x.fillStyle = item.c || '#f2b34c';
+          x.lineWidth = 3;
+          for (let k = 0; k < 10; k++) {
+            x.beginPath();
+            x.arc(W * .72, H * .3, 36 + k * 48, 0, Math.PI * 2);
+            x.stroke();
+          }
+          x.restore();
+        }
+
+        // Crisp frame border accent
+        x.strokeStyle = item.c || '#f2b34c';
+        x.globalAlpha = .75;
+        x.lineWidth = 3;
+        x.strokeRect(18, 18, W - 36, H - 36);
+        x.globalAlpha = 1;
+
+        // Watermark Index Number
+        x.font = '400 300px "Bebas Neue"';
+        x.fillStyle = 'rgba(255,255,255,.07)';
+        x.fillText(pad(i + 1), 32, H * .58);
+
+        // Type Badge
+        x.fillStyle = item.c || '#f2b34c';
+        const badgeLabel = (item.k || 'WATCHED').toUpperCase().split('').join(' ');
+        const badgeW = (item.k || 'WATCHED').length * 15 + 36;
+        x.fillRect(44, 44, badgeW, 34);
+        x.fillStyle = '#07080c';
+        x.font = '700 14px Inter';
+        x.fillText(badgeLabel, 60, 67);
+
+        // Personal Rating display (Top Right)
+        x.save();
+        x.shadowColor = 'rgba(0,0,0,0.9)';
+        x.shadowBlur = 10;
+        x.textAlign = 'right';
+        x.fillStyle = '#ffffff';
+        x.font = '400 84px "Bebas Neue"';
+        x.fillText(Number(item.r || 0).toFixed(1), W - 44, 114);
+        x.font = '600 12px Inter';
+        x.fillStyle = 'rgba(255,255,255,.9)';
+        x.fillText('M Y   R A T I N G', W - 44, 138);
+        x.restore();
+
+        // Title at bottom with high contrast shadow
+        x.save();
+        x.shadowColor = 'rgba(0,0,0,0.95)';
+        x.shadowBlur = 14;
+        x.textAlign = 'left';
+        x.fillStyle = '#ffffff';
+        let fs = 96;
+        x.font = `400 ${fs}px "Bebas Neue"`;
+        let lines = wrapText(x, (item.t || '').toUpperCase(), W - 90);
+        if (lines.length > 3) {
+          fs = 74;
+          x.font = `400 ${fs}px "Bebas Neue"`;
+          lines = wrapText(x, (item.t || '').toUpperCase(), W - 90);
+        }
+        const lh = fs * .94;
+        let ty = H - 180 - (lines.length - 1) * lh;
+        lines.forEach(l => {
+          x.fillText(l, 44, ty);
+          ty += lh;
+        });
+        x.restore();
+
+        // Accent divider line
+        x.fillStyle = item.c || '#f2b34c';
+        x.fillRect(44, H - 150, 72, 4);
+
+        // Metadata line
+        x.font = '600 19px Inter';
+        x.fillStyle = 'rgba(255,255,255,.92)';
+        const yr = item.y ? `${item.y}   •   ` : '';
+        const gn = item.g ? `${item.g.toUpperCase()}   •   ` : '';
+        const dr = item.d || 'Watched';
+        x.fillText(`${yr}${gn}${dr}`, 44, H - 110);
+
+        // Stars
+        const stars = Math.min(5, Math.max(1, Math.round((item.r || 0) / 2)));
+        for (let s = 0; s < 5; s++) {
+          x.fillStyle = s < stars ? (item.c || '#f2b34c') : 'rgba(255,255,255,.25)';
+          x.beginPath();
+          const cx = 54 + s * 28, cy = H - 68;
+          for (let k = 0; k < 10; k++) {
+            const rr = k % 2 ? 4.5 : 9.8, an = k * Math.PI / 5 - Math.PI / 2;
+            x.lineTo(cx + Math.cos(an) * rr, cy + Math.sin(an) * rr);
+          }
+          x.closePath();
+          x.fill();
+        }
+
+        tex.needsUpdate = true;
+      }
+
+      render(null);
+
+      function loadCover(url) {
+        if (!url) return;
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => render(img);
+        img.onerror = () => {
+          // If custom cover fails, search TVMaze & iTunes fallback
+          fetchMediaCoverArt(item.t, (newUrl) => {
+            if (newUrl && newUrl !== url) {
+              const retry = new Image();
+              retry.crossOrigin = 'anonymous';
+              retry.onload = () => render(retry);
+              retry.src = newUrl;
+            }
+          });
+        };
+        img.src = url;
+      }
+
+      if (item.p) {
+        loadCover(item.p);
+      } else {
+        fetchMediaCoverArt(item.t, (url) => {
+          if (url) {
+            item.p = url;
+            saveWatchlist(ITEMS);
+            loadCover(url);
+          }
+        });
+      }
+
+      return tex;
+    }
+
+    async function fetchMediaCoverArt(query, callback) {
+      // 1. Try TVMaze
+      try {
+        const res = await fetch(`https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(query)}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.image) {
+            const imgUrl = data.image.original || data.image.medium;
+            if (imgUrl) {
+              callback(imgUrl);
+              return;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('TVMaze lookup error:', e);
+      }
+
+      // 2. Try iTunes Search API for movies
+      try {
+        const itunesRes = await fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=movie&limit=1`);
+        if (itunesRes.ok) {
+          const itunesData = await itunesRes.json();
+          if (itunesData.results && itunesData.results.length > 0 && itunesData.results[0].artworkUrl100) {
+            const highRes = itunesData.results[0].artworkUrl100.replace('100x100bb', '600x600bb');
+            callback(highRes);
+          }
+        }
+      } catch (e) {
+        console.warn('iTunes lookup error:', e);
+      }
+    }
+
+    function makeGlow() {
+      const c = document.createElement('canvas');
+      c.width = c.height = 256;
+      const x = c.getContext('2d');
+      const g = x.createRadialGradient(128, 128, 10, 128, 128, 128);
+      g.addColorStop(0, 'rgba(255,255,255,1)');
+      g.addColorStop(.35, 'rgba(255,255,255,.35)');
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      x.fillStyle = g;
+      x.fillRect(0, 0, 256, 256);
+      return new THREE.CanvasTexture(c);
+    }
+
+    /* ================= DYNAMIC 3D SCENE REBUILD ================= */
+    function rebuildScene() {
+      if (!scene) return;
+
+      // Clean up previous cards
+      cards.forEach(c => {
+        scene.remove(c.group);
+        if (c.ring) scene.remove(c.ring);
+        if (c.poster && c.poster.geometry) c.poster.geometry.dispose();
+        if (c.poster && c.poster.material) c.poster.material.dispose();
+        if (c.frame && c.frame.material) c.frame.material.dispose();
+        if (c.glow && c.glow.material) c.glow.material.dispose();
+      });
+      cards.length = 0;
+      posterMeshes.length = 0;
+
+      // Clean up previous rails
+      helixRailMeshes.forEach(m => {
+        scene.remove(m);
+        if (m.geometry) m.geometry.dispose();
+        if (m.material) m.material.dispose();
+      });
+      helixRailMeshes.length = 0;
+
+      if (perfPoints) {
+        scene.remove(perfPoints);
+        if (perfPoints.geometry) perfPoints.geometry.dispose();
+        if (perfPoints.material) perfPoints.material.dispose();
+        perfPoints = null;
+      }
+
+      const total = ITEMS.length;
+      const glowTex = makeGlow();
+      const posterGeo = new THREE.PlaneGeometry(1.85, 2.78);
+      const frameGeo = new THREE.PlaneGeometry(1.97, 2.90);
+      const glowGeo = new THREE.PlaneGeometry(3.6, 4.8);
+      const ringGeo = new THREE.TorusGeometry(R + 1.25, .007, 4, 140);
+
+      ITEMS.forEach((item, i) => {
+        const a = i * STEP_ANGLE, y = -i * STEP_Y;
+        const group = new THREE.Group();
+        const base = new THREE.Vector3(Math.cos(a) * R, y, Math.sin(a) * R);
+        group.position.copy(base);
+        group.lookAt(0, y, 0);
+
+        const pivot = new THREE.Group();
+        group.add(pivot);
+
+        const tex = makePoster(item, i);
+        const poster = new THREE.Mesh(
+          posterGeo,
+          new THREE.MeshBasicMaterial({
+            map: tex,
+            toneMapped: true
+          })
+        );
+        poster.userData.i = i;
+        pivot.add(poster);
+        posterMeshes.push(poster);
+
+        const frame = new THREE.Mesh(
+          frameGeo,
+          new THREE.MeshBasicMaterial({ color: item.c || '#f2b34c', transparent: true, opacity: .35 })
+        );
+        frame.position.z = -.02;
+        pivot.add(frame);
+
+        const glow = new THREE.Mesh(
+          glowGeo,
+          new THREE.MeshBasicMaterial({
+            map: glowTex,
+            color: item.c || '#f2b34c',
+            transparent: true,
+            opacity: .08,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+          })
+        );
+        glow.position.z = -.25;
+        pivot.add(glow);
+
+        const ring = new THREE.Mesh(
+          ringGeo,
+          new THREE.MeshBasicMaterial({ color: item.c || '#f2b34c', transparent: true, opacity: .22 })
+        );
+        ring.rotation.x = Math.PI / 2;
+        ring.position.y = y - 1.5;
+        scene.add(ring);
+
+        scene.add(group);
+
+        const inward = new THREE.Vector3(0, y, 0).sub(base).normalize();
+        cards.push({ group, pivot, poster, frame, glow, ring, base, inward, item });
+      });
+
+      // Helix rails
+      if (total > 0) {
+        [[-1.65, 0x7f8cff], [1.65, 0xff9e5a]].forEach(([dy, col]) => {
+          const pts = [];
+          for (let k = 0; k <= 420; k++) {
+            const p = -2 + (k / 420) * (total + 3);
+            const a = p * STEP_ANGLE;
+            pts.push(new THREE.Vector3(Math.cos(a) * (R + 0.95), -p * STEP_Y + dy, Math.sin(a) * (R + 0.95)));
+          }
+          const tube = new THREE.Mesh(
+            new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 520, .014, 6, false),
+            new THREE.MeshBasicMaterial({ color: col, transparent: true, opacity: .85 })
+          );
+          scene.add(tube);
+          helixRailMeshes.push(tube);
+        });
+
+        // Perforations
+        const perfGeo = new THREE.BufferGeometry();
+        const perf = [];
+        for (let k = 0; k < total * 14; k++) {
+          const p = -1.5 + k / 14;
+          const a = p * STEP_ANGLE;
+          perf.push(Math.cos(a) * (R + 0.95), -p * STEP_Y - 1.55, Math.sin(a) * (R + 0.95));
+          perf.push(Math.cos(a) * (R + 0.95), -p * STEP_Y + 1.55, Math.sin(a) * (R + 0.95));
+        }
+        perfGeo.setAttribute('position', new THREE.Float32BufferAttribute(perf, 3));
+        perfPoints = new THREE.Points(
+          perfGeo,
+          new THREE.PointsMaterial({ color: 0xffffff, size: .06, transparent: true, opacity: .7, sizeAttenuation: true })
+        );
+        scene.add(perfPoints);
+      }
+
+      // Rebuild Navigation Dots
+      const dots = document.getElementById('dots');
+      dots.innerHTML = '';
+      ITEMS.forEach((it, i) => {
+        const d = document.createElement('div');
+        d.className = 'd';
+        d.dataset.t = it.t;
+        d.onclick = () => goTo(i);
+        dots.appendChild(d);
+      });
+
+      // Update Scroller height
+      document.getElementById('scroller').style.height = ((UNIT * (total + 1) + 1) * 100) + 'vh';
+
+      refreshStats();
+      updateUIState();
+    }
+
+    function refreshStats() {
+      const total = ITEMS.length;
+      const films = ITEMS.filter(i => i.k === "Movie").length;
+      const series = total - films;
+      const hours = ITEMS.reduce((a, i) => a + (i.h || 2), 0);
+      const avg = total > 0 ? (ITEMS.reduce((a, i) => a + Number(i.r || 0), 0) / total).toFixed(1) : '0.0';
+      const gen = {};
+      ITEMS.forEach(i => { if (i.g) gen[i.g] = (gen[i.g] || 0) + 1; });
+      const topGenEntries = Object.entries(gen).sort((a, b) => b[1] - a[1]);
+      const top = topGenEntries.length > 0 ? topGenEntries[0][0] : 'None';
+
+      document.getElementById('navstats').innerHTML =
+        `<span><b>${total}</b> watched</span><span><b>${films}</b> films</span><span><b>${series}</b> series</span><span><b>${avg}</b> avg</span>`;
+
+      document.getElementById('endgrid').innerHTML =
+        `<div><b>${total}</b><small>Titles</small></div><div><b>${films}</b><small>Films</small></div><div><b>${series}</b><small>Series</small></div><div><b>${hours}h</b><small>Watched</small></div><div><b>${avg}</b><small>Avg rating</small></div><div><b>${top}</b><small>Top genre</small></div>`;
+
+      document.getElementById('c-tot').textContent = '/ ' + pad(total || 1);
+
+      // Hero description update based on count
+      const heroKicker = document.getElementById('heroKicker');
+      const heroDesc = document.getElementById('heroDesc');
+      const heroHint = document.getElementById('heroHint');
+
+      if (total === 0) {
+        heroKicker.textContent = 'A personal archive • No titles recorded yet';
+        heroDesc.textContent = 'Your watchlist is currently empty. Enter the name of any movie or series you’ve watched, set your personal rating, and click Record to start your 3D spiral reel.';
+        heroHint.style.display = 'none';
+      } else {
+        heroKicker.textContent = `A personal archive • ${total} title${total > 1 ? 's' : ''} recorded`;
+        heroDesc.textContent = `You have recorded ${total} title${total > 1 ? 's' : ''} in your 3D spiral reel. Scroll to fall through each memory or record another watched title directly above.`;
+        heroHint.style.display = 'flex';
+      }
+
+      // Render the Editorial Paper Ledger & Ratings Index
+      renderLedgerSection();
+    }
+
+    /* ================= EDITORIAL PAPER RATINGS LEDGER & INDEX ================= */
+    let currentSortMode = 'rating'; // 'rating' (default - ordered by rating given by user), 'title', 'year'
+
+    function renderLedgerSection() {
+      const total = ITEMS.length;
+      const hoursEl = document.getElementById('ledgerHoursNum');
+      const countEl = document.getElementById('ledgerTitlesCount');
+      const breakdownEl = document.getElementById('ledgerTitlesBreakdown');
+      const meanScoreEl = document.getElementById('ledgerMeanScore');
+      const ratingQuipEl = document.getElementById('ledgerRatingQuip');
+      const yearsSpanEl = document.getElementById('ledgerYearsSpan');
+      const yearsDetailEl = document.getElementById('ledgerYearsDetail');
+      const genreListEl = document.getElementById('ledgerGenreList');
+      const indexListEl = document.getElementById('indexList');
+      const indexRankLabel = document.getElementById('indexRankLabel');
+
+      if (!hoursEl || !genreListEl || !indexListEl) return;
+
+      // 1. Calculate Runtime / Hours
+      const totalHours = ITEMS.reduce((acc, it) => {
+        if (it.h) return acc + Number(it.h);
+        if (it.k === 'Series') return acc + 12; // default series run
+        return acc + 2; // default 2 hour movie
+      }, 0);
+
+      hoursEl.textContent = totalHours;
+
+      // 2. Titles Breakdown
+      const filmsCount = ITEMS.filter(i => i.k === 'Movie').length;
+      const seriesCount = total - filmsCount;
+      countEl.textContent = total;
+      breakdownEl.textContent = `${filmsCount} FILMS · ${seriesCount} SERIES · ZERO REGRETS`;
+
+      // 3. Mean Rating & Quip
+      const avg = total > 0 ? (ITEMS.reduce((a, i) => a + Number(i.r || 0), 0) / total) : 0;
+      meanScoreEl.textContent = avg > 0 ? avg.toFixed(1) : '0.0';
+
+      if (total === 0) {
+        ratingQuipEl.textContent = 'record titles above to compute';
+      } else if (avg >= 9.5) {
+        ratingQuipEl.textContent = 'pure masterpieces, undeniably';
+      } else if (avg >= 9.0) {
+        ratingQuipEl.textContent = 'a harsh crowd, apparently';
+      } else if (avg >= 8.0) {
+        ratingQuipEl.textContent = 'high standards, respected';
+      } else if (avg >= 7.0) {
+        ratingQuipEl.textContent = 'a balanced cinematic palate';
+      } else {
+        ratingQuipEl.textContent = 'tough critics across the board';
+      }
+
+      // 4. Years Spanned
+      const validYears = ITEMS.map(i => parseInt(i.y)).filter(y => !isNaN(y) && y > 1900);
+      if (validYears.length > 0) {
+        const minYear = Math.min(...validYears);
+        const maxYear = Math.max(...validYears);
+        const span = (maxYear - minYear) + 1;
+        yearsSpanEl.textContent = span;
+        yearsDetailEl.textContent = `${minYear} – ${maxYear}, one reel at a time`;
+      } else {
+        yearsSpanEl.textContent = '0';
+        yearsDetailEl.textContent = '—, one reel at a time';
+      }
+
+      // 5. Genre Tally (Proportional horizontal bars)
+      const genreCounts = {};
+      ITEMS.forEach(it => {
+        const glist = it.genres && it.genres.length ? it.genres : [it.g || 'Cinema'];
+        glist.forEach(g => {
+          if (!g) return;
+          const name = g.trim();
+          genreCounts[name] = (genreCounts[name] || 0) + 1;
+        });
+      });
+
+      const sortedGenres = Object.entries(genreCounts).sort((a, b) => b[1] - a[1]);
+      const maxGenreCount = sortedGenres.length > 0 ? Math.max(...sortedGenres.map(g => g[1])) : 1;
+
+      if (sortedGenres.length === 0) {
+        genreListEl.innerHTML = '<div style="font-family:\'Space Mono\', monospace; font-size:12px; color:#78716c; padding:12px 0;">No genres recorded yet in vault.</div>';
+      } else {
+        genreListEl.innerHTML = sortedGenres.map(([genre, count], idx) => {
+          const pct = Math.max(6, (count / maxGenreCount) * 100);
+          const isAccent = idx === 0;
+          return `
+            <div class="genre-tally-row">
+              <div class="genre-tally-name">${genre.toUpperCase()}</div>
+              <div class="genre-tally-track">
+                <div class="genre-tally-fill ${isAccent ? 'accent' : ''}" style="width: ${pct}%;"></div>
+              </div>
+              <div class="genre-tally-count">×${count}</div>
+            </div>
+          `;
+        }).join('');
+      }
+
+      // 6. The Index (Ranked List strictly by personal rating)
+      if (total === 0) {
+        indexListEl.innerHTML = `
+          <div style="padding:48px 12px; text-align:center; font-family:'Fraunces', serif; font-style:italic; font-size:19px; color:#78716c;">
+            No titles recorded in your reel yet. Record a movie or TV series above to populate the ledger index.
+          </div>
+        `;
+        return;
+      }
+
+      // Build sorted entries with reference to original array index for jump-to-reel
+      const indexedItems = ITEMS.map((item, originalIndex) => ({ item, originalIndex }));
+
+      if (currentSortMode === 'rating') {
+        indexedItems.sort((a, b) => (Number(b.item.r || 0) - Number(a.item.r || 0)) || a.item.t.localeCompare(b.item.t));
+        if (indexRankLabel) indexRankLabel.textContent = 'Ranked by your personal rating (Highest → Lowest)';
+      } else if (currentSortMode === 'title') {
+        indexedItems.sort((a, b) => a.item.t.localeCompare(b.item.t));
+        if (indexRankLabel) indexRankLabel.textContent = 'Ordered Alphabetically (A → Z)';
+      } else if (currentSortMode === 'year') {
+        indexedItems.sort((a, b) => (parseInt(b.item.y) || 0) - (parseInt(a.item.y) || 0));
+        if (indexRankLabel) indexRankLabel.textContent = 'Ordered by Release Year (Newest → Oldest)';
+      }
+
+      indexListEl.innerHTML = indexedItems.map(({ item, originalIndex }, rankIdx) => {
+        const numStr = pad(rankIdx + 1);
+        const score = Number(item.r || 0).toFixed(1);
+        const safeTitle = item.t.replace(/"/g, '&quot;');
+        return `
+          <div class="index-row" data-orig="${originalIndex}" data-title="${safeTitle}" data-poster="${item.p || ''}" data-score="${score}" data-sub="${item.y || ''} • ${item.k || 'Movie'} • ${item.g || 'Cinema'}">
+            <span class="index-num">${numStr}</span>
+            <span class="index-title">${item.t}</span>
+            <span class="index-meta-pill">${item.k || 'FILM'}</span>
+            <span class="index-meta-pill">${item.y || '—'}</span>
+            <span class="index-rating">${score}</span>
+          </div>
+        `;
+      }).join('');
+
+      // Attach row hover and click events
+      const rows = indexListEl.querySelectorAll('.index-row');
+      const previewEl = document.getElementById('indexPosterPreview');
+      const prevImg = document.getElementById('prevImg');
+      const prevTitle = document.getElementById('prevTitle');
+      const prevScore = document.getElementById('prevScore');
+      const prevSub = document.getElementById('prevSub');
+
+      rows.forEach(row => {
+        const origIdx = parseInt(row.dataset.orig, 10);
+        
+        row.onclick = () => {
+          if (!isNaN(origIdx) && origIdx >= 0 && origIdx < ITEMS.length) {
+            goTo(origIdx);
+          }
+        };
+
+        row.onmouseenter = (e) => {
+          const poster = row.dataset.poster;
+          const title = row.dataset.title;
+          const score = row.dataset.score;
+          const sub = row.dataset.sub;
+
+          if (poster) {
+            prevImg.src = poster;
+            prevImg.style.display = 'block';
+          } else {
+            prevImg.style.display = 'none';
+          }
+          prevTitle.textContent = title;
+          prevScore.textContent = `★ ${score} / 10 (Your Rating)`;
+          prevSub.textContent = sub;
+
+          previewEl.classList.add('show');
+          updatePreviewPos(e);
+        };
+
+        row.onmousemove = (e) => {
+          updatePreviewPos(e);
+        };
+
+        row.onmouseleave = () => {
+          previewEl.classList.remove('show');
+        };
+      });
+    }
+
+    function updatePreviewPos(e) {
+      const previewEl = document.getElementById('indexPosterPreview');
+      if (!previewEl) return;
+      const x = Math.min(e.clientX + 16, window.innerWidth - 190);
+      const y = Math.min(e.clientY - 40, window.innerHeight - 300);
+      previewEl.style.left = `${Math.max(10, x)}px`;
+      previewEl.style.top = `${Math.max(10, y)}px`;
+    }
+
+    function updateSortButtons() {
+      const btnRating = document.getElementById('btnSortRating');
+      const btnTitle = document.getElementById('btnSortTitle');
+      const btnYear = document.getElementById('btnSortYear');
+
+      if (!btnRating) return;
+
+      [btnRating, btnTitle, btnYear].forEach(btn => {
+        if (!btn) return;
+        btn.style.background = 'transparent';
+        btn.style.color = '#1b1917';
+      });
+
+      if (currentSortMode === 'rating' && btnRating) {
+        btnRating.style.background = '#1b1917';
+        btnRating.style.color = '#eee8dc';
+      } else if (currentSortMode === 'title' && btnTitle) {
+        btnTitle.style.background = '#1b1917';
+        btnTitle.style.color = '#eee8dc';
+      } else if (currentSortMode === 'year' && btnYear) {
+        btnYear.style.background = '#1b1917';
+        btnYear.style.color = '#eee8dc';
+      }
+    }
+
+    function updateUIState() {
+      const total = ITEMS.length;
+      if (total === 0) {
+        document.getElementById('info').style.opacity = '0';
+        document.getElementById('counter').style.opacity = '0';
+        document.getElementById('dots').style.opacity = '0';
+        document.getElementById('hero').style.opacity = '1';
+        document.getElementById('hero').style.transform = 'none';
+        document.getElementById('end').style.opacity = '0';
+        document.getElementById('end').style.pointerEvents = 'none';
+      }
+    }
+
+    /* ================= SINGLE NAME INPUT + RATING RECORDING WITH SUGGESTIONS & VALIDATION ================= */
+    let selectedMediaObj = null;
+    let searchDebounceTimer = null;
+    let activeSuggestionIndex = -1;
+    let currentSuggestions = [];
+
+    // Aggregated Movie & Series Search (TVMaze + iTunes Movies)
+    async function fetchRelatedMedia(query) {
+      const q = query.trim();
+      if (!q || q.length < 2) return [];
+
+      const results = [];
+      const seenTitles = new Set();
+
+      // Parallel fetch from TVMaze (Series) and iTunes (Movies)
+      const [tvmazeRes, itunesRes] = await Promise.allSettled([
+        fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(q)}`),
+        fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(q)}&entity=movie&limit=6`)
+      ]);
+
+      // Parse TVMaze results (Series, Mini-series, Specials)
+      if (tvmazeRes.status === 'fulfilled' && tvmazeRes.value.ok) {
+        try {
+          const tvList = await tvmazeRes.value.json();
+          if (Array.isArray(tvList)) {
+            tvList.slice(0, 5).forEach(({ show }) => {
+              if (!show || !show.name) return;
+              const titleKey = show.name.toLowerCase().trim();
+              if (seenTitles.has(titleKey)) return;
+              seenTitles.add(titleKey);
+
+              const year = show.premiered ? parseInt(show.premiered.slice(0, 4)) : 2024;
+              const genre = (show.genres && show.genres[0]) || 'Drama';
+              const color = getGenreColor(show.genres || []);
+              const poster = (show.image && (show.image.medium || show.image.original)) || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png';
+              const synopsis = cleanHtml(show.summary) || `Official TV series: ${show.name}`;
+
+              results.push({
+                t: show.name,
+                y: year,
+                k: 'Series',
+                g: genre,
+                genres: show.genres || [genre],
+                c: color,
+                d: show.averageRuntime ? `${show.averageRuntime}m/ep` : 'Series',
+                h: Math.max(2, Math.round((show.weight || 30) / 3)),
+                p: poster,
+                tvmazeId: show.id,
+                n: synopsis,
+                rating: (show.rating && show.rating.average) ? show.rating.average : 8.5
+              });
+            });
+          }
+        } catch (e) {
+          console.warn('TVMaze parse error:', e);
+        }
+      }
+
+      // Parse iTunes Movie results (Feature Films)
+      if (itunesRes.status === 'fulfilled' && itunesRes.value.ok) {
+        try {
+          const itunesData = await itunesRes.value.json();
+          if (itunesData && Array.isArray(itunesData.results)) {
+            itunesData.results.forEach(m => {
+              if (!m || !m.trackName) return;
+              const titleKey = m.trackName.toLowerCase().trim();
+              if (seenTitles.has(titleKey)) return;
+              seenTitles.add(titleKey);
+
+              const year = m.releaseDate ? parseInt(m.releaseDate.slice(0, 4)) : 2024;
+              const genre = m.primaryGenreName || 'Cinema';
+              const color = getGenreColor([genre]);
+              let poster = m.artworkUrl100 || '';
+              if (poster) poster = poster.replace('100x100bb', '600x600bb');
+              const synopsis = m.longDescription || m.shortDescription || `Feature Film: ${m.trackName}`;
+              const runtimeMins = m.trackTimeMillis ? Math.round(m.trackTimeMillis / 60000) : 120;
+
+              results.push({
+                t: m.trackName,
+                y: year,
+                k: 'Movie',
+                g: genre,
+                genres: [genre],
+                c: color,
+                d: `${runtimeMins} min`,
+                h: Math.max(2, Math.round(runtimeMins / 60)),
+                p: poster || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png',
+                tvmazeId: null,
+                n: synopsis,
+                rating: 8.5
+              });
+            });
+          }
+        } catch (e) {
+          console.warn('iTunes parse error:', e);
+        }
+      }
+
+      return results;
+    }
+
+    function renderSuggestions(list, query) {
+      const dropdown = document.getElementById('heroSuggestions');
+      const listContainer = document.getElementById('suggestionsList');
+      currentSuggestions = list;
+      activeSuggestionIndex = -1;
+
+      if (!query || query.trim().length < 2) {
+        dropdown.classList.remove('active');
+        listContainer.innerHTML = '';
+        return;
+      }
+
+      if (list.length === 0) {
+        listContainer.innerHTML = `
+          <div class="suggestion-empty">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+            <span>No related movie or series found for "${query}"</span>
+          </div>
+        `;
+        dropdown.classList.add('active');
+        return;
+      }
+
+      listContainer.innerHTML = list.map((item, idx) => `
+        <div class="suggestion-item" data-idx="${idx}">
+          <img src="${item.p}" class="suggestion-poster" alt="${item.t}" loading="lazy" />
+          <div class="suggestion-info">
+            <div class="suggestion-title">${item.t}</div>
+            <div class="suggestion-meta">
+              <span class="suggestion-badge">${item.k}</span>
+              <span>${item.y}</span>
+              <span>•</span>
+              <span>${item.g}</span>
+            </div>
+          </div>
+          <span style="font-size:11px; color:var(--accent); font-weight:600; padding:4px 8px; border:1px solid rgba(242,179,76,0.3); border-radius:4px;">Select</span>
+        </div>
+      `).join('');
+
+      // Add click listeners to items
+      listContainer.querySelectorAll('.suggestion-item').forEach(el => {
+        el.onclick = (e) => {
+          e.stopPropagation();
+          const idx = parseInt(el.getAttribute('data-idx'));
+          selectSuggestion(list[idx]);
+        };
+      });
+
+      dropdown.classList.add('active');
+    }
+
+    function selectSuggestion(item) {
+      selectedMediaObj = item;
+      const nameInput = document.getElementById('heroNameInput');
+      nameInput.value = item.t;
+
+      const dropdown = document.getElementById('heroSuggestions');
+      dropdown.classList.remove('active');
+
+      const tag = document.getElementById('heroSelectedTag');
+      const text = document.getElementById('heroSelectedText');
+      text.textContent = `Verified: ${item.t} (${item.y} • ${item.k} • ${item.g})`;
+      tag.classList.add('show');
+
+      // Clear any previous error
+      hideHeroError();
+    }
+
+    function clearSelectedSuggestion() {
+      selectedMediaObj = null;
+      document.getElementById('heroSelectedTag').classList.remove('show');
+    }
+
+    function showHeroError(msg) {
+      const form = document.getElementById('heroRecordForm');
+      const feedback = document.getElementById('heroFeedbackMsg');
+      const text = document.getElementById('heroFeedbackText');
+
+      text.textContent = msg;
+      feedback.classList.add('show');
+
+      form.classList.remove('error-shake');
+      void form.offsetWidth; // trigger reflow
+      form.classList.add('error-shake');
+
+      showToast(`Cannot add: No matching title found.`);
+    }
+
+    function hideHeroError() {
+      const feedback = document.getElementById('heroFeedbackMsg');
+      feedback.classList.remove('show');
+    }
+
+    async function submitDirectRecord() {
+      const nameInput = document.getElementById('heroNameInput');
+      const ratingInput = document.getElementById('heroRatingInput');
+      const submitBtn = document.getElementById('heroSubmitBtn');
+      const spinner = document.getElementById('heroInputSpinner');
+
+      const typedTitle = nameInput.value.trim();
+      if (!typedTitle) return;
+
+      const userRating = Math.min(10, Math.max(0, parseFloat(ratingInput.value) || 9.0));
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<span>Checking...</span>`;
+      spinner.style.display = 'block';
+
+      let mediaToAdd = null;
+
+      // 1. If user already selected a verified suggestion and title matches
+      if (selectedMediaObj && selectedMediaObj.t.toLowerCase() === typedTitle.toLowerCase()) {
+        mediaToAdd = selectedMediaObj;
+      } else {
+        // 2. Otherwise search live to verify if ANY related movie or series exists
+        try {
+          const matches = await fetchRelatedMedia(typedTitle);
+          if (matches && matches.length > 0) {
+            // Find closest match or take top match
+            const exact = matches.find(m => m.t.toLowerCase() === typedTitle.toLowerCase());
+            mediaToAdd = exact || matches[0];
+          }
+        } catch (err) {
+          console.error('Validation error:', err);
+        }
+      }
+
+      spinner.style.display = 'none';
+
+      // STRICT REQUIREMENT: If no related movie or series found, DO NOT ADD IT!
+      if (!mediaToAdd) {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = `
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>Record to Vault</span>
+        `;
+        showHeroError(`"${typedTitle}" does not match any known movie or series. Please check spelling or select from suggestions.`);
+        return;
+      }
+
+      // Valid verified title found: Proceed to add
+      hideHeroError();
+
+      const newItem = {
+        t: mediaToAdd.t,
+        y: mediaToAdd.y || 2024,
+        k: mediaToAdd.k || 'Movie',
+        g: mediaToAdd.g || 'Cinema',
+        r: userRating,
+        c: mediaToAdd.c || getGenreColor(mediaToAdd.genres || [mediaToAdd.g]),
+        d: mediaToAdd.d || 'Watched',
+        h: mediaToAdd.h || (mediaToAdd.k === 'Series' ? 12 : 2),
+        p: mediaToAdd.p,
+        tvmazeId: mediaToAdd.tvmazeId,
+        n: mediaToAdd.n || `Watched and rated ${userRating.toFixed(1)}/10 by you.`
+      };
+
+      ITEMS.push(newItem);
+      saveWatchlist(ITEMS);
+
+      // Rebuild 3D spiral
+      rebuildScene();
+
+      // Reset form & state
+      nameInput.value = '';
+      clearSelectedSuggestion();
+      document.getElementById('heroSuggestions').classList.remove('active');
+
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = `
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+        <span>Record to Vault</span>
+      `;
+
+      showToast(`Recorded "${newItem.t}" (${userRating.toFixed(1)}★)`);
+
+      // Smoothly navigate to newly recorded item
+      setTimeout(() => {
+        goTo(ITEMS.length - 1);
+      }, 250);
+    }
+
+    // Sync rating slider and input
+    const heroSlider = document.getElementById('heroRatingSlider');
+    const heroRatingIn = document.getElementById('heroRatingInput');
+    const sliderDisplay = document.getElementById('sliderValDisplay');
+
+    heroSlider.addEventListener('input', e => {
+      heroRatingIn.value = parseFloat(e.target.value).toFixed(1);
+      sliderDisplay.textContent = heroRatingIn.value;
+    });
+    heroRatingIn.addEventListener('input', e => {
+      const v = clamp(parseFloat(e.target.value) || 0, 0, 10);
+      heroSlider.value = v;
+      sliderDisplay.textContent = v.toFixed(1);
+    });
+
+    /* ================= EDIT RATING & DELETE ACTIONS ================= */
+    let editingIndex = -1;
+
+    function openEditRating() {
+      const idx = clamp(Math.round(curP), 0, ITEMS.length - 1);
+      if (idx < 0 || idx >= ITEMS.length) return;
+      editingIndex = idx;
+      const it = ITEMS[idx];
+
+      document.getElementById('editModalTitle').textContent = `EDIT: ${it.t.toUpperCase()}`;
+      document.getElementById('editRatingInput').value = Number(it.r || 0).toFixed(1);
+      document.getElementById('editRatingSlider').value = Number(it.r || 0);
+      document.getElementById('editNoteInput').value = it.n || '';
+
+      document.getElementById('editRatingModal').classList.add('active');
+    }
+
+    document.getElementById('editRatingSlider').addEventListener('input', e => {
+      document.getElementById('editRatingInput').value = parseFloat(e.target.value).toFixed(1);
+    });
+    document.getElementById('editRatingInput').addEventListener('input', e => {
+      const v = clamp(parseFloat(e.target.value) || 0, 0, 10);
+      document.getElementById('editRatingSlider').value = v;
+    });
+
+    document.getElementById('btnSaveEdit').onclick = () => {
+      if (editingIndex >= 0 && editingIndex < ITEMS.length) {
+        const newRating = clamp(parseFloat(document.getElementById('editRatingInput').value) || 0, 0, 10);
+        const newNote = document.getElementById('editNoteInput').value.trim();
+
+        ITEMS[editingIndex].r = newRating;
+        if (newNote) ITEMS[editingIndex].n = newNote;
+
+        saveWatchlist(ITEMS);
+        rebuildScene();
+        closeModals();
+        showToast(`Updated rating to ${newRating.toFixed(1)}★`);
+      }
+    };
+
+    function deleteCurrentItem() {
+      const idx = clamp(Math.round(curP), 0, ITEMS.length - 1);
+      if (idx < 0 || idx >= ITEMS.length) return;
+      const title = ITEMS[idx].t;
+
+      ITEMS.splice(idx, 1);
+      saveWatchlist(ITEMS);
+      rebuildScene();
+      showToast(`Removed "${title}" from watchlist.`);
+
+      if (ITEMS.length > 0) {
+        goTo(Math.min(idx, ITEMS.length - 1));
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    /* ================= TVMAZE SEARCH & MODAL HELPERS ================= */
+    async function handleTvmazeSearch() {
+      const q = document.getElementById('searchInput').value.trim();
+      const statusEl = document.getElementById('searchStatus');
+      const resultsEl = document.getElementById('searchResults');
+      if (!q) return;
+
+      statusEl.textContent = `Searching TVMaze for "${q}"...`;
+      resultsEl.innerHTML = '';
+
+      try {
+        const res = await fetch(`https://api.tvmaze.com/search/shows?q=${encodeURIComponent(q)}`);
+        const list = await res.json();
+        if (!list || list.length === 0) {
+          statusEl.textContent = `No TVMaze shows found for "${q}".`;
+          return;
+        }
+
+        statusEl.textContent = `Found ${list.length} show${list.length > 1 ? 's' : ''} on TVMaze:`;
+        list.forEach(({ show }) => {
+          const posterUrl = (show.image && (show.image.medium || show.image.original)) || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png';
+          const year = show.premiered ? show.premiered.slice(0, 4) : '—';
+          const defaultRating = (show.rating && show.rating.average) ? show.rating.average.toFixed(1) : '8.5';
+          const genre = (show.genres && show.genres.length) ? show.genres.join(', ') : 'Drama';
+          const network = (show.network && show.network.name) || (show.webChannel && show.webChannel.name) || 'TV';
+          const synopsis = cleanHtml(show.summary) || 'No summary provided by TVMaze.';
+
+          const card = document.createElement('div');
+          card.className = 'result-item';
+          card.innerHTML = `
+            <img src="${posterUrl}" class="result-poster" alt="${show.name}" loading="lazy" />
+            <div class="result-info">
+              <div>
+                <div class="result-title">${show.name}</div>
+                <div class="result-meta"><span>${year}</span> • <span>${network}</span> • <span>${genre}</span></div>
+                <div class="result-desc">${synopsis}</div>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; margin-top:8px;">
+                <label style="font-size:10px; color:var(--muted); text-transform:uppercase;">Rating:</label>
+                <input type="number" id="rate-${show.id}" value="${defaultRating}" min="0" max="10" step="0.1" style="width:48px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); border-radius:4px; color:#fff; font-size:11px; padding:3px; text-align:center;" />
+                <button class="result-add-btn" id="add-${show.id}">+ Add</button>
+                <button class="result-add-btn" style="border-color:rgba(255,255,255,0.25); color:#fff;" id="det-${show.id}">Details</button>
+              </div>
+            </div>
+          `;
+          resultsEl.appendChild(card);
+
+          card.querySelector(`#add-${show.id}`).onclick = () => {
+            const userRate = parseFloat(card.querySelector(`#rate-${show.id}`).value) || 8.5;
+            addShowToWatchlist(show, userRate);
+          };
+          card.querySelector(`#det-${show.id}`).onclick = () => openTvmazeDetails(show.id);
+        });
+      } catch (err) {
+        statusEl.textContent = 'Failed to connect to TVMaze API. Please check your connection.';
+        console.error(err);
+      }
+    }
+
+    function addShowToWatchlist(show, userRating) {
+      const genre = (show.genres && show.genres[0]) || 'Drama';
+      const color = getGenreColor(show.genres);
+      const year = show.premiered ? parseInt(show.premiered.slice(0, 4)) : 2024;
+      const dur = show.averageRuntime ? `${show.averageRuntime} min/ep` : 'Series';
+      const poster = (show.image && (show.image.original || show.image.medium)) || '';
+      const summary = cleanHtml(show.summary) || 'Added from TVMaze.';
+
+      const newItem = {
+        t: show.name,
+        y: year,
+        k: 'Series',
+        g: genre,
+        r: userRating,
+        c: color,
+        d: dur,
+        h: Math.max(2, Math.round((show.weight || 30) / 3)),
+        p: poster,
+        tvmazeId: show.id,
+        n: summary
+      };
+
+      ITEMS.push(newItem);
+      saveWatchlist(ITEMS);
+      rebuildScene();
+      closeModals();
+      showToast(`Added "${newItem.t}" to Watchlist!`);
+      setTimeout(() => goTo(ITEMS.length - 1), 300);
+    }
+
+    async function openTvmazeDetails(tvmazeIdOrCurrent) {
+      const modal = document.getElementById('detailModal');
+      const body = document.getElementById('detailBody');
+      const titleEl = document.getElementById('detailTitle');
+      const badgeEl = document.getElementById('detailBadge');
+
+      modal.classList.add('active');
+      body.innerHTML = '<div style="padding:40px; text-align:center; color:var(--muted); font-size:14px;">Fetching show overview & cast...</div>';
+
+      let showId = tvmazeIdOrCurrent;
+      let currentItem = null;
+
+      if (!showId || typeof showId !== 'number') {
+        const i = clamp(Math.round(curP), 0, ITEMS.length - 1);
+        if (i >= 0 && i < ITEMS.length) {
+          currentItem = ITEMS[i];
+          showId = currentItem.tvmazeId;
+        }
+      }
+
+      try {
+        let showData = null;
+        if (showId) {
+          const res = await fetch(`https://api.tvmaze.com/shows/${showId}?embed[]=cast`);
+          showData = await res.json();
+        } else if (currentItem) {
+          const res = await fetch(`https://api.tvmaze.com/singlesearch/shows?q=${encodeURIComponent(currentItem.t)}&embed[]=cast`);
+          if (res.ok) showData = await res.json();
+        }
+
+        if (!showData) {
+          const it = currentItem || (ITEMS.length > 0 ? ITEMS[clamp(Math.round(curP), 0, ITEMS.length - 1)] : null);
+          if (!it) {
+            body.innerHTML = '<div style="padding:30px; text-align:center;">No title selected.</div>';
+            return;
+          }
+          titleEl.textContent = it.t.toUpperCase();
+          badgeEl.textContent = `${it.k} • Watchlist Record`;
+          body.innerHTML = `
+            <div style="display:flex; gap:22px; flex-wrap:wrap;">
+              <img src="${it.p || ''}" style="width:140px; height:210px; border-radius:8px; object-fit:cover; border:1px solid rgba(255,255,255,0.15); background:#151822;" alt="${it.t}" />
+              <div style="flex:1; min-width:260px;">
+                <div style="font-size:13px; color:var(--muted); margin-bottom:8px;">
+                  <b>${it.y || '—'}</b> • <b>${it.g || 'Watched'}</b> • <b>${it.d || ''}</b> • ⭐ <b>${Number(it.r).toFixed(1)} / 10</b>
+                </div>
+                <p style="font-size:14px; line-height:1.6; color:#f4f4f7;">${it.n || 'No extra note entered.'}</p>
+              </div>
+            </div>
+          `;
+          return;
+        }
+
+        titleEl.textContent = showData.name.toUpperCase();
+        badgeEl.textContent = `TVMaze Show ID: ${showData.id} • ${showData.type || 'Series'}`;
+
+        const posterImg = (showData.image && (showData.image.original || showData.image.medium)) || '';
+        const genres = (showData.genres && showData.genres.join(', ')) || 'Drama';
+        const rating = (showData.rating && showData.rating.average) ? `${showData.rating.average} / 10` : 'Not Rated';
+        const network = (showData.network && showData.network.name) || (showData.webChannel && showData.webChannel.name) || 'Television';
+        const castList = (showData._embedded && showData._embedded.cast) ? showData._embedded.cast.slice(0, 6) : [];
+
+        let castHtml = '';
+        if (castList.length > 0) {
+          castHtml = `
+            <div style="margin-top:20px;">
+              <h4 style="font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:0.06em; color:#fff; margin-bottom:10px;">MAIN CAST</h4>
+              <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(130px, 1fr)); gap:10px;">
+                ${castList.map(c => `
+                  <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:8px; text-align:center;">
+                    <img src="${(c.person.image && c.person.image.medium) || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png'}" style="width:100%; height:110px; object-fit:cover; border-radius:4px; margin-bottom:6px;" alt="${c.person.name}" />
+                    <div style="font-size:11px; font-weight:600; color:#fff; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${c.person.name}</div>
+                    <div style="font-size:10px; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">as ${c.character.name}</div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        body.innerHTML = `
+          <div style="display:flex; gap:20px; flex-wrap:wrap;">
+            <img src="${posterImg}" style="width:140px; height:200px; border-radius:8px; object-fit:cover; border:1px solid rgba(255,255,255,0.15);" alt="${showData.name}" />
+            <div style="flex:1; min-width:260px;">
+              <div style="display:flex; flex-wrap:wrap; gap:10px; font-size:12px; color:var(--muted); margin-bottom:12px;">
+                <span><b>Premiered:</b> ${showData.premiered || '—'}</span>
+                <span><b>Status:</b> ${showData.status || 'Ended'}</span>
+                <span><b>Network:</b> ${network}</span>
+                <span><b>TVMaze Rating:</b> ⭐ ${rating}</span>
+                <span><b>Genres:</b> ${genres}</span>
+              </div>
+              <div style="font-size:13px; line-height:1.55; color:#e0e0e6;">${cleanHtml(showData.summary)}</div>
+              ${showData.officialSite ? `<a href="${showData.officialSite}" target="_blank" rel="noreferrer" style="display:inline-block; margin-top:10px; font-size:11px; color:var(--accent); text-decoration:underline;">Visit Official Website →</a>` : ''}
+            </div>
+          </div>
+          ${castHtml}
+        `;
+      } catch (err) {
+        body.innerHTML = '<div style="padding:30px; text-align:center; color:#ff6b6b;">Could not load TVMaze details. Please try again.</div>';
+      }
+    }
+
+    function closeModals() {
+      document.getElementById('searchModal').classList.remove('active');
+      document.getElementById('detailModal').classList.remove('active');
+      document.getElementById('editRatingModal').classList.remove('active');
+    }
+
+    /* ================= THREE.JS INITIALIZATION ================= */
+    function init() {
+      if (started) return;
+      started = true;
+
+      const canvas = document.getElementById('scene');
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
+      renderer.setClearColor(0x000000, 1);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.12;
+
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color(0x000000);
+      scene.fog = new THREE.FogExp2(0x000000, .038);
+
+      camera = new THREE.PerspectiveCamera(48, window.innerWidth / window.innerHeight, .1, 90);
+      clock = new THREE.Clock();
+
+      scene.add(new THREE.AmbientLight(0xffffff, 1.25));
+      scene.add(new THREE.HemisphereLight(0x99aaff, 0x050505, .6));
+
+      keyLight = new THREE.PointLight(0xffffff, 1.7, 24, 1.4);
+      scene.add(keyLight);
+      rimLight = new THREE.PointLight(0x7588ff, 1.15, 28, 1.4);
+      scene.add(rimLight);
+
+      // Dust particles
+      const cnt = 1800, pos = new Float32Array(cnt * 3);
+      for (let i = 0; i < cnt; i++) {
+        const rr = Math.sqrt(Math.random()) * 13, an = Math.random() * Math.PI * 2;
+        pos[i * 3] = Math.cos(an) * rr;
+        pos[i * 3 + 1] = 4 - Math.random() * 45;
+        pos[i * 3 + 2] = Math.sin(an) * rr;
+      }
+      const pg = new THREE.BufferGeometry();
+      pg.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+      particles = new THREE.Points(
+        pg,
+        new THREE.PointsMaterial({ color: 0xaabbff, size: .055, transparent: true, opacity: .55, blending: THREE.AdditiveBlending, depthWrite: false })
+      );
+      scene.add(particles);
+
+      if (window.THREE && THREE.EffectComposer && THREE.UnrealBloomPass) {
+        composer = new THREE.EffectComposer(renderer);
+        composer.addPass(new THREE.RenderPass(scene, camera));
+        composer.addPass(new THREE.UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), .20, .45, .88));
+      }
+
+      // Build 3D spiral from watchlist
+      rebuildScene();
+
+      onScroll();
+      curP = targetP;
+      prevP = curP;
+
+      window.addEventListener('resize', onResize);
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('pointermove', e => {
+        pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+        pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+        mouse.tx = pointer.x;
+        mouse.ty = pointer.y;
+      });
+
+      let downX = 0, downY = 0;
+      window.addEventListener('pointerdown', e => {
+        downX = e.clientX;
+        downY = e.clientY;
+      });
+      window.addEventListener('pointerup', e => {
+        if (Math.hypot(e.clientX - downX, e.clientY - downY) < 6 && hovered >= 0) {
+          goTo(hovered);
+        }
+      });
+
+      // Mobile Touch Drag Gesture on 3D Canvas
+      let touchStartY = 0, touchStartX = 0, isTouchDragging = false;
+      window.addEventListener('touchstart', e => {
+        if (e.touches && e.touches.length === 1 && !e.target.closest('button, input, a, .modal-card, .ledger-container')) {
+          touchStartY = e.touches[0].clientY;
+          touchStartX = e.touches[0].clientX;
+          isTouchDragging = true;
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchmove', e => {
+        if (!isTouchDragging || !e.touches || e.touches.length !== 1) return;
+        const dy = touchStartY - e.touches[0].clientY;
+        const dx = touchStartX - e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchStartX = e.touches[0].clientX;
+
+        // If on the 3D reel view, drag smoothly scrolls the reel
+        if (window.scrollY < document.body.scrollHeight - window.innerHeight * 1.5) {
+          window.scrollBy({ top: dy * 1.2, behavior: 'auto' });
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchend', () => {
+        isTouchDragging = false;
+      });
+
+      window.addEventListener('keydown', e => {
+        const total = ITEMS.length;
+        if (total === 0) return;
+        const i = clamp(Math.round(curP), 0, total - 1);
+        if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          goTo(Math.min(i + 1, total - 1));
+        }
+        if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          goTo(Math.max(i - 1, 0));
+        }
+        if (e.key === 'Home') window.scrollTo({ top: 0, behavior: 'smooth' });
+        if (e.key === 'End') window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        if (e.key === 'Escape') closeModals();
+      });
+
+      // Hero rating plus / minus stepper buttons
+      const btnRatingMinus = document.getElementById('btnRatingMinus');
+      const btnRatingPlus = document.getElementById('btnRatingPlus');
+      const heroRatingInput = document.getElementById('heroRatingInput');
+      const heroRatingSlider = document.getElementById('heroRatingSlider');
+      const sliderValDisplay = document.getElementById('sliderValDisplay');
+
+      if (btnRatingMinus && heroRatingInput) {
+        btnRatingMinus.onclick = () => {
+          let v = Math.max(0, (parseFloat(heroRatingInput.value) || 0) - 0.5);
+          v = Math.round(v * 10) / 10;
+          heroRatingInput.value = v.toFixed(1);
+          if (heroRatingSlider) heroRatingSlider.value = v;
+          if (sliderValDisplay) sliderValDisplay.textContent = v.toFixed(1);
+        };
+      }
+
+      if (btnRatingPlus && heroRatingInput) {
+        btnRatingPlus.onclick = () => {
+          let v = Math.min(10, (parseFloat(heroRatingInput.value) || 0) + 0.5);
+          v = Math.round(v * 10) / 10;
+          heroRatingInput.value = v.toFixed(1);
+          if (heroRatingSlider) heroRatingSlider.value = v;
+          if (sliderValDisplay) sliderValDisplay.textContent = v.toFixed(1);
+        };
+      }
+
+      // Navigation & Modal Event Listeners
+      document.getElementById('rewind').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+      document.getElementById('logo').onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      const ledgerSec = document.getElementById('ledgerSection');
+      const openLedger = () => {
+        if (ledgerSec) {
+          ledgerSec.scrollIntoView({ behavior: 'smooth' });
+        }
+      };
+
+      const btnOpenLedger = document.getElementById('btnOpenLedger');
+      if (btnOpenLedger) btnOpenLedger.onclick = openLedger;
+
+      const btnViewLedger = document.getElementById('btnViewLedger');
+      if (btnViewLedger) btnViewLedger.onclick = openLedger;
+
+      const btnJumpToReel = document.getElementById('btnJumpToReel');
+      if (btnJumpToReel) {
+        btnJumpToReel.onclick = () => {
+          const targetIndex = currentIdx >= 0 ? currentIdx : 0;
+          goTo(targetIndex);
+        };
+      }
+
+      // Sort button toggles for The Index
+      const btnSortRating = document.getElementById('btnSortRating');
+      if (btnSortRating) {
+        btnSortRating.onclick = () => {
+          currentSortMode = 'rating';
+          renderLedgerSection();
+          updateSortButtons();
+        };
+      }
+
+      const btnSortTitle = document.getElementById('btnSortTitle');
+      if (btnSortTitle) {
+        btnSortTitle.onclick = () => {
+          currentSortMode = 'title';
+          renderLedgerSection();
+          updateSortButtons();
+        };
+      }
+
+      const btnSortYear = document.getElementById('btnSortYear');
+      if (btnSortYear) {
+        btnSortYear.onclick = () => {
+          currentSortMode = 'year';
+          renderLedgerSection();
+          updateSortButtons();
+        };
+      }
+
+      document.getElementById('btnNavRecord').onclick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+          document.getElementById('heroNameInput').focus();
+        }, 300);
+      };
+
+      document.getElementById('btnRecordAnother').onclick = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => {
+          document.getElementById('heroNameInput').focus();
+        }, 300);
+      };
+
+      document.getElementById('btnOpenSearch').onclick = () => {
+        document.getElementById('searchModal').classList.add('active');
+        document.getElementById('searchInput').focus();
+      };
+      document.getElementById('btnCloseSearch').onclick = closeModals;
+
+      document.getElementById('btnTvmazeDetails').onclick = () => openTvmazeDetails();
+      document.getElementById('btnCloseDetail').onclick = closeModals;
+
+      document.getElementById('btnEditRating').onclick = openEditRating;
+      document.getElementById('btnCloseEdit').onclick = closeModals;
+
+      document.getElementById('btnDeleteWatch').onclick = deleteCurrentItem;
+
+      // Share Modal Triggers & Actions
+      function openShareModal() {
+        const shareData = JSON.stringify(ITEMS);
+        const encoded = btoa(unescape(encodeURIComponent(shareData)));
+        const shareUrl = `${window.location.origin}${window.location.pathname}#share=${encoded}`;
+        
+        document.getElementById('shareLinkInput').value = shareUrl;
+        document.getElementById('shareModal').classList.add('active');
+      }
+
+      const btnNavShare = document.getElementById('btnNavShare');
+      if (btnNavShare) btnNavShare.onclick = openShareModal;
+
+      const btnEndShare = document.getElementById('btnEndShare');
+      if (btnEndShare) btnEndShare.onclick = openShareModal;
+
+      const btnShareCurrent = document.getElementById('btnShareCurrent');
+      if (btnShareCurrent) btnShareCurrent.onclick = openShareModal;
+
+      const btnCloseShare = document.getElementById('btnCloseShare');
+      if (btnCloseShare) btnCloseShare.onclick = closeModals;
+
+      // Copy Link Action
+      document.getElementById('btnCopyShareLink').onclick = async () => {
+        const linkInput = document.getElementById('shareLinkInput');
+        try {
+          await navigator.clipboard.writeText(linkInput.value);
+          showToast('Share link copied to clipboard!');
+        } catch (err) {
+          linkInput.select();
+          document.execCommand('copy');
+          showToast('Share link copied!');
+        }
+      };
+
+      // Native Device Share
+      document.getElementById('btnShareNative').onclick = async () => {
+        const shareUrl = document.getElementById('shareLinkInput').value;
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: 'ReelVault - My Watchlist 3D Reel',
+              text: `Check out my personal 3D watchlist reel with ${ITEMS.length} movies and shows!`,
+              url: shareUrl
+            });
+          } catch (e) {
+            console.log('Share dismissed');
+          }
+        } else {
+          document.getElementById('btnCopyShareLink').click();
+        }
+      };
+
+      // Share to X
+      document.getElementById('btnShareTwitter').onclick = () => {
+        const shareUrl = encodeURIComponent(document.getElementById('shareLinkInput').value);
+        const text = encodeURIComponent(`Explore my personal film & series archive on ReelVault (${ITEMS.length} titles recorded):`);
+        window.open(`https://twitter.com/intent/tweet?text=${text}&url=${shareUrl}`, '_blank');
+      };
+
+      // Share to WhatsApp
+      document.getElementById('btnShareWhatsApp').onclick = () => {
+        const shareUrl = encodeURIComponent(document.getElementById('shareLinkInput').value);
+        const text = encodeURIComponent(`Check out my movie & TV watchlist on ReelVault: ${shareUrl}`);
+        window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+      };
+
+      // Firebase Google Sign In / Sign Out Flow
+      const btnGoogleSignIn = document.getElementById('btnGoogleSignIn');
+      const btnSignOut = document.getElementById('btnSignOut');
+      const userProfile = document.getElementById('userProfile');
+      const userAvatarImg = document.getElementById('userAvatarImg');
+      const userNameText = document.getElementById('userNameText');
+
+      if (auth) {
+        auth.onAuthStateChanged(async (user) => {
+          currentUser = user;
+          if (user) {
+            btnGoogleSignIn.style.display = 'none';
+            userProfile.style.display = 'flex';
+            userNameText.textContent = user.displayName || user.email.split('@')[0];
+            userAvatarImg.src = user.photoURL || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.displayName || user.email)}&background=f2b34c&color=000`;
+            showToast(`Signed in as ${user.displayName || user.email}`);
+
+            // Fetch user's saved watchlist from Firestore
+            try {
+              const doc = await db.collection('users').doc(user.uid).get();
+              if (doc.exists && doc.data().watchlist && Array.isArray(doc.data().watchlist)) {
+                const cloudItems = doc.data().watchlist;
+                if (cloudItems.length > 0) {
+                  ITEMS = cloudItems;
+                  saveLocalWatchlist(ITEMS);
+                  rebuildScene();
+                  showToast(`Synced ${cloudItems.length} titles from your cloud vault!`);
+                } else if (ITEMS.length > 0) {
+                  // If cloud is empty but local has items, sync up
+                  await saveWatchlist(ITEMS);
+                }
+              } else if (ITEMS.length > 0) {
+                await saveWatchlist(ITEMS);
+              }
+            } catch (err) {
+              console.warn('Firestore load error:', err);
+            }
+          } else {
+            btnGoogleSignIn.style.display = 'flex';
+            userProfile.style.display = 'none';
+          }
+        });
+
+        btnGoogleSignIn.onclick = async () => {
+          try {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            await auth.signInWithPopup(provider);
+          } catch (err) {
+            console.error('Sign-in error:', err);
+            showToast(`Sign-in note: ${err.message || 'Popup closed'}`);
+          }
+        };
+
+        btnSignOut.onclick = async () => {
+          try {
+            await auth.signOut();
+            showToast('Signed out of cloud sync');
+          } catch (err) {
+            console.error('Sign-out error:', err);
+          }
+        };
+      }
+
+      // Close modal on backdrop click
+      ['searchModal', 'detailModal', 'editRatingModal', 'shareModal'].forEach(id => {
+        const m = document.getElementById(id);
+        if (m) {
+          m.onclick = (e) => {
+            if (e.target === m) closeModals();
+          };
+        }
+      });
+
+      // Live Autocomplete Input Listener
+      const heroNameInput = document.getElementById('heroNameInput');
+      const heroSpinner = document.getElementById('heroInputSpinner');
+      const suggestionsDropdown = document.getElementById('heroSuggestions');
+
+      heroNameInput.addEventListener('input', (e) => {
+        const val = e.target.value;
+        hideHeroError();
+
+        // If user typed after selecting, clear verified selection
+        if (selectedMediaObj && selectedMediaObj.t !== val) {
+          clearSelectedSuggestion();
+        }
+
+        if (searchDebounceTimer) clearTimeout(searchDebounceTimer);
+
+        if (!val || val.trim().length < 2) {
+          heroSpinner.style.display = 'none';
+          suggestionsDropdown.classList.remove('active');
+          return;
+        }
+
+        heroSpinner.style.display = 'block';
+
+        searchDebounceTimer = setTimeout(async () => {
+          try {
+            const results = await fetchRelatedMedia(val);
+            if (heroNameInput.value === val) { // Ensure still matching current typed input
+              renderSuggestions(results, val);
+            }
+          } catch (err) {
+            console.error('Fetch suggestions error:', err);
+          } finally {
+            heroSpinner.style.display = 'none';
+          }
+        }, 220);
+      });
+
+      // Keyboard navigation in suggestions list
+      heroNameInput.addEventListener('keydown', (e) => {
+        if (!suggestionsDropdown.classList.contains('active') || currentSuggestions.length === 0) return;
+
+        const items = suggestionsDropdown.querySelectorAll('.suggestion-item');
+        if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          activeSuggestionIndex = Math.min(activeSuggestionIndex + 1, items.length - 1);
+          items.forEach((it, idx) => it.classList.toggle('selected', idx === activeSuggestionIndex));
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          activeSuggestionIndex = Math.max(activeSuggestionIndex - 1, 0);
+          items.forEach((it, idx) => it.classList.toggle('selected', idx === activeSuggestionIndex));
+        } else if (e.key === 'Enter' && activeSuggestionIndex >= 0 && activeSuggestionIndex < currentSuggestions.length) {
+          e.preventDefault();
+          selectSuggestion(currentSuggestions[activeSuggestionIndex]);
+        }
+      });
+
+      // Clear selected tag button
+      document.getElementById('heroClearSelectedBtn').onclick = () => {
+        clearSelectedSuggestion();
+        heroNameInput.value = '';
+        heroNameInput.focus();
+      };
+
+      // Close autocomplete dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.hero-input-wrap')) {
+          suggestionsDropdown.classList.remove('active');
+        }
+      });
+
+      setTimeout(() => document.getElementById('loader').classList.add('hide'), 400);
+
+      animate();
+    }
+
+    function goTo(i) {
+      window.scrollTo({ top: (i + 1) * UNIT * window.innerHeight, behavior: 'smooth' });
+    }
+
+    function onScroll() {
+      const total = ITEMS.length;
+      if (total === 0) {
+        targetP = -1;
+        return;
+      }
+      targetP = (window.scrollY / window.innerHeight) / UNIT - 1;
+    }
+
+    function onResize() {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      if (composer) composer.setSize(window.innerWidth, window.innerHeight);
+      onScroll();
+    }
+
+    /* ---------- UI SYNC ---------- */
+    const el = id => document.getElementById(id);
+    const heroEl = el('hero'), infoEl = el('info'), counterEl = el('counter'), endEl = el('end'), dotsEl = el('dots'), progEl = el('progress');
+
+    function setInfo(i) {
+      const it = ITEMS[i];
+      if (!it) return;
+      document.documentElement.style.setProperty('--accent', it.c || '#f2b34c');
+      el('i-type').textContent = it.k || 'Watched';
+      el('i-idx').textContent = `${pad(i + 1)} / ${pad(ITEMS.length)}`;
+      el('i-title').textContent = it.t;
+      el('i-year').textContent = it.y || '—';
+      el('i-genre').textContent = it.g || 'Cinema';
+      el('i-dur').textContent = it.d || 'Watched';
+      el('i-score').textContent = Number(it.r || 0).toFixed(1);
+      el('i-note').textContent = it.n || 'My personal watchlist record.';
+      el('c-num').textContent = pad(i + 1);
+      el('c-tot').textContent = `/ ${pad(ITEMS.length)}`;
+
+      infoEl.classList.remove('switch');
+      void infoEl.offsetWidth;
+      infoEl.classList.add('switch');
+
+      el('i-bar').style.width = '0%';
+      requestAnimationFrame(() => {
+        el('i-bar').style.width = (it.r * 10) + '%';
+      });
+
+      [...dotsEl.children].forEach((d, k) => d.classList.toggle('on', k === i));
+    }
+
+    function updateUI(p) {
+      const total = ITEMS.length;
+      if (total === 0) {
+        updateUIState();
+        return;
+      }
+
+      const idx = clamp(Math.round(p), 0, total - 1);
+      if (idx !== currentIdx) {
+        currentIdx = idx;
+        setInfo(idx);
+      }
+
+      const hf = clamp((p + 1) / .6, 0, 1);
+      heroEl.style.opacity = 1 - hf;
+      heroEl.style.transform = `translateY(${-hf * 80}px) scale(${1 - hf * .08})`;
+
+      const inf = clamp((p + .35) / .45, 0, 1) * clamp((total - .55 - p) / .45, 0, 1);
+      infoEl.style.opacity = inf;
+      counterEl.style.opacity = inf;
+      dotsEl.style.opacity = inf;
+
+      const ef = clamp((p - (total - .55)) / .5, 0, 1);
+      endEl.style.opacity = ef;
+      endEl.style.pointerEvents = ef > .5 ? 'auto' : 'none';
+      endEl.style.transform = `translateY(${(1 - ef) * 60}px)`;
+
+      progEl.style.width = (clamp((p + 1) / (total + 1), 0, 1) * 100) + '%';
+    }
+
+    /* ---------- ANIMATION LOOP ---------- */
+    function animate() {
+      requestAnimationFrame(animate);
+      const dt = Math.min(clock.getDelta(), .05), t = clock.elapsedTime;
+      const k = 1 - Math.exp(-dt * 6.5);
+      curP += (targetP - curP) * k;
+      const v = curP - prevP;
+      prevP = curP;
+      vel += (v - vel) * .18;
+
+      mouse.x += (mouse.tx - mouse.x) * .06;
+      mouse.y += (mouse.ty - mouse.y) * .06;
+
+      const total = ITEMS.length;
+
+      if (total > 0) {
+        const aEnd = (total - 1) * STEP_ANGLE, yEnd = -(total - 1) * STEP_Y;
+        const END = {
+          pos: new THREE.Vector3(Math.cos(aEnd) * -0.8, yEnd - 3.4, Math.sin(aEnd) * -0.8),
+          tgt: new THREE.Vector3(Math.cos(aEnd - 1.4) * R * .45, yEnd + 6, Math.sin(aEnd - 1.4) * R * .45)
+        };
+
+        // camera
+        getCam(clamp(curP, 0, total - 1), A);
+        camPos.copy(A.pos);
+        camTgt.copy(A.tgt);
+
+        if (curP < 0) {
+          const s = smooth(clamp(curP + 1, 0, 1));
+          camPos.lerpVectors(HERO.pos, A.pos, s);
+          camTgt.lerpVectors(HERO.tgt, A.tgt, s);
+        } else if (curP > total - 1) {
+          const s = smooth(clamp(curP - (total - 1), 0, 1));
+          camPos.lerpVectors(A.pos, END.pos, s);
+          camTgt.lerpVectors(A.tgt, END.tgt, s);
+        }
+
+        // cards animation
+        const speed = Math.min(Math.abs(vel) * 4, 1);
+        for (let i = 0; i < total; i++) {
+          const c = cards[i];
+          if (!c) continue;
+          const d = i - curP, ad = Math.abs(d);
+          const f = smooth(clamp(1 - ad, 0, 1));
+          const hov = hovered === i ? 1 : 0;
+
+          c.group.position.copy(c.base).addScaledVector(c.inward, .95 * f);
+          c.group.position.y += Math.sin(t * .9 + i * .7) * .045;
+
+          const s = 1 + .14 * f + .03 * hov;
+          c.pivot.scale.set(s, s, s);
+          c.pivot.rotation.y = clamp(d * .32, -.7, .7) * (1 - f) + mouse.x * .16 * f + vel * .6 * (1 - f);
+          c.pivot.rotation.x = -mouse.y * .1 * f + Math.sin(t * .5 + i) * .02;
+          c.pivot.rotation.z = clamp(-vel * .8, -.15, .15) * (1 - f);
+
+          c.frame.material.opacity = .22 + .7 * f + .3 * hov;
+          c.glow.material.opacity = .05 + .32 * f + .1 * hov + speed * .05 * (1 - f);
+          c.ring.material.opacity = .12 + .5 * f;
+        }
+      } else {
+        // Empty state idle camera
+        camPos.copy(HERO.pos);
+        camTgt.copy(HERO.tgt);
+      }
+
+      camPos.y += Math.sin(t * .6) * .03;
+      camera.position.copy(camPos);
+      camera.lookAt(camTgt);
+
+      camera.rotateY(-mouse.x * .07);
+      camera.rotateX(mouse.y * .045);
+      camera.rotateZ(clamp(-vel * 1.1, -.09, .09));
+      camera.fov = 48 + Math.min(Math.abs(vel) * 50, 8);
+      camera.updateProjectionMatrix();
+
+      keyLight.position.copy(camera.position).add(new THREE.Vector3(0, .8, 0));
+      rimLight.position.set(Math.cos(curP * STEP_ANGLE + 1.2) * R * .7, camera.position.y - 2.5, Math.sin(curP * STEP_ANGLE + 1.2) * R * .7);
+
+      particles.rotation.y = t * .02;
+      particles.position.y = Math.sin(t * .3) * .3;
+
+      // Raycasting Hover
+      if (pointer.x > -5 && posterMeshes.length > 0) {
+        raycaster.setFromCamera(pointer, camera);
+        const hit = raycaster.intersectObjects(posterMeshes)[0];
+        const nh = hit ? hit.object.userData.i : -1;
+        if (nh !== hovered) {
+          hovered = nh;
+          renderer.domElement.style.cursor = nh >= 0 ? 'pointer' : 'default';
+        }
+      } else {
+        hovered = -1;
+      }
+
+      updateUI(curP);
+
+      if (composer) composer.render();
+      else renderer.render(scene, camera);
+    }
+
+    /* ---------- BOOT AFTER FONTS ---------- */
+    const boot = () => init();
+    if (document.fonts && document.fonts.load) {
+      Promise.all([
+        document.fonts.load('80px "Bebas Neue"'),
+        document.fonts.load('500 16px Inter'),
+        document.fonts.load('700 13px Inter')
+      ]).then(boot).catch(boot);
+      setTimeout(boot, 3000);
+    } else {
+      boot();
+    }
+  </script>
+</body>
+</html>
