@@ -74,7 +74,7 @@
       100% { transform: translate(0, 0); }
     }
 
-    /* ---------- NAV & BUTTON ORGANIZATION ---------- */
+    /* ---------- ORGANIZED HEADER NAVIGATION ---------- */
     #nav {
       position: fixed;
       top: 0;
@@ -84,19 +84,31 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 28px;
+      padding: 10px 24px;
       pointer-events: none;
-      background: linear-gradient(180deg, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.3) 70%, transparent 100%);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
+      background: linear-gradient(180deg, rgba(8, 9, 13, 0.96) 0%, rgba(8, 9, 13, 0.85) 75%, transparent 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      transition: padding 0.2s ease, background 0.2s ease;
+    }
+    .nav-top-bar {
+      display: contents;
+    }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      pointer-events: auto;
+      flex-shrink: 0;
     }
     #logo {
       font-family: 'Bebas Neue', sans-serif;
-      font-size: 24px;
-      letter-spacing: .22em;
+      font-size: 23px;
+      letter-spacing: .2em;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       pointer-events: auto;
       cursor: pointer;
       user-select: none;
@@ -107,11 +119,11 @@
       transform: scale(1.02);
     }
     #logo i {
-      width: 12px;
-      height: 12px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 16px var(--accent);
+      box-shadow: 0 0 14px var(--accent);
       display: inline-block;
       animation: pulse 2.4s ease-in-out infinite;
       flex-shrink: 0;
@@ -120,12 +132,39 @@
       0%, 100% { transform: scale(1); opacity: 1; }
       50% { transform: scale(.7); opacity: .6; }
     }
+    .dev-badge-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.65);
+      font-size: 11px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      pointer-events: auto;
+    }
+    .dev-badge-link:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.28);
+      color: #fff;
+      transform: translateY(-1px);
+    }
+    .dev-badge-link svg {
+      color: #f2b34c;
+      flex-shrink: 0;
+    }
 
-    .nav-cluster {
+    /* Center Nav Tool Bar */
+    .nav-center {
       display: flex;
       align-items: center;
-      gap: 10px;
       pointer-events: auto;
+      gap: 8px;
     }
     .nav-tool-group {
       display: flex;
@@ -134,53 +173,149 @@
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 20px;
       padding: 3px;
-      gap: 3px;
+      gap: 2px;
       backdrop-filter: blur(12px);
     }
     .nav-btn-iconic {
       background: transparent;
       border: none;
-      color: rgba(244, 244, 247, 0.85);
+      color: rgba(244, 244, 247, 0.82);
       padding: 6px 12px;
       border-radius: 16px;
       font-family: 'Inter', sans-serif;
       font-size: 11px;
-      letter-spacing: .08em;
+      letter-spacing: .06em;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       cursor: pointer;
-      transition: all .2s;
+      transition: all .18s;
       white-space: nowrap;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
     .nav-btn-iconic:hover {
-      background: rgba(255, 255, 255, 0.14);
+      background: rgba(255, 255, 255, 0.12);
       color: #fff;
     }
     .nav-btn-iconic.active {
       background: rgba(242, 179, 76, 0.2);
       color: var(--accent);
     }
+    .nav-btn-iconic.package-btn {
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.12);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+    }
+    .nav-btn-iconic.package-btn:hover {
+      background: rgba(245, 158, 11, 0.25);
+      border-color: rgba(245, 158, 11, 0.5);
+      color: #fff;
+    }
+
+    /* Right Nav Cluster */
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      pointer-events: auto;
+      flex-shrink: 0;
+    }
+    #nav .stats {
+      font-size: 11px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      padding: 5px 12px;
+    }
+    #nav .stats b {
+      color: var(--fg);
+      font-weight: 700;
+    }
     .nav-auth-wrap {
       display: flex;
       align-items: center;
     }
 
-    #nav .stats {
-      font-size: 11px;
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      color: var(--muted);
+    /* Hero Undo / Remove Banner */
+    .hero-undo-banner {
       display: flex;
-      gap: 14px;
-      margin-left: 6px;
-      padding-left: 12px;
-      border-left: 1px solid rgba(255, 255, 255, 0.12);
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      background: rgba(239, 68, 68, 0.12);
+      border: 1px solid rgba(239, 68, 68, 0.35);
+      border-radius: 8px;
+      padding: 8px 14px;
+      margin-top: 10px;
+      width: 100%;
+      box-sizing: border-box;
+      animation: fadeInUndo 0.24s ease-out;
     }
-    #nav .stats b {
-      color: var(--fg);
+    @keyframes fadeInUndo {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero-undo-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+    .hero-undo-icon {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #10b981;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+    .hero-undo-title {
+      font-size: 12px;
       font-weight: 600;
+      color: #fff;
+      display: block;
+    }
+    .hero-undo-sub {
+      font-size: 10px;
+      color: #fca5a5;
+      font-family: 'Space Mono', monospace;
+      display: block;
+    }
+    .hero-undo-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(239, 68, 68, 0.28);
+      border: 1px solid rgba(239, 68, 68, 0.5);
+      color: #fca5a5;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Inter', sans-serif;
+      white-space: nowrap;
+    }
+    .hero-undo-btn:hover {
+      background: #ef4444;
+      color: #fff;
+      border-color: #ef4444;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
     }
     #progress {
       position: fixed;
@@ -1523,48 +1658,108 @@
     }
 
     /* ---------- RESPONSIVE BREAKPOINTS (MOBILE & TABLET) ---------- */
-    @media (max-width: 900px) {
-      #nav { padding: 12px 18px; }
-      #nav .stats { display: none; }
-      .nav-btn-iconic span.btn-text { display: none; }
-      .nav-btn-iconic { padding: 6px 9px; }
-      .dev-badge-link span { display: none; }
-      .dev-badge-link { padding: 6px 8px; }
-    }
-
-    @media (max-width: 768px) {
+    @media (max-width: 860px) {
       #nav {
-        padding: 10px 14px;
+        padding: 8px 12px 6px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+        background: rgba(8, 9, 13, 0.98);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        pointer-events: auto;
+      }
+      .nav-top-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        gap: 8px;
+      }
+      .nav-left {
+        gap: 8px;
       }
       #logo {
-        font-size: 20px;
-        letter-spacing: .16em;
+        font-size: 19px;
+        letter-spacing: .15em;
       }
-      #btnNavRecord {
-        padding: 6px 10px;
+      .dev-badge-link {
+        padding: 3px 7px;
         font-size: 10px;
       }
-      .nav-cluster {
+      .dev-badge-link span {
+        display: none;
+      }
+      .nav-right {
         gap: 6px;
       }
+      #nav .stats {
+        display: none;
+      }
+      #btnNavRecord {
+        padding: 5px 10px;
+        font-size: 11px;
+        font-weight: 700;
+        white-space: nowrap;
+      }
       .auth-btn {
-        padding: 6px 9px;
+        padding: 5px 8px;
         font-size: 10px;
       }
       .auth-label {
         display: none;
       }
       .user-name {
-        max-width: 65px;
+        max-width: 60px;
         font-size: 11px;
       }
       .sync-badge {
         display: none;
       }
 
+      /* Horizontal Scrolling Ribbon for all tools */
+      .nav-center {
+        display: flex;
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 1px 0 2px;
+      }
+      .nav-center::-webkit-scrollbar {
+        display: none;
+      }
+      .nav-tool-group {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        width: max-content;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 999px;
+        padding: 2px 4px;
+        flex-shrink: 0;
+      }
+      .nav-btn-iconic {
+        padding: 5px 10px;
+        font-size: 11px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        flex-shrink: 0;
+        white-space: nowrap;
+      }
+      .nav-btn-iconic span.btn-text {
+        display: inline-block !important;
+        font-size: 11px;
+      }
+      .nav-btn-iconic svg {
+        width: 13px;
+        height: 13px;
+      }
+
       /* HERO ON MOBILE */
       #hero {
-        padding: 0 16px;
+        padding: 84px 16px 20px;
         justify-content: center;
       }
       #hero h1 {
@@ -2249,11 +2444,13 @@
       transform: translateY(-1px);
     }
     .index-row-delete-btn {
-      background: transparent;
-      border: 1px solid transparent;
-      color: #a8a29e;
+      background: rgba(239, 68, 68, 0.08);
+      border: 1px solid rgba(239, 68, 68, 0.22);
+      color: #ef4444;
       border-radius: 6px;
-      padding: 6px 8px;
+      padding: 6px 9px;
+      min-width: 32px;
+      min-height: 32px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -2261,12 +2458,14 @@
       transition: all .2s cubic-bezier(.2, .8, .2, 1);
       margin-left: 6px;
       flex-shrink: 0;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
-    .index-row-delete-btn:hover {
-      background: rgba(239, 68, 68, 0.12);
-      border-color: rgba(239, 68, 68, 0.3);
-      color: #dc2626;
-      transform: scale(1.1);
+    .index-row-delete-btn:hover, .index-row-delete-btn:active {
+      background: rgba(239, 68, 68, 0.22);
+      border-color: #ef4444;
+      color: #ffffff;
+      transform: scale(1.08);
     }
     .ledger-format-filter-group {
       display: inline-flex;
@@ -3368,6 +3567,274 @@
       color: #fbbf24;
       font-weight: 700;
     }
+
+    /* ================= MANUAL FRANCHISE PACKAGE BUILDER & TV RATINGS CSS ================= */
+    .franchise-preset-row {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      margin-bottom: 12px;
+      scrollbar-width: thin;
+    }
+    .franchise-preset-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      color: #eee;
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: 'Space Mono', monospace;
+    }
+    .franchise-preset-btn:hover, .franchise-preset-btn.active {
+      background: #f2b34c;
+      color: #0c0b0f;
+      border-color: #f2b34c;
+      box-shadow: 0 2px 10px rgba(242, 179, 76, 0.3);
+    }
+    .package-movies-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 10px;
+      max-height: 250px;
+      overflow-y: auto;
+      padding: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+    .package-movie-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.04);
+      cursor: pointer;
+      transition: all 0.18s ease;
+      user-select: none;
+    }
+    .package-movie-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .package-movie-card.selected {
+      background: rgba(242, 179, 76, 0.14);
+      border-color: #f2b34c;
+    }
+    .package-movie-checkbox {
+      width: 16px;
+      height: 16px;
+      accent-color: #f2b34c;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .package-movie-thumb {
+      width: 32px;
+      height: 46px;
+      border-radius: 4px;
+      object-fit: cover;
+      background: #111;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      flex-shrink: 0;
+    }
+    .package-movie-info {
+      flex: 1;
+      min-width: 0;
+    }
+    .package-movie-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .package-movie-meta {
+      font-size: 10px;
+      color: #a8a29e;
+      margin-top: 2px;
+    }
+    .package-movie-rating-input {
+      width: 46px;
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      color: #f2b34c;
+      font-size: 11px;
+      font-weight: 700;
+      text-align: center;
+      padding: 2px;
+      outline: none;
+    }
+
+    /* Package Tier Pill */
+    .package-tier-pill {
+      display: inline-block;
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: rgba(242, 179, 76, 0.18);
+      color: #f2b34c;
+      border: 1px solid rgba(242, 179, 76, 0.4);
+    }
+
+    /* TV Series Specific Form Controls */
+    .tv-control-label {
+      font-size: 10px;
+      font-family: 'Space Mono', monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #93c5fd;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .tv-tags-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 8px;
+    }
+    .tv-choice-btn {
+      background: rgba(77, 150, 255, 0.08);
+      border: 1px solid rgba(77, 150, 255, 0.25);
+      color: #bfdbfe;
+      border-radius: 6px;
+      padding: 5px 10px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.18s ease;
+      font-family: 'Inter', sans-serif;
+    }
+    .tv-choice-btn:hover, .tv-choice-btn.selected {
+      background: #3b82f6;
+      color: #fff;
+      border-color: #60a5fa;
+      box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+    }
+
+    /* TV vs Movie Rating Tier Tags */
+    .movie-tier-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      background: rgba(242, 179, 76, 0.18);
+      color: #f2b34c;
+      border: 1px solid rgba(242, 179, 76, 0.4);
+    }
+    .series-tier-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      padding: 4px 8px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      background: rgba(59, 130, 246, 0.2);
+      color: #93c5fd;
+      border: 1px solid rgba(59, 130, 246, 0.45);
+    }
+
+    /* Modal Close Alt Button */
+    .modal-close-alt {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #ddd;
+      border-radius: 8px;
+      padding: 0 16px;
+      height: 44px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .modal-close-alt:hover {
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+
+    /* Ledger Split Analytics Cards */
+    .ledger-split-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+      margin-top: 24px;
+      margin-bottom: 30px;
+    }
+    @media (max-width: 820px) {
+      .ledger-split-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .ledger-analytic-card {
+      background: #fbf8f2;
+      border: 1px solid #e0d6c5;
+      border-radius: 8px;
+      padding: 16px;
+    }
+    .ledger-analytic-card.movies {
+      border-top: 3px solid #f2b34c;
+    }
+    .ledger-analytic-card.series {
+      border-top: 3px solid #3b82f6;
+    }
+    .ledger-analytic-card.packages {
+      border-top: 3px solid #10b981;
+    }
+    .analytic-header {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .analytic-metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+    .metric-box {
+      display: flex;
+      flex-direction: column;
+    }
+    .metric-val {
+      font-family: 'Fraunces', serif;
+      font-size: 20px;
+      font-weight: 700;
+      color: #1b1917;
+      line-height: 1.1;
+    }
+    .metric-lbl {
+      font-family: 'Space Mono', monospace;
+      font-size: 8.5px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #78716c;
+      margin-top: 3px;
+    }
+
+    .package-pill {
+      background: rgba(16, 185, 129, 0.15);
+      color: #065f46;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+    }
   </style>
 </head>
 <body>
@@ -3377,58 +3844,72 @@
   <div id="grain"></div>
   <div id="progress"></div>
 
-  <!-- TOP NAV -->
+  <!-- TOP NAV (ORGANIZED 3-ZONE HEADER) -->
   <nav id="nav">
-    <div id="logo" title="Back to top"><i></i><span>CINEMA FILES</span></div>
-    
-    <div class="nav-cluster">
-      <!-- Developer Credit Instagram Pill -->
-      <a href="https://instagram.com/anurag_singh.indoliya" target="_blank" rel="noopener noreferrer" class="dev-badge-link" title="Developer Instagram: @anurag_singh.indoliya">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-        <span>by @anurag_singh.indoliya</span>
-      </a>
+    <div class="nav-top-bar">
+      <!-- Zone 1: Brand & Creator Identity -->
+      <div class="nav-left">
+        <div id="logo" title="Back to top"><i></i><span>CINEMA FILES</span></div>
+        <a href="https://instagram.com/anurag_singh.indoliya" target="_blank" rel="noopener noreferrer" class="dev-badge-link" title="Developer Instagram: @anurag_singh.indoliya">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          <span class="dev-name">@anurag_singh.indoliya</span>
+        </a>
+      </div>
 
-      <!-- Primary Action -->
-      <button id="btnNavRecord" class="nav-btn primary" title="Record title to archive">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-        <span>+ Record Title</span>
-      </button>
+      <!-- Zone 3: Stats, Primary Add & Cloud Sync -->
+      <div class="nav-right">
+        <div class="stats" id="navstats"></div>
+        <button id="btnNavRecord" class="nav-btn primary" title="Record title to archive">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+          <span>+ Record</span>
+        </button>
+        <div id="authContainer" class="nav-auth-wrap">
+          <button id="btnGoogleSignIn" class="auth-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.9C6.2 7.2 8.9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/><path fill="#FBBC05" d="M5.3 14.7c-.2-.7-.4-1.5-.4-2.7s.1-2 .4-2.7L1.6 6.4C.6 8.3 0 10.1 0 12s.6 3.7 1.6 5.6l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.2-6.7-5.3L1.6 16c1.9 3.8 5.8 7 10.4 7z"/></svg>
+            <span class="auth-label">Sign In</span>
+          </button>
+          <div id="userProfile" class="user-chip" style="display:none;">
+            <img id="userAvatarImg" class="user-avatar" src="" alt="User" />
+            <span id="userNameText" class="user-name"></span>
+            <span class="sync-badge"><span class="sync-dot"></span> Cloud</span>
+            <button id="btnSignOut" class="user-signout" title="Sign Out">Sign Out</button>
+          </div>
+        </div>
+      </div>
+    </div>
 
-      <!-- Segmented Tool Group -->
+    <!-- Zone 2: Navigation & Curation Tools (Ribbon on mobile) -->
+    <div class="nav-center">
       <div class="nav-tool-group">
-        <button id="btnOpenSearch" class="nav-btn-iconic" title="Search TV & Movies (TVMaze Live Search)">
+        <button id="btnNav3DReel" class="nav-btn-iconic" title="Jump to 3D Spiral Helix Reel">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polygon points="10 8 16 12 10 16 10 8"></polygon></svg>
+          <span class="btn-text">3D Reel</span>
+        </button>
+        <button id="btnOpenSearch" class="nav-btn-iconic" title="Search Global Cinema & TV Databases">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
           <span class="btn-text">Search</span>
         </button>
-        <button id="btnOpenLedger" class="nav-btn-iconic" title="Archival Ledger & Ratings Index">
+        <button id="btnOpenLedger" class="nav-btn-iconic" title="Archival Ledger & Analytics Index">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
           <span class="btn-text">The Ledger</span>
         </button>
-        <button id="btnOpenGoat" class="nav-btn-iconic goat-nav-btn" title="Who is the Real GOAT? • Cinema Knockout Tournament">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-          <span class="btn-text">Real GOAT</span>
+        <button id="btnOpenFranchisePackager" class="nav-btn-iconic package-btn" title="Manual Franchise Packager: Select movies watched from a franchise and bundle them">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          <span class="btn-text">Package</span>
         </button>
-        <button id="btnNavShare" class="nav-btn-iconic" title="Share your Watchlist Reel">
+        <button id="btnRealignReel" class="nav-btn-iconic" title="Realign Reel by Rating (Decreasing Order)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+          <span class="btn-text">Realign</span>
+        </button>
+        <button id="btnNavGoat" class="nav-btn-iconic" title="GOAT Tournament Arena">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H8v2h8v-2h-1c-.55 0-1-.45-1-1v-2.34"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"></path></svg>
+          <span class="btn-text">GOAT Arena</span>
+        </button>
+        <button id="btnNavShare" class="nav-btn-iconic" title="Share Watchlist Reel">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
           <span class="btn-text">Share</span>
         </button>
       </div>
-
-      <!-- Cloud Sync / Auth Cluster -->
-      <div id="authContainer" class="nav-auth-wrap">
-        <button id="btnGoogleSignIn" class="auth-btn">
-          <svg width="13" height="13" viewBox="0 0 24 24"><path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.4 1 3.5 3.6 1.6 7.4l3.7 2.9C6.2 7.2 8.9 5 12 5z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5 3.7-8.8z"/><path fill="#FBBC05" d="M5.3 14.7c-.2-.7-.4-1.5-.4-2.7s.1-2 .4-2.7L1.6 6.4C.6 8.3 0 10.1 0 12s.6 3.7 1.6 5.6l3.7-2.9z"/><path fill="#34A853" d="M12 23c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3.1 0-5.8-2.2-6.7-5.3L1.6 16c1.9 3.8 5.8 7 10.4 7z"/></svg>
-          <span class="auth-label">Sign In</span>
-        </button>
-        <div id="userProfile" class="user-chip" style="display:none;">
-          <img id="userAvatarImg" class="user-avatar" src="" alt="User" />
-          <span id="userNameText" class="user-name"></span>
-          <span class="sync-badge"><span class="sync-dot"></span> Cloud</span>
-          <button id="btnSignOut" class="user-signout" title="Sign Out">Sign Out</button>
-        </div>
-      </div>
-
-      <div class="stats" id="navstats"></div>
     </div>
   </nav>
 
@@ -3506,6 +3987,9 @@
           </button>
         </div>
 
+        <!-- HERO UNDO / REMOVE ACCIDENTAL ADD BANNER -->
+        <div id="heroUndoBanner" style="display:none;"></div>
+
         <!-- GRAPHIC FILM SLATE PREVIEW CARD (VERIFIED TITLE DECK) -->
         <div id="heroSlateCard" class="hero-slate-card">
           <div class="slate-top-row">
@@ -3516,7 +4000,7 @@
             <div class="slate-info">
               <div class="slate-title-row">
                 <h4 id="slateTitleText" class="slate-title">Title</h4>
-                <button type="button" id="slateResetBtn" style="background:transparent; border:none; color:var(--muted); font-size:12px; cursor:pointer; padding:2px 6px;" title="Reset selection">✕</button>
+                <button type="button" id="slateResetBtn" style="background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); color:#fff; font-size:14px; cursor:pointer; width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; user-select:none; -webkit-tap-highlight-color:transparent;" title="Clear preview">✕</button>
               </div>
               <div class="slate-meta-chips">
                 <span id="slateYearChip" class="slate-chip">2024</span>
@@ -3525,6 +4009,7 @@
                 <span id="slateDurationChip" class="slate-chip">120 min</span>
               </div>
               <p id="slateSynopsisText" class="slate-synopsis">Synopsis preview will appear here.</p>
+              <div id="slateActionRow"></div>
             </div>
           </div>
 
@@ -3551,17 +4036,50 @@
           <!-- EXPANDABLE ARCHIVAL LOG DRAWER -->
           <button type="button" id="slateDrawerToggle" class="slate-drawer-toggle">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
-            <span>+ Add Viewing Format & Personal Memo (Optional)</span>
+            <span id="slateDrawerToggleText">+ Add Viewing Format & Personal Memo (Optional)</span>
           </button>
           <div id="slateDrawer" class="slate-drawer">
-            <div class="slate-tags-row" id="viewingFormatChips">
-              <button type="button" class="tag-choice-btn selected" data-format="IMAX / 70mm">🎟️ IMAX / 70mm</button>
-              <button type="button" class="tag-choice-btn" data-format="4K HDR Home">✨ 4K HDR</button>
-              <button type="button" class="tag-choice-btn" data-format="Cinema Theater">🍿 Theater</button>
-              <button type="button" class="tag-choice-btn" data-format="35mm Vintage">💿 35mm Vintage</button>
-              <button type="button" class="tag-choice-btn" data-format="Streaming">📺 Streaming</button>
+            <!-- MOVIE SPECIFIC OPTIONS -->
+            <div id="heroMovieSpecificOpts">
+              <span class="tv-control-label" style="color:#f2b34c;">🎬 Film Viewing Format:</span>
+              <div class="slate-tags-row" id="viewingFormatChips">
+                <button type="button" class="tag-choice-btn selected" data-format="IMAX / 70mm">🎟️ IMAX / 70mm</button>
+                <button type="button" class="tag-choice-btn" data-format="4K HDR Home">✨ 4K HDR</button>
+                <button type="button" class="tag-choice-btn" data-format="Cinema Theater">🍿 Theater</button>
+                <button type="button" class="tag-choice-btn" data-format="35mm Vintage">💿 35mm Vintage</button>
+                <button type="button" class="tag-choice-btn" data-format="Streaming">📺 Streaming</button>
+              </div>
             </div>
-            <input type="text" id="slateCustomMemo" class="slate-note-input" placeholder="Personal note or quote (e.g. Masterclass cinematography, watched in IMAX with friends)..." maxlength="160" />
+
+            <!-- TV SERIES SPECIFIC OPTIONS -->
+            <div id="heroSeriesSpecificOpts" style="display:none;">
+              <span class="tv-control-label">📺 Series Watch Status:</span>
+              <div class="tv-tags-row" id="seriesStatusChips">
+                <button type="button" class="tv-choice-btn selected" data-status="Completed">🏁 Completed</button>
+                <button type="button" class="tv-choice-btn" data-status="Watching / Ongoing">▶️ Watching</button>
+                <button type="button" class="tv-choice-btn" data-status="Miniseries">📜 Miniseries</button>
+                <button type="button" class="tv-choice-btn" data-status="Dropped">🛑 Dropped</button>
+              </div>
+
+              <span class="tv-control-label">📺 Seasons Watched:</span>
+              <div class="tv-tags-row" id="seriesSeasonsChips">
+                <button type="button" class="tv-choice-btn selected" data-seasons="All Seasons">All Seasons</button>
+                <button type="button" class="tv-choice-btn" data-seasons="1 Season">1 Season</button>
+                <button type="button" class="tv-choice-btn" data-seasons="2 Seasons">2 Seasons</button>
+                <button type="button" class="tv-choice-btn" data-seasons="3 Seasons">3 Seasons</button>
+                <button type="button" class="tv-choice-btn" data-seasons="4 Seasons">4 Seasons</button>
+                <button type="button" class="tv-choice-btn" data-seasons="5+ Seasons">5+ Seasons</button>
+              </div>
+
+              <span class="tv-control-label">📺 Binge Factor & Pacing:</span>
+              <div class="tv-tags-row" id="seriesBingeChips">
+                <button type="button" class="tv-choice-btn selected" data-binge="🔥 Unputdownable Binge">🔥 Unputdownable</button>
+                <button type="button" class="tv-choice-btn" data-binge="📅 Weekly Ritual">📅 Weekly Ritual</button>
+                <button type="button" class="tv-choice-btn" data-binge="☕ Slow Burn Masterclass">☕ Slow Burn</button>
+              </div>
+            </div>
+
+            <input type="text" id="slateCustomMemo" class="slate-note-input" placeholder="Personal note or critique (e.g. Masterclass cinematography, watched in IMAX with friends)..." maxlength="160" />
           </div>
         </div>
 
@@ -3632,6 +4150,10 @@
       <button id="btnShareCurrent" class="info-action-btn" style="border-color:rgba(255,255,255,0.22);">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
         <span>Share</span>
+      </button>
+      <button id="btnUnpackCurrent" class="info-action-btn" style="display:none; border-color:rgba(242,179,76,0.5); color:#f2b34c;" title="Unpack this franchise package into individual movie records">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        <span>Unpack Films</span>
       </button>
       <button id="btnDeleteWatch" class="info-action-btn danger">
         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
@@ -3728,6 +4250,75 @@
         </div>
       </div>
 
+      <!-- SPLIT ANALYTICS: FEATURE FILMS VS TV SERIES VS PACKAGES -->
+      <div class="ledger-split-grid">
+        <!-- FEATURE FILMS -->
+        <div class="ledger-analytic-card movies">
+          <div class="analytic-header">
+            <span style="color:#b45309;">🎬 Feature Films</span>
+            <span class="movie-tier-tag" id="filmAvgTierTag">CINEMA</span>
+          </div>
+          <div class="analytic-metrics-row">
+            <div class="metric-box">
+              <span class="metric-val" id="filmCountMetric">0</span>
+              <span class="metric-lbl">Films Logged</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-val" id="filmAvgMetric">0.0</span>
+              <span class="metric-lbl">Mean Score</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-val" id="filmHoursMetric">0h</span>
+              <span class="metric-lbl">Screen Time</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TV SERIES -->
+        <div class="ledger-analytic-card series">
+          <div class="analytic-header">
+            <span style="color:#1d4ed8;">📺 TV Series</span>
+            <span class="series-tier-tag" id="seriesAvgTierTag">PEAK TV</span>
+          </div>
+          <div class="analytic-metrics-row">
+            <div class="metric-box">
+              <span class="metric-val" id="seriesCountMetric">0</span>
+              <span class="metric-lbl">Series Runs</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-val" id="seriesAvgMetric">0.0</span>
+              <span class="metric-lbl">Mean Score</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-val" id="seriesHoursMetric">0h</span>
+              <span class="metric-lbl">Binge Hours</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FRANCHISE PACKAGES -->
+        <div class="ledger-analytic-card packages">
+          <div class="analytic-header">
+            <span style="color:#065f46;">📦 Franchise Packages</span>
+            <button type="button" onclick="openPackageFranchiseModal()" class="paper-btn" style="padding:2px 8px; font-size:10px; background:#f2b34c; color:#1b1917; font-weight:700;">+ Package</button>
+          </div>
+          <div class="analytic-metrics-row">
+            <div class="metric-box">
+              <span class="metric-val" id="packageCountMetric">0</span>
+              <span class="metric-lbl">Packages</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-val" id="packagedFilmsCountMetric">0</span>
+              <span class="metric-lbl">Films Packaged</span>
+            </div>
+            <div class="metric-box">
+              <span class="metric-val" id="packageAvgMetric">0.0</span>
+              <span class="metric-lbl">Bundle Mean</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <hr class="ledger-divider" />
 
       <!-- GENRE TALLY -->
@@ -3752,7 +4343,7 @@
       <!-- SORT / FILTER BAR -->
       <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid #d6cebf;">
         <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-          <!-- Format Filter Tabs (All / Movies / Series) -->
+          <!-- Format Filter Tabs (All / Movies / Series / Packages) -->
           <div class="ledger-format-filter-group" id="ledgerFormatFilterGroup">
             <button type="button" id="btnFilterAll" class="ledger-format-btn active" data-filter="all">
               <span>All Titles</span>
@@ -3766,13 +4357,16 @@
               <span>📺 Series</span>
               <span class="ledger-format-count" id="drawerCountSeries">(0)</span>
             </button>
+            <button type="button" id="btnFilterPackages" class="ledger-format-btn" data-filter="packages">
+              <span>📦 Packages</span>
+              <span class="ledger-format-count" id="drawerCountPackages">(0)</span>
+            </button>
           </div>
 
           <!-- Sort Modes & Franchise Mode -->
           <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
-            <button type="button" id="btnToggleCombineFranchise" class="ledger-format-btn active" style="border:1px solid rgba(27,25,23,0.18); background:#1c1917; color:#eee8dc;" title="Combine sequels and multi-part series like Iron Man 1, 2, 3 into a single unified Trio entry">
-              <span>⚡ Combine Parts</span>
-              <span class="ledger-format-count" id="combineFranchiseStatusBadge" style="background:rgba(242,179,76,0.3); color:#f2b34c; padding:1px 5px; border-radius:3px; font-weight:700;">ON</span>
+            <button type="button" id="btnOpenPackageFranchiseModal" class="ledger-format-btn" style="border:1px solid #d97706; background:rgba(242,179,76,0.16); color:#78350f; font-weight:700;" title="Select which movies you watched from a franchise and package them into a consolidated reel item">
+              <span>📦 Package Franchise</span>
             </button>
             <span style="font-family:'Space Mono', monospace; font-size:10px; color:#a8a29e; text-transform:uppercase; letter-spacing:0.1em; margin-left:4px; margin-right:2px;">Sort:</span>
             <button id="btnSortRating" class="paper-btn" style="background:#1b1917; color:#eee8dc;">★ Rating</button>
@@ -3808,171 +4402,6 @@
 
     </div>
   </section>
-
-  <!-- ================= THE REAL GOAT KNOCKOUT TOURNAMENT SECTION ================= -->
-  <section id="goatSection" class="goat-tournament-section">
-    <div class="goat-stadium-glow"></div>
-    <div class="goat-tournament-inner">
-
-      <!-- HEADER BANNER -->
-      <div class="goat-header-banner">
-        <div class="goat-kicker">
-          <span class="goat-gold-dot"></span>
-          <span>THE CINEMA CLASH • KNOCKOUT ELIMINATION</span>
-        </div>
-        <h2 class="goat-main-heading">WHO IS THE REAL GOAT?</h2>
-        <p class="goat-sub-desc">
-          Your top 16 rated movies and TV series clash in a direct single-elimination football-style knockout fixture.
-          Resolve every battle round-by-round from the Round of 16 to the Grand Final, and crown the ultimate All-Time Cinema GOAT.
-        </p>
-
-        <div class="goat-status-bar" id="goatStatusBar">
-          <span class="goat-status-pill locked" id="goatStatusBadge">VAULT SYNC</span>
-          <span id="goatStatusText">Scanning logged archive for top 16 seeds...</span>
-        </div>
-      </div>
-
-      <!-- 3D TROPHY & HIGHLIGHT STAGE HERO -->
-      <div class="goat-stage-hero">
-        <!-- 3D Golden Reel Trophy Card -->
-        <div class="goat-trophy-card">
-          <canvas id="goatTrophyCanvas" class="goat-trophy-3d-canvas"></canvas>
-          <div class="goat-trophy-caption">
-            <div class="goat-trophy-title" id="goatTrophyTitle">THE GOLDEN REEL TROPHY</div>
-            <div class="goat-trophy-sub" id="goatTrophySub">Interactive 3D Asset • Drag to rotate in space</div>
-          </div>
-        </div>
-
-        <!-- Dynamic Matchup / Champion Panel -->
-        <div class="goat-highlight-panel" id="goatHighlightPanel">
-          <!-- Populated by JavaScript with active battle or championship banner -->
-        </div>
-      </div>
-
-      <!-- ACTION TOOLBAR -->
-      <div class="goat-action-toolbar">
-        <button type="button" id="btnGoatAutoSeed" class="goat-tool-btn" title="Refresh bracket with top 16 rated titles from your archive">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg>
-          <span id="btnGoatAutoSeedLabel">Sync Vault Top 16</span>
-        </button>
-
-        <button type="button" id="btnGoatPlayNext" class="goat-tool-btn primary" title="Enter the 3D Face-Off Arena for the next match">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-          <span id="btnGoatPlayNextLabel">Play Next Match</span>
-        </button>
-
-        <button type="button" id="btnGoatReset" class="goat-tool-btn danger" title="Reset tournament bracket">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-          <span>Reset Bracket</span>
-        </button>
-
-        <button type="button" id="btnGoatSoundToggle" class="goat-tool-btn" title="Toggle audio sound FX">
-          <span id="goatSoundIcon">🔊</span>
-          <span id="goatSoundLabel">Sound FX: ON</span>
-        </button>
-
-        <button type="button" id="btnGoatBackToTop" class="goat-tool-btn" title="Scroll back to top reel">
-          <span>↑ Back to Reel</span>
-        </button>
-      </div>
-
-      <!-- FOOTBALL STYLE KNOCKOUT BRACKET TREE -->
-      <div class="goat-bracket-outer" id="goatBracketOuter">
-        <div class="goat-bracket-scrollable">
-          <div class="goat-bracket-fixture" id="goatBracketFixture">
-            <!-- Dynamically populated 7-column fixture tree -->
-          </div>
-        </div>
-      </div>
-
-      <!-- CROWN CELEBRATION & HALL OF FAME PODIUM (Visible after Grand Final) -->
-      <div id="goatCrownCelebration" class="goat-crown-celebration" style="display:none;">
-        <div class="champion-trophy-emblem">👑</div>
-        <h3 class="champion-title-heading" id="championTitleText">THE REAL GOAT</h3>
-        <div class="champion-sub-heading">OFFICIALLY CROWNED CHAMPION OF THE CINEMA FILES ARCHIVE</div>
-
-        <!-- PODIUM (1ST, 2ND, 3RD) -->
-        <div class="champion-podium-grid" id="championPodiumGrid">
-          <!-- Populated dynamically -->
-        </div>
-
-        <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-          <button type="button" id="btnShareGoatResult" class="goat-tool-btn primary">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
-            <span>Share GOAT Crown</span>
-          </button>
-          <button type="button" id="btnReplayGoat" class="goat-tool-btn">
-            <span>Replay Tournament</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- SECTION FOOTER CREDITS -->
-      <div style="margin-top:50px; text-align:center; font-family:'Space Mono', monospace; font-size:11px; color:#78716c; letter-spacing:0.15em;">
-        <div>KNOCKOUT ENGINE DESIGNED & DEVELOPED FOR CINEMA FILES BY <strong>ANURAG SINGH INDOLIYA</strong></div>
-        <div style="margin-top:6px;">
-          <a href="https://instagram.com/anurag_singh.indoliya" target="_blank" rel="noopener noreferrer" style="color:#a8a29e; text-decoration:none;">
-            Instagram: @anurag_singh.indoliya
-          </a>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- 3D HOLOGRAPHIC CINEMA CLASH ARENA MODAL -->
-  <div id="goatArenaModal" class="modal-backdrop goat-arena-backdrop">
-    <div class="goat-arena-card">
-      <div class="goat-arena-header">
-        <div class="goat-arena-round-badge" id="arenaRoundBadge">ROUND OF 16 • MATCH 1</div>
-        <h3 class="goat-arena-title">CHOOSE THE VICTOR</h3>
-        <button type="button" class="modal-close" id="btnCloseArena">×</button>
-      </div>
-
-      <div class="goat-arena-stage">
-        <!-- CONTENDER A -->
-        <div class="contender-arena-card left" id="contenderCardA">
-          <div class="contender-poster-box">
-            <img id="arenaPosterA" class="contender-poster-img" src="" alt="" />
-            <div class="contender-seed-tag" id="arenaSeedA">#01</div>
-            <div class="contender-score-tag" id="arenaRatingA">★ 9.9</div>
-          </div>
-          <h4 class="contender-arena-title" id="arenaTitleA">Breaking Bad</h4>
-          <div class="contender-arena-meta" id="arenaMetaA">2008 • TV Series</div>
-          <div class="contender-arena-synopsis" id="arenaSynopsisA">A high school chemistry teacher diagnosed with terminal lung cancer turns to manufacturing methamphetamine.</div>
-          <button type="button" class="contender-choose-btn" id="btnChooseA">
-            <span>👑 CHOOSE AS WINNER</span>
-          </button>
-        </div>
-
-        <!-- CENTER VS PULSE -->
-        <div class="goat-arena-vs">
-          <div class="vs-ring-pulse"></div>
-          <div class="vs-text">VS</div>
-          <div class="vs-sub">KNOCKOUT</div>
-        </div>
-
-        <!-- CONTENDER B -->
-        <div class="contender-arena-card right" id="contenderCardB">
-          <div class="contender-poster-box">
-            <img id="arenaPosterB" class="contender-poster-img" src="" alt="" />
-            <div class="contender-seed-tag" id="arenaSeedB">#16</div>
-            <div class="contender-score-tag" id="arenaRatingB">★ 2.1</div>
-          </div>
-          <h4 class="contender-arena-title" id="arenaTitleB">365 Days</h4>
-          <div class="contender-arena-meta" id="arenaMetaB">2020 • Feature Film</div>
-          <div class="contender-arena-synopsis" id="arenaSynopsisB">A fiery Polish executive falls victim to a Sicilian mafia boss who gives her 365 days to fall in love with him.</div>
-          <button type="button" class="contender-choose-btn" id="btnChooseB">
-            <span>👑 CHOOSE AS WINNER</span>
-          </button>
-        </div>
-      </div>
-
-      <div style="text-align:center; font-family:'Space Mono', monospace; font-size:11px; color:#a8a29e; letter-spacing:0.08em; padding-top:10px; border-top:1px solid rgba(255,255,255,0.08);">
-        Select either contender or press [<kbd style="background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:4px; color:#fff;">←</kbd> / <kbd style="background:rgba(255,255,255,0.1); padding:2px 6px; border-radius:4px; color:#fff;">→</kbd>] to eliminate opponent & advance!
-      </div>
-    </div>
-  </div>
 
   <!-- FLOATING POSTER PREVIEW TOOLTIP -->
   <div id="indexPosterPreview">
@@ -4042,9 +4471,99 @@
           </div>
           <div>
             <label style="font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:8px;">Personal Thought / Note</label>
-            <textarea id="editNoteInput" rows="3" style="width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.18); border-radius:8px; padding:10px 14px; font-size:13px; color:#fff; font-family:'Inter',sans-serif; outline:none; resize:none;" placeholder="What did you think about this film or series?"></textarea>
+            <textarea id="editNoteInput" rows="3" style="width:100%; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.18); border-radius:8px; padding:10px 14px; font-size:13px; color:#fff; font-family:'Inter',sans-serif; outline:none; resize:none;" placeholder="What did you think about this title?"></textarea>
           </div>
+
+          <!-- DYNAMIC TYPE-SPECIFIC CONTROLS (MOVIES VS SERIES VS PACKAGES) -->
+          <div id="editTypeSpecificContainer" style="display:flex; flex-direction:column; gap:12px; padding:12px; background:rgba(0,0,0,0.3); border-radius:8px; border:1px solid rgba(255,255,255,0.08);">
+            <!-- Populated dynamically by openEditRating() -->
+          </div>
+
           <button id="btnSaveEdit" class="search-btn" style="height:44px; margin-top:8px;">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Manual Franchise Package Builder Modal -->
+  <div id="packageFranchiseModal" class="modal-backdrop">
+    <div class="modal-card" style="max-width:680px;">
+      <div class="modal-header">
+        <div>
+          <span style="font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:#f2b34c;">Custom Franchise Packager</span>
+          <h3 style="margin-top:2px;" id="packageModalTitle">PACKAGE FRANCHISE MOVIES</h3>
+        </div>
+        <button id="btnClosePackage" class="modal-close">×</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <!-- PRESETS ROW -->
+          <div>
+            <span class="tv-control-label" style="color:#f2b34c;">Pick a Franchise Saga:</span>
+            <div class="franchise-preset-row" id="franchisePresetsContainer">
+              <!-- Dynamically populated presets -->
+            </div>
+          </div>
+
+          <!-- PACKAGE TITLE & YEAR -->
+          <div style="display:grid; grid-template-columns: 2fr 1fr; gap:10px;">
+            <div>
+              <label style="font-size:10px; font-family:'Space Mono',monospace; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:6px;">Package Name</label>
+              <input type="text" id="packageCustomNameInput" style="width:100%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); border-radius:6px; padding:8px 12px; font-size:14px; font-weight:700; color:#fff; outline:none;" placeholder="e.g. The Dark Knight Trilogy" />
+            </div>
+            <div>
+              <label style="font-size:10px; font-family:'Space Mono',monospace; text-transform:uppercase; color:var(--muted); display:block; margin-bottom:6px;">Genre</label>
+              <input type="text" id="packageCustomGenreInput" style="width:100%; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.2); border-radius:6px; padding:8px 12px; font-size:14px; color:#fff; outline:none;" placeholder="Action / Sci-Fi" />
+            </div>
+          </div>
+
+          <!-- INSTRUCTION CALLOUT -->
+          <div style="padding:10px 14px; background:rgba(242,179,76,0.1); border-left:3px solid #f2b34c; border-radius:4px; font-size:12px; color:#fde68a; line-height:1.5;">
+            <strong>Select only the movies you watched</strong> from this franchise below. Adjust individual scores as needed. We will bundle them into <strong>1 consolidated card</strong> on your 3D reel sorted by overall score.
+          </div>
+
+          <!-- MOVIES SELECTION LIST -->
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+              <span class="tv-control-label" style="color:#f2b34c;">Franchise Films (<span id="selectedMoviesCountBadge">0 selected</span>):</span>
+              <button type="button" id="btnSelectAllFranchise" class="paper-btn" style="padding:2px 8px; font-size:10px; background:rgba(255,255,255,0.1); color:#fff;">Select All</button>
+            </div>
+            <div class="package-movies-grid" id="packageMoviesGrid">
+              <!-- Dynamically rendered selectable movies -->
+            </div>
+          </div>
+
+          <!-- ADD CUSTOM FILM TO SAGA -->
+          <div style="display:flex; gap:8px; align-items:center; padding:8px; background:rgba(255,255,255,0.03); border:1px dashed rgba(255,255,255,0.15); border-radius:6px;">
+            <input type="text" id="packageNewMovieTitle" placeholder="+ Add another movie to this saga..." style="flex:1; background:transparent; border:none; color:#fff; font-size:12px; outline:none;" />
+            <input type="number" id="packageNewMovieYear" placeholder="Year" style="width:60px; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.15); border-radius:4px; color:#fff; font-size:11px; padding:4px; text-align:center; outline:none;" />
+            <input type="number" id="packageNewMovieRating" placeholder="★ 9.0" step="0.1" min="0" max="10" value="9.0" style="width:55px; background:rgba(0,0,0,0.4); border:1px solid rgba(255,255,255,0.15); border-radius:4px; color:#f2b34c; font-size:11px; padding:4px; text-align:center; outline:none;" />
+            <button type="button" id="btnAddMovieToPackageList" class="paper-btn" style="padding:4px 10px; font-size:11px; background:#f2b34c; color:#1b1917; font-weight:700;">+ Add</button>
+          </div>
+
+          <!-- UNIFIED RATING & AUTO-AVERAGE BAR -->
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; padding:12px; background:rgba(242,179,76,0.08); border:1px solid rgba(242,179,76,0.25); border-radius:8px;">
+            <div>
+              <div style="font-family:'Space Mono',monospace; font-size:10px; text-transform:uppercase; color:#f2b34c; letter-spacing:0.1em;">Calculated Average Score:</div>
+              <div style="font-size:18px; font-weight:700; color:#fff; margin-top:2px;">
+                ★ <span id="packageCalculatedAvg">0.0</span> / 10
+                <button type="button" id="btnApplyAvgRating" class="paper-btn" style="padding:2px 8px; font-size:10px; margin-left:8px; background:#f2b34c; color:#1b1917; font-weight:700;">Use Average</button>
+              </div>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:8px;">
+              <label style="font-size:11px; font-family:'Space Mono',monospace; text-transform:uppercase; color:#fff;">Unified Package Score:</label>
+              <input type="number" id="packageFinalScoreInput" min="0" max="10" step="0.1" value="9.0" style="width:70px; background:#111; border:1px solid #f2b34c; border-radius:6px; padding:6px; font-size:16px; font-weight:700; color:#f2b34c; text-align:center; outline:none;" />
+            </div>
+          </div>
+
+          <!-- SUBMIT ACTIONS -->
+          <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:6px;">
+            <button type="button" id="btnCancelPackage" class="modal-close-alt">Cancel</button>
+            <button type="button" id="btnSubmitCreatePackage" class="search-btn" style="height:44px; padding:0 24px; font-weight:800; background:#f2b34c; color:#0c0b0f; border-color:#f2b34c;">
+              📦 Package Selected Movies into 1 Card
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -4080,6 +4599,32 @@
           <button id="btnShareWhatsApp" class="share-opt-btn">
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12.031 2c-5.508 0-9.985 4.477-9.985 9.985 0 1.761.459 3.479 1.332 4.995L2 22.5l5.688-1.309a9.92 9.92 0 0 0 4.343 1.009c5.508 0 9.985-4.477 9.985-9.985C22.016 6.477 17.539 2 12.031 2zm0 18.271a8.27 8.27 0 0 1-4.223-1.152l-.303-.18-3.137.722.839-3.058-.197-.314a8.26 8.26 0 0 1-1.264-4.304c0-4.57 3.715-8.285 8.285-8.285 4.57 0 8.285 3.715 8.285 8.285 0 4.57-3.715 8.285-8.285 8.285z"/></svg>
             <span>WhatsApp</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Cinema Confirmation Modal (Reliable Delete on all devices & iframe) -->
+  <div id="cinemaConfirmModal" class="modal-backdrop">
+    <div class="modal-card" style="max-width:420px; border-color:rgba(239, 68, 68, 0.35); box-shadow:0 24px 60px rgba(0,0,0,0.9), 0 0 30px rgba(220,38,38,0.2);">
+      <div class="modal-header" style="border-bottom:1px solid rgba(239,68,68,0.15);">
+        <div>
+          <span style="font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:#ef4444; font-weight:700;">Archive Action</span>
+          <h3 id="cinemaConfirmTitle" style="margin-top:2px; font-size:18px; letter-spacing:0.04em;">REMOVE ENTRY</h3>
+        </div>
+        <button id="btnCloseCinemaConfirm" class="modal-close">×</button>
+      </div>
+      <div class="modal-body" style="padding:22px 24px;">
+        <p id="cinemaConfirmMessage" style="font-size:14px; color:#e2e8f0; line-height:1.6; margin-bottom:24px;">
+          Are you sure you want to remove this item from your cinema archive?
+        </p>
+        <div style="display:flex; gap:12px; justify-content:flex-end;">
+          <button type="button" id="btnCinemaConfirmCancel" class="paper-btn" style="height:42px; padding:0 18px; background:rgba(255,255,255,0.08); color:#cbd5e1; border:1px solid rgba(255,255,255,0.15); font-weight:600; border-radius:8px; cursor:pointer;">
+            Cancel
+          </button>
+          <button type="button" id="btnCinemaConfirmAction" class="search-btn" style="height:42px; padding:0 22px; background:#dc2626; color:#ffffff; border:1px solid #ef4444; font-weight:700; border-radius:8px; box-shadow:0 4px 14px rgba(220,38,38,0.4); cursor:pointer;">
+            Remove Title
           </button>
         </div>
       </div>
@@ -4150,7 +4695,42 @@
       }
     }
 
+    /* ================= 3D REEL RATING REALIGNMENT ENGINE ================= */
+    function sortItemsByRatingDescending(items) {
+      if (!Array.isArray(items)) return items;
+      return items.sort((a, b) => {
+        const rateA = Number(a.r !== undefined && a.r !== null ? a.r : 0);
+        const rateB = Number(b.r !== undefined && b.r !== null ? b.r : 0);
+        if (rateB !== rateA) {
+          return rateB - rateA; // Decreasing order: highest rating first
+        }
+        // Secondary tie-breaker: Year descending (newest first)
+        const yearA = parseInt(a.y) || 0;
+        const yearB = parseInt(b.y) || 0;
+        if (yearB !== yearA) {
+          return yearB - yearA;
+        }
+        // Tertiary tie-breaker: Title alphabetically
+        return (a.t || '').localeCompare(b.t || '');
+      });
+    }
+
+    function realignReelByRating(interactive = true) {
+      sortItemsByRatingDescending(ITEMS);
+      saveWatchlist(ITEMS);
+      rebuildScene();
+      renderLedgerSection();
+      if (typeof initGoatTournament === 'function') {
+        initGoatTournament(false);
+      }
+      if (interactive) {
+        showToast('★ 3D Reel realigned: Titles ordered by rating (Highest → Lowest)!');
+        goTo(0);
+      }
+    }
+
     async function saveWatchlist(items) {
+      sortItemsByRatingDescending(items);
       saveLocalWatchlist(items);
       if (currentUser && db) {
         try {
@@ -4188,7 +4768,7 @@
     }
 
     const sharedFromUrl = parseSharedWatchlistFromUrl();
-    let ITEMS = sharedFromUrl || loadLocalWatchlist();
+    let ITEMS = sortItemsByRatingDescending(sharedFromUrl || loadLocalWatchlist());
     const UNIT = 0.7; // viewport heights per item
     const R = 5.2, STEP_ANGLE = 0.58, STEP_Y = 1.18;
 
@@ -4551,6 +5131,9 @@
     function rebuildScene() {
       if (!scene) return;
 
+      // Always maintain 3D scroll animation realigned by rating in decreasing order
+      sortItemsByRatingDescending(ITEMS);
+
       // Clean up previous cards
       cards.forEach(c => {
         scene.remove(c.group);
@@ -4684,7 +5267,7 @@
       ITEMS.forEach((it, i) => {
         const d = document.createElement('div');
         d.className = 'd';
-        d.dataset.t = it.t;
+        d.dataset.t = `#${i + 1} · ${it.t} (★ ${Number(it.r || 0).toFixed(1)})`;
         d.onclick = () => goTo(i);
         dots.appendChild(d);
       });
@@ -4836,101 +5419,463 @@
     function combineFranchiseItems(rawItems) {
       if (!rawItems || !rawItems.length) return [];
 
-      const groups = new Map();
-      const ungrouped = [];
-
+      const results = [];
       rawItems.forEach((item, originalIndex) => {
-        if (item.isCombinedFranchise) {
-          ungrouped.push({
+        const isPack = !!(item.isPackage || item.isCombinedFranchise || (item.parts && item.parts.length >= 2));
+        if (isPack) {
+          const parts = item.parts || [item];
+          results.push({
             isCombined: true,
             item: { ...item },
             franchiseKey: (item.baseName || item.t).toLowerCase(),
-            originalIndices: item.parts && item.parts.length ? item.parts.map((p, i) => p.originalIndex !== undefined ? p.originalIndex : originalIndex) : [originalIndex],
-            parts: item.parts || [item]
+            originalIndices: parts.map((p, i) => p.originalIndex !== undefined ? p.originalIndex : originalIndex),
+            parts: parts
           });
-          return;
-        }
-
-        const info = getFranchiseKeyAndPart(item.t);
-        if (!info) {
-          ungrouped.push({
+        } else {
+          results.push({
             isCombined: false,
             item: { ...item },
             originalIndices: [originalIndex]
           });
-          return;
         }
-
-        const key = info.franchiseKey;
-        if (!groups.has(key)) {
-          groups.set(key, { baseName: info.baseName, parts: [] });
-        }
-        groups.get(key).parts.push({ item, info, originalIndex });
       });
+      return results;
+    }
 
-      const combinedResults = [];
+    /* ================= MANUAL FRANCHISE PACKAGER ENGINE ================= */
+    const FRANCHISE_PRESETS = [
+      {
+        id: 'dark-knight',
+        name: 'The Dark Knight Trilogy',
+        baseName: 'The Dark Knight',
+        genre: 'Action / Crime',
+        defaultRating: 9.3,
+        poster: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX600.jpg',
+        movies: [
+          { t: 'Batman Begins', y: 2005, r: 8.8, d: '140 min', h: 2, p: 'https://m.media-amazon.com/images/M/MV5BOTY4YjI2N2MtYmFlMC00ZjcyLWE3YjEtMDQxY2ZjMzRmMjExXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX600.jpg' },
+          { t: 'The Dark Knight', y: 2008, r: 9.8, d: '152 min', h: 3, p: 'https://m.media-amazon.com/images/M/MV5BMTMxNTMwODM0NF5BMl5BanBnXkFtZTcwODAyMTk2Mw@@._V1_SX600.jpg' },
+          { t: 'The Dark Knight Rises', y: 2012, r: 8.9, d: '164 min', h: 3, p: 'https://m.media-amazon.com/images/M/MV5BMTk4ODQzNDY3Ml5BMl5BanBnXkFtZTcwODA0NTM4Nw@@._V1_SX600.jpg' }
+        ]
+      },
+      {
+        id: 'iron-man',
+        name: 'Iron Man Trio Movies',
+        baseName: 'Iron Man',
+        genre: 'Action / Sci-Fi',
+        defaultRating: 9.2,
+        poster: 'https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX600.jpg',
+        movies: [
+          { t: 'Iron Man', y: 2008, r: 9.4, d: '126 min', h: 2, p: 'https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX600.jpg' },
+          { t: 'Iron Man 2', y: 2010, r: 8.3, d: '124 min', h: 2, p: 'https://m.media-amazon.com/images/M/MV5BMTM0MDgwNjMyMl5BMl5BanBnXkFtZTcwNTg3NzAzMw@@._V1_SX600.jpg' },
+          { t: 'Iron Man 3', y: 2013, r: 8.6, d: '130 min', h: 2, p: 'https://m.media-amazon.com/images/M/MV5BMjE5MzcyNjk1M15BMl5BanBnXkFtZTcwMjQ4MjcxOQ@@._V1_SX600.jpg' }
+        ]
+      },
+      {
+        id: 'spider-man-raimi',
+        name: 'Spider-Man Raimi Trilogy',
+        baseName: 'Spider-Man',
+        genre: 'Action / Adventure',
+        defaultRating: 8.9,
+        poster: 'https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_SX600.jpg',
+        movies: [
+          { t: 'Spider-Man', y: 2002, r: 9.0, d: '121 min', h: 2, p: 'https://m.media-amazon.com/images/M/MV5BZDEyN2NhMjgtMjdhNi00MmNlLWE5YTgtZGE4MzNjMTRlMGEwXkEyXkFqcGdeQXVyNDUyOTg3Njg@._V1_SX600.jpg' },
+          { t: 'Spider-Man 2', y: 2004, r: 9.5, d: '127 min', h: 2, p: 'https://m.media-amazon.com/images/M/MV5BMzY2ODk4NmUtOTVmNi00ZTdkLTlmOWYtMmE2OWVhNTU2OTVkXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_SX600.jpg' },
+          { t: 'Spider-Man 3', y: 2007, r: 7.7, d: '139 min', h: 2, p: 'https://m.media-amazon.com/images/M/MV5BYTk3NDVkOTktNjAxMC00NDg3LWI4OWItNmE4NWFlNDVjMzU5XkEyXkFqcGdeQXVyODE5NzE3OTE@._V1_SX600.jpg' }
+        ]
+      },
+      {
+        id: 'godfather',
+        name: 'The Godfather Trilogy',
+        baseName: 'The Godfather',
+        genre: 'Crime / Drama',
+        defaultRating: 9.6,
+        poster: 'https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX600.jpg',
+        movies: [
+          { t: 'The Godfather', y: 1972, r: 9.9, d: '175 min', h: 3, p: 'https://m.media-amazon.com/images/M/MV5BM2MyNjYxNmUtYTAwNi00MTYxLWJmNWYtYzZlODY3ZTk3OTFlXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX600.jpg' },
+          { t: 'The Godfather Part II', y: 1974, r: 9.8, d: '202 min', h: 3, p: 'https://m.media-amazon.com/images/M/MV5BMWMwMGQzZTItY2JlNC00OWZiLWIyMDAtNDk2ZDQ2NDIxNjZkXkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX600.jpg' },
+          { t: 'The Godfather Part III', y: 1990, r: 8.0, d: '162 min', h: 3, p: 'https://m.media-amazon.com/images/M/MV5BNTc1YjUxZmUtYjk3OS00MTRhLWI2Y2MtZjQzOWFmKw@@._V1_SX600.jpg' }
+        ]
+      },
+      {
+        id: 'lotr',
+        name: 'The Lord of the Rings Trilogy',
+        baseName: 'The Lord of the Rings',
+        genre: 'Fantasy / Adventure',
+        defaultRating: 9.8,
+        poster: 'https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX600.jpg',
+        movies: [
+          { t: 'The Lord of the Rings: The Fellowship of the Ring', y: 2001, r: 9.7, d: '178 min', h: 3, p: 'https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_SX600.jpg' },
+          { t: 'The Lord of the Rings: The Two Towers', y: 2002, r: 9.6, d: '179 min', h: 3, p: 'https://m.media-amazon.com/images/M/MV5BZGMxZTdjZmYtMmE2Ni00ZTdkLWI5NTgtNjlmMjBiNzU2MmI5XkEyXkFqcGdeQXVyNjU0OTQ0OTY@._V1_SX600.jpg' },
+          { t: 'The Lord of the Rings: The Return of the King', y: 2003, r: 9.9, d: '201 min', h: 3, p: 'https://m.media-amazon.com/images/M/MV5BNzA5ZDNlZWMtM2NhNS00NDJjLTk4NDItYTRmY2EwMWZlMTY3XkEyXkFqcGdeQXVyNzkwMjQ5NzM@._V1_SX600.jpg' }
+        ]
+      },
+      {
+        id: 'john-wick',
+        name: 'John Wick 4-Part Saga',
+        baseName: 'John Wick',
+        genre: 'Action / Neo-Noir',
+        defaultRating: 9.1,
+        poster: 'https://m.media-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_SX600.jpg',
+        movies: [
+          { t: 'John Wick', y: 2014, r: 9.1, d: '101 min', h: 2, p: 'https://m.media-amazon.com/images/M/MV5BMTU2NjA1ODgzMF5BMl5BanBnXkFtZTgwMTM2MTI4MjE@._V1_SX600.jpg' },
+          { t: 'John Wick: Chapter 2', y: 2017, r: 9.0, d: '122 min', h: 2, p: 'https://m.media-amazon.com/images/M/MV5BMjE2NDkxNTY2M15BMl5BanBnXkFtZTgwMDc2NzE0MTI@._V1_SX600.jpg' },
+          { t: 'John Wick: Chapter 3 - Parabellum', y: 2019, r: 8.9, d: '130 min', h: 2, p: 'https://m.media-amazon.com/images/M/MV5BMDg2YzI0ODctYjliMy00NTU0LTkxODYtYTNkNjQwMzVmOTcxXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SX600.jpg' },
+          { t: 'John Wick: Chapter 4', y: 2023, r: 9.2, d: '169 min', h: 3, p: 'https://m.media-amazon.com/images/M/MV5BMDExZGMyOTMtMDgyYi00N2JhLWExNTMtZDFiZDA2NDExNWIxXkEyXkFqcGdeQXVyNjg2NjQwMDQ@._V1_SX600.jpg' }
+        ]
+      },
+      {
+        id: 'dune',
+        name: 'Dune Duology',
+        baseName: 'Dune',
+        genre: 'Sci-Fi / Adventure',
+        defaultRating: 9.4,
+        poster: 'https://m.media-amazon.com/images/M/MV5BN2FjNmEyNWMtYzM0ZS00NjIyLTg5YzYtODExYjUxOTU1ZjQxXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX600.jpg',
+        movies: [
+          { t: 'Dune: Part One', y: 2021, r: 9.2, d: '155 min', h: 3, p: 'https://m.media-amazon.com/images/M/MV5BN2FjNmEyNWMtYzM0ZS00NjIyLTg5YzYtODExYjUxOTU1ZjQxXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX600.jpg' },
+          { t: 'Dune: Part Two', y: 2024, r: 9.6, d: '166 min', h: 3, p: 'https://m.media-amazon.com/images/M/MV5BN2QyZGUgk@._V1_SX600.jpg' }
+        ]
+      },
+      {
+        id: 'custom',
+        name: '+ Custom Franchise',
+        baseName: 'Custom Saga',
+        genre: 'Cinema',
+        defaultRating: 9.0,
+        poster: 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png',
+        movies: []
+      }
+    ];
 
-      groups.forEach((group, key) => {
-        // Only combine if 2 or more parts exist
-        if (group.parts.length < 2) {
-          group.parts.forEach(p => {
-            combinedResults.push({
-              isCombined: false,
-              item: { ...p.item },
-              originalIndices: [p.originalIndex]
-            });
-          });
-          return;
-        }
+    let activePackagePresetId = 'dark-knight';
+    let activePackageWorkingList = [];
 
-        // Sort parts chronologically by part number then release year
-        group.parts.sort((a, b) => (a.info.partNumber - b.info.partNumber) || ((parseInt(a.item.y) || 0) - (parseInt(b.item.y) || 0)));
+    function openPackageFranchiseModal(presetKey) {
+      const container = document.getElementById('franchisePresetsContainer');
+      if (container) {
+        container.innerHTML = FRANCHISE_PRESETS.map(preset => `
+          <button type="button" class="preset-pill ${preset.id === (presetKey || activePackagePresetId) ? 'selected' : ''}" data-id="${preset.id}">
+            ${preset.name}
+          </button>
+        `).join('');
 
-        const count = group.parts.length;
-        let combinedTitle = '';
-        if (count === 2) combinedTitle = `${group.baseName} Duo Movies`;
-        else if (count === 3) combinedTitle = `${group.baseName} Trio Movies`;
-        else if (count === 4) combinedTitle = `${group.baseName} 4-Part Saga`;
-        else combinedTitle = `${group.baseName} Collection (${count} Films)`;
-
-        const ratings = group.parts.map(p => Number(p.item.r || 0)).filter(r => r > 0);
-        const avgRating = ratings.length ? Number((ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1)) : 9.0;
-
-        const years = group.parts.map(p => parseInt(p.item.y)).filter(y => !isNaN(y));
-        const minYear = years.length ? Math.min(...years) : 2008;
-        const maxYear = years.length ? Math.max(...years) : 2013;
-        const yearSpan = minYear === maxYear ? `${minYear}` : `${minYear}–${maxYear}`;
-
-        const totalHours = group.parts.reduce((a, b) => a + (Number(b.item.h) || 2), 0);
-        const primaryPart = group.parts[0].item;
-        const partsWithOrig = group.parts.map(p => ({ ...p.item, originalIndex: p.originalIndex }));
-
-        const combinedItem = {
-          ...primaryPart,
-          t: combinedTitle,
-          baseName: group.baseName,
-          y: yearSpan,
-          r: avgRating,
-          h: totalHours,
-          d: `${count} Feature Films`,
-          k: count === 3 ? 'Movie Trio' : (count === 2 ? 'Movie Duo' : 'Movie Saga'),
-          n: `Combined Franchise: Includes ${partsWithOrig.map(p => `${p.t} (${p.y}) ★${Number(p.r || 0).toFixed(1)}`).join(' · ')}. Mean Rating: ★ ${avgRating.toFixed(1)}/10.`,
-          isCombinedFranchise: true,
-          partsCount: count,
-          parts: partsWithOrig
-        };
-
-        combinedResults.push({
-          isCombined: true,
-          item: combinedItem,
-          franchiseKey: key,
-          baseName: group.baseName,
-          originalIndices: group.parts.map(p => p.originalIndex),
-          parts: partsWithOrig
+        container.querySelectorAll('.preset-pill').forEach(btn => {
+          btn.onclick = () => {
+            selectFranchisePreset(btn.getAttribute('data-id'));
+          };
         });
+      }
+
+      selectFranchisePreset(presetKey || activePackagePresetId);
+
+      const btnAddMovie = document.getElementById('btnAddMovieToPackageList');
+      if (btnAddMovie) btnAddMovie.onclick = addCustomMovieToPackageList;
+
+      const btnApplyAvg = document.getElementById('btnApplyAvgRating');
+      if (btnApplyAvg) {
+        btnApplyAvg.onclick = () => {
+          const avg = parseFloat(document.getElementById('packageCalculatedAvg').textContent) || 9.0;
+          document.getElementById('packageFinalScoreInput').value = avg.toFixed(1);
+        };
+      }
+
+      const btnSelectAll = document.getElementById('btnSelectAllFranchise');
+      if (btnSelectAll) {
+        btnSelectAll.onclick = () => {
+          const allSelected = activePackageWorkingList.every(m => m.selected);
+          activePackageWorkingList.forEach(m => m.selected = !allSelected);
+          renderPackageMoviesGrid();
+          recalcPackageAverage();
+        };
+      }
+
+      const btnSubmit = document.getElementById('btnSubmitCreatePackage');
+      if (btnSubmit) btnSubmit.onclick = submitCreatePackage;
+
+      const btnCancel = document.getElementById('btnCancelPackage');
+      if (btnCancel) btnCancel.onclick = () => closeModal('packageFranchiseModal');
+
+      const btnClose = document.getElementById('btnClosePackage');
+      if (btnClose) btnClose.onclick = () => closeModal('packageFranchiseModal');
+
+      openModal('packageFranchiseModal');
+    }
+
+    function selectFranchisePreset(presetId) {
+      activePackagePresetId = presetId;
+      const preset = FRANCHISE_PRESETS.find(p => p.id === presetId) || FRANCHISE_PRESETS[0];
+
+      // Highlight active pill
+      document.querySelectorAll('#franchisePresetsContainer .preset-pill').forEach(pill => {
+        pill.classList.toggle('selected', pill.getAttribute('data-id') === presetId);
       });
 
-      return [...combinedResults, ...ungrouped];
+      const nameIn = document.getElementById('packageCustomNameInput');
+      const genreIn = document.getElementById('packageCustomGenreInput');
+      const finalScoreIn = document.getElementById('packageFinalScoreInput');
+
+      if (nameIn) nameIn.value = preset.name;
+      if (genreIn) genreIn.value = preset.genre;
+      if (finalScoreIn) finalScoreIn.value = preset.defaultRating.toFixed(1);
+
+      // Deep copy movies and cross-check against user's ITEMS
+      activePackageWorkingList = preset.movies.map(m => {
+        const existingInArchive = ITEMS.find(it => it.t.toLowerCase().trim() === m.t.toLowerCase().trim());
+        return {
+          t: m.t,
+          y: m.y,
+          r: existingInArchive ? Number(existingInArchive.r || m.r) : Number(m.r),
+          d: m.d || '120 min',
+          h: m.h || 2,
+          p: existingInArchive && existingInArchive.p ? existingInArchive.p : m.p,
+          selected: true
+        };
+      });
+
+      renderPackageMoviesGrid();
+      recalcPackageAverage();
+    }
+
+    function renderPackageMoviesGrid() {
+      const grid = document.getElementById('packageMoviesGrid');
+      const countBadge = document.getElementById('selectedMoviesCountBadge');
+      if (!grid) return;
+
+      const selectedCount = activePackageWorkingList.filter(m => m.selected).length;
+      if (countBadge) {
+        countBadge.textContent = `${selectedCount} of ${activePackageWorkingList.length} selected`;
+      }
+
+      if (activePackageWorkingList.length === 0) {
+        grid.innerHTML = `
+          <div style="grid-column:1/-1; padding:20px; text-align:center; color:#a8a29e; font-size:12px; font-family:'Space Mono',monospace;">
+            No films in this package yet. Use the input below to add films you watched from this franchise.
+          </div>
+        `;
+        return;
+      }
+
+      grid.innerHTML = activePackageWorkingList.map((m, idx) => `
+        <div class="package-movie-card ${m.selected ? 'checked' : ''}" data-idx="${idx}">
+          <input type="checkbox" class="package-checkbox" ${m.selected ? 'checked' : ''} data-idx="${idx}" />
+          <img src="${m.p || 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png'}" class="package-movie-thumb" alt="${m.t}" />
+          <div class="package-movie-info">
+            <div class="package-movie-title">${m.t}</div>
+            <div class="package-movie-meta">${m.y} • ${m.d || 'Film'}</div>
+            <div class="package-movie-score-row">
+              <span>Your Rating:</span>
+              <input type="number" class="package-movie-score-input" step="0.1" min="0" max="10" value="${Number(m.r || 9.0).toFixed(1)}" data-idx="${idx}" />
+              <span style="color:#f2b34c;">★</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+
+      // Wire checkboxes
+      grid.querySelectorAll('.package-checkbox').forEach(cb => {
+        cb.onchange = (e) => {
+          e.stopPropagation();
+          const idx = parseInt(cb.getAttribute('data-idx'));
+          if (activePackageWorkingList[idx]) {
+            activePackageWorkingList[idx].selected = cb.checked;
+            renderPackageMoviesGrid();
+            recalcPackageAverage();
+          }
+        };
+      });
+
+      // Wire card click toggles
+      grid.querySelectorAll('.package-movie-card').forEach(card => {
+        card.onclick = (e) => {
+          if (e.target.tagName === 'INPUT') return;
+          const idx = parseInt(card.getAttribute('data-idx'));
+          if (activePackageWorkingList[idx]) {
+            activePackageWorkingList[idx].selected = !activePackageWorkingList[idx].selected;
+            renderPackageMoviesGrid();
+            recalcPackageAverage();
+          }
+        };
+      });
+
+      // Wire score inputs
+      grid.querySelectorAll('.package-movie-score-input').forEach(inp => {
+        inp.onchange = (e) => {
+          e.stopPropagation();
+          const idx = parseInt(inp.getAttribute('data-idx'));
+          const score = clamp(parseFloat(inp.value) || 9.0, 0, 10);
+          if (activePackageWorkingList[idx]) {
+            activePackageWorkingList[idx].r = score;
+            recalcPackageAverage();
+          }
+        };
+      });
+    }
+
+    function recalcPackageAverage() {
+      const selected = activePackageWorkingList.filter(m => m.selected);
+      const avgEl = document.getElementById('packageCalculatedAvg');
+      const finalIn = document.getElementById('packageFinalScoreInput');
+      if (selected.length === 0) {
+        if (avgEl) avgEl.textContent = '0.0';
+        return;
+      }
+      const sum = selected.reduce((acc, m) => acc + Number(m.r || 0), 0);
+      const avg = sum / selected.length;
+      if (avgEl) avgEl.textContent = avg.toFixed(1);
+      if (finalIn && (!finalIn.value || finalIn.value === '0.0')) {
+        finalIn.value = avg.toFixed(1);
+      }
+    }
+
+    function addCustomMovieToPackageList() {
+      const titleIn = document.getElementById('packageNewMovieTitle');
+      const yearIn = document.getElementById('packageNewMovieYear');
+      const ratingIn = document.getElementById('packageNewMovieRating');
+
+      const title = titleIn ? titleIn.value.trim() : '';
+      if (!title) {
+        showToast('Please type a movie title to add.');
+        return;
+      }
+
+      const year = parseInt(yearIn && yearIn.value ? yearIn.value : '2024') || 2024;
+      const rating = clamp(parseFloat(ratingIn && ratingIn.value ? ratingIn.value : '9.0') || 9.0, 0, 10);
+
+      activePackageWorkingList.push({
+        t: title,
+        y: year,
+        r: rating,
+        d: '120 min',
+        h: 2,
+        p: 'https://static.tvmaze.com/images/no-img/no-img-portrait-text.png',
+        selected: true
+      });
+
+      if (titleIn) titleIn.value = '';
+      renderPackageMoviesGrid();
+      recalcPackageAverage();
+      showToast(`Added "${title}" to package builder.`);
+    }
+
+    function submitCreatePackage() {
+      const selected = activePackageWorkingList.filter(m => m.selected);
+      if (selected.length < 2) {
+        showToast('Please select at least 2 films to bundle into a franchise package.');
+        return;
+      }
+
+      const nameIn = document.getElementById('packageCustomNameInput');
+      const genreIn = document.getElementById('packageCustomGenreInput');
+      const scoreIn = document.getElementById('packageFinalScoreInput');
+
+      const activePreset = FRANCHISE_PRESETS.find(p => p.id === activePackagePresetId);
+      const packageName = (nameIn && nameIn.value.trim()) ? nameIn.value.trim() : `${selected[0].t} Saga`;
+      const packageGenre = (genreIn && genreIn.value.trim()) ? genreIn.value.trim() : 'Action / Cinema';
+      const finalScore = clamp(parseFloat(scoreIn && scoreIn.value ? scoreIn.value : '9.0') || 9.0, 0, 10);
+
+      const years = selected.map(m => parseInt(m.y)).filter(y => !isNaN(y));
+      const minYear = years.length ? Math.min(...years) : 2008;
+      const maxYear = years.length ? Math.max(...years) : 2024;
+      const yearSpan = minYear === maxYear ? `${minYear}` : `${minYear}–${maxYear}`;
+
+      const totalHours = selected.reduce((acc, m) => acc + (m.h || 2), 0);
+      const poster = (activePreset && activePreset.poster) ? activePreset.poster : selected[0].p;
+
+      // Consolidate: Remove any existing standalone items in ITEMS that match selected movie titles
+      const selectedTitles = new Set(selected.map(m => m.t.toLowerCase().trim()));
+      ITEMS = ITEMS.filter(it => !selectedTitles.has(it.t.toLowerCase().trim()));
+
+      const count = selected.length;
+      let sagaLabel = count === 3 ? 'Movie Trio' : (count === 2 ? 'Movie Duo' : 'Movie Saga');
+
+      const packageItem = {
+        t: packageName,
+        baseName: activePreset ? activePreset.baseName : packageName,
+        y: yearSpan,
+        k: sagaLabel,
+        g: packageGenre,
+        genres: [packageGenre, 'Franchise'],
+        c: '#f2b34c',
+        d: `${count} Feature Films`,
+        h: totalHours,
+        p: poster,
+        r: Number(finalScore.toFixed(1)),
+        n: `Packaged Franchise (${count} films): ${selected.map(m => `${m.t} (${m.y}) ★${Number(m.r).toFixed(1)}`).join(' · ')}. Mean Rating: ★ ${finalScore.toFixed(1)}/10.`,
+        isPackage: true,
+        isCombinedFranchise: true,
+        partsCount: count,
+        parts: selected.map(m => ({ ...m }))
+      };
+
+      ITEMS.push(packageItem);
+      sortItemsByRatingDescending(ITEMS);
+      saveWatchlist(ITEMS);
+
+      rebuildScene();
+      renderLedgerSection();
+      refreshStats();
+      if (typeof initGoatTournament === 'function') {
+        initGoatTournament(false);
+      }
+
+      closeModal('packageFranchiseModal');
+      showToast(`★ Successfully created package "${packageName}" (${count} films) at ★ ${finalScore.toFixed(1)}/10!`);
+
+      const newPos = ITEMS.indexOf(packageItem);
+      setTimeout(() => {
+        goTo(newPos >= 0 ? newPos : 0);
+      }, 250);
+    }
+
+    async function unpackFranchisePackage(targetItem) {
+      if (!targetItem) return;
+      const parts = targetItem.parts || [];
+      const partsCount = targetItem.partsCount || parts.length;
+      if (partsCount < 2) {
+        showToast('Cannot unpack: This item is not a multi-film package.');
+        return;
+      }
+
+      const confirmed = await showCinemaConfirm(
+        'UNPACK FRANCHISE',
+        `Unpack <strong>"${targetItem.t}"</strong> back into ${partsCount} individual movie entries in your reel?`,
+        'Unpack Package',
+        '#f2b34c'
+      );
+      if (!confirmed) return;
+
+      const idx = ITEMS.findIndex(it => it === targetItem || (it.t === targetItem.t && it.isPackage));
+      if (idx === -1) return;
+
+      ITEMS.splice(idx, 1);
+
+      parts.forEach(part => {
+        const individual = {
+          t: part.t,
+          y: part.y || targetItem.y,
+          k: 'Movie',
+          g: part.g || targetItem.g || 'Cinema',
+          genres: part.genres || targetItem.genres || ['Cinema'],
+          c: part.c || targetItem.c || '#f2b34c',
+          d: part.d || '120 min',
+          h: part.h || 2,
+          p: part.p || targetItem.p,
+          r: Number(part.r || targetItem.r || 9.0),
+          n: part.n || `Unpacked from ${targetItem.t}.`
+        };
+        ITEMS.push(individual);
+      });
+
+      sortItemsByRatingDescending(ITEMS);
+      saveWatchlist(ITEMS);
+      rebuildScene();
+      renderLedgerSection();
+      refreshStats();
+      if (typeof initGoatTournament === 'function') {
+        initGoatTournament(false);
+      }
+      closeModals();
+      showToast(`Unpacked "${targetItem.t}" into ${partsCount} standalone films · Realigned in Reel!`);
+      goTo(0);
     }
 
     /* Merge franchise parts directly into a single 3D Reel card */
@@ -4979,10 +5924,15 @@
     }
 
     /* Remove an entire franchise collection */
-    function removeFranchiseGroup(franchiseKey, franchiseTitle, partsCount) {
-      if (!confirm(`Are you sure you want to remove all ${partsCount} parts of "${franchiseTitle}" from your cinema archive?`)) {
-        return;
-      }
+    async function removeFranchiseGroup(franchiseKey, franchiseTitle, partsCount) {
+      const confirmed = await showCinemaConfirm(
+        'REMOVE FRANCHISE',
+        `Are you sure you want to remove all ${partsCount} parts of <strong>"${franchiseTitle}"</strong> from your cinema archive?`,
+        'Remove All Parts',
+        '#dc2626'
+      );
+      if (!confirmed) return;
+
       const allCombined = combineFranchiseItems(ITEMS);
       const group = allCombined.find(c => c.isCombined && c.franchiseKey === franchiseKey.toLowerCase());
       if (!group) return;
@@ -4998,12 +5948,16 @@
       showToast(`Removed all ${partsCount} parts of "${franchiseTitle}" from archive.`);
     }
 
-    function removeItemByIndex(origIdx, title) {
+    async function removeItemByIndex(origIdx, title) {
       if (origIdx < 0 || origIdx >= ITEMS.length) return;
       const targetTitle = title || ITEMS[origIdx].t;
-      if (!confirm(`Are you sure you want to remove "${targetTitle}" from your cinema archive?`)) {
-        return;
-      }
+      const confirmed = await showCinemaConfirm(
+        'REMOVE ENTRY',
+        `Are you sure you want to remove <strong>"${targetTitle}"</strong> from your cinema archive?`,
+        'Remove Title',
+        '#dc2626'
+      );
+      if (!confirmed) return;
 
       ITEMS.splice(origIdx, 1);
       saveWatchlist(ITEMS);
@@ -5023,14 +5977,19 @@
       const btnAll = document.getElementById('btnFilterAll');
       const btnMovies = document.getElementById('btnFilterMovies');
       const btnSeries = document.getElementById('btnFilterSeries');
-      if (!btnAll || !btnMovies || !btnSeries) return;
+      const btnPackages = document.getElementById('btnFilterPackages');
 
-      [btnAll, btnMovies, btnSeries].forEach(b => b.classList.remove('active'));
-      if (currentIndexFilter === 'movies') {
+      [btnAll, btnMovies, btnSeries, btnPackages].forEach(b => {
+        if (b) b.classList.remove('active');
+      });
+
+      if (currentIndexFilter === 'movies' && btnMovies) {
         btnMovies.classList.add('active');
-      } else if (currentIndexFilter === 'series') {
+      } else if (currentIndexFilter === 'series' && btnSeries) {
         btnSeries.classList.add('active');
-      } else {
+      } else if (currentIndexFilter === 'packages' && btnPackages) {
+        btnPackages.classList.add('active');
+      } else if (btnAll) {
         btnAll.classList.add('active');
       }
     }
@@ -5060,19 +6019,61 @@
       hoursEl.textContent = totalHours;
 
       // 2. Titles Breakdown & Filter Badges
-      const filmsCount = ITEMS.filter(i => isMovieItem(i)).length;
-      const seriesCount = total - filmsCount;
+      const filmsCount = ITEMS.filter(i => isMovieItem(i) && !i.isPackage).length;
+      const seriesCount = ITEMS.filter(i => !isMovieItem(i)).length;
+      const packageCount = ITEMS.filter(i => !!(i.isPackage || i.isCombinedFranchise || (i.parts && i.parts.length >= 2))).length;
       countEl.textContent = total;
-      breakdownEl.textContent = `${filmsCount} FILMS · ${seriesCount} SERIES LOGGED`;
+      breakdownEl.textContent = `${filmsCount} FILMS · ${seriesCount} SERIES · ${packageCount} PACKAGES`;
 
       const drawerCountAll = document.getElementById('drawerCountAll');
       const drawerCountMovies = document.getElementById('drawerCountMovies');
       const drawerCountSeries = document.getElementById('drawerCountSeries');
+      const drawerCountPackages = document.getElementById('drawerCountPackages');
       const indexShowingCount = document.getElementById('indexShowingCount');
 
       if (drawerCountAll) drawerCountAll.textContent = `(${total})`;
       if (drawerCountMovies) drawerCountMovies.textContent = `(${filmsCount})`;
       if (drawerCountSeries) drawerCountSeries.textContent = `(${seriesCount})`;
+      if (drawerCountPackages) drawerCountPackages.textContent = `(${packageCount})`;
+
+      // Populate Split Analytics Cards
+      const movieItems = ITEMS.filter(i => isMovieItem(i) && !i.isPackage);
+      const seriesItems = ITEMS.filter(i => !isMovieItem(i));
+      const packageItems = ITEMS.filter(i => !!(i.isPackage || i.isCombinedFranchise || (i.parts && i.parts.length >= 2)));
+
+      const filmCountEl = document.getElementById('filmCountMetric');
+      const filmAvgEl = document.getElementById('filmAvgMetric');
+      const filmHoursEl = document.getElementById('filmHoursMetric');
+      const filmTierEl = document.getElementById('filmAvgTierTag');
+
+      const movieHours = movieItems.reduce((acc, it) => acc + (Number(it.h) || 2), 0);
+      const movieAvg = movieItems.length ? (movieItems.reduce((a, i) => a + Number(i.r || 0), 0) / movieItems.length) : 0;
+      if (filmCountEl) filmCountEl.textContent = movieItems.length;
+      if (filmAvgEl) filmAvgEl.textContent = movieAvg > 0 ? movieAvg.toFixed(1) : '0.0';
+      if (filmHoursEl) filmHoursEl.textContent = `${movieHours}h`;
+      if (filmTierEl) filmTierEl.textContent = movieAvg >= 9.5 ? 'Masterwork' : (movieAvg >= 9.0 ? 'Essential' : (movieAvg >= 8.0 ? 'High Caliber' : 'Notable'));
+
+      const seriesCountEl = document.getElementById('seriesCountMetric');
+      const seriesAvgEl = document.getElementById('seriesAvgMetric');
+      const seriesHoursEl = document.getElementById('seriesHoursMetric');
+      const seriesTierEl = document.getElementById('seriesAvgTierTag');
+
+      const seriesHours = seriesItems.reduce((acc, it) => acc + (Number(it.h) || 12), 0);
+      const seriesAvg = seriesItems.length ? (seriesItems.reduce((a, i) => a + Number(i.r || 0), 0) / seriesItems.length) : 0;
+      if (seriesCountEl) seriesCountEl.textContent = seriesItems.length;
+      if (seriesAvgEl) seriesAvgEl.textContent = seriesAvg > 0 ? seriesAvg.toFixed(1) : '0.0';
+      if (seriesHoursEl) seriesHoursEl.textContent = `${seriesHours}h`;
+      if (seriesTierEl) seriesTierEl.textContent = seriesAvg >= 9.5 ? 'Prestige TV' : (seriesAvg >= 9.0 ? 'Golden Age' : (seriesAvg >= 8.0 ? 'Strong Run' : 'Notable'));
+
+      const packageCountMetricEl = document.getElementById('packageCountMetric');
+      const packagedFilmsCountEl = document.getElementById('packagedFilmsCountMetric');
+      const packageAvgEl = document.getElementById('packageAvgMetric');
+
+      const packagedFilmsTotal = packageItems.reduce((acc, it) => acc + (it.partsCount || (it.parts ? it.parts.length : 2)), 0);
+      const packageAvg = packageItems.length ? (packageItems.reduce((a, i) => a + Number(i.r || 0), 0) / packageItems.length) : 0;
+      if (packageCountMetricEl) packageCountMetricEl.textContent = packageItems.length;
+      if (packagedFilmsCountEl) packagedFilmsCountEl.textContent = packagedFilmsTotal;
+      if (packageAvgEl) packageAvgEl.textContent = packageAvg > 0 ? packageAvg.toFixed(1) : '0.0';
 
       updateIndexFilterButtons();
 
@@ -5145,22 +6146,22 @@
       const bannerEl = document.getElementById('franchiseDetectedBanner');
       if (bannerEl) {
         if (multiPartGroups.length > 0) {
-          const namesList = multiPartGroups.map(g => `<strong>${g.item.t}</strong> (${g.item.partsCount} films)`).join(', ');
+          const namesList = multiPartGroups.map(g => `<strong>${g.item.t}</strong> (${g.item.partsCount || g.parts.length} films)`).join(', ');
           bannerEl.style.display = 'block';
           bannerEl.innerHTML = `
             <div style="background:rgba(242, 179, 76, 0.12); border:1px solid rgba(242, 179, 76, 0.38); border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-family:'Space Mono', monospace; font-size:11px;">
               <div style="display:flex; align-items:center; gap:8px; color:#78350f;">
                 <span style="font-size:15px;">⚡</span>
-                <span>Franchise detected: ${namesList}. Showing combined as one entry on ledger.</span>
+                <span>Active Packages: ${namesList}. Bundle or configure more packages anytime.</span>
               </div>
-              <button type="button" class="paper-btn" id="btnConsolidateAllFranchises" style="background:#1b1917; color:#eee8dc; padding:4px 12px; font-size:10px; font-weight:700; cursor:pointer;" title="Merge all detected franchise parts into single cards directly on your 3D spiral reel">
-                Merge into 1 Card on 3D Reel
+              <button type="button" class="paper-btn" id="btnConsolidateAllFranchises" style="background:#1b1917; color:#eee8dc; padding:4px 12px; font-size:10px; font-weight:700; cursor:pointer;" title="Package or manage multi-part films">
+                Package Franchises
               </button>
             </div>
           `;
           const btnAll = bannerEl.querySelector('#btnConsolidateAllFranchises');
           if (btnAll) {
-            btnAll.onclick = () => consolidateAllFranchisesToReel();
+            btnAll.onclick = () => openPackageFranchiseModal();
           }
         } else {
           bannerEl.style.display = 'none';
@@ -5203,12 +6204,14 @@
         if (indexRankLabel) indexRankLabel.textContent = 'Ordered by Release Year (Newest → Oldest)';
       }
 
-      // Filter according to active format filter (All, Movies, Series)
+      // Filter according to active format filter (All, Movies, Series, Packages)
       let filteredEntries = entries;
       if (currentIndexFilter === 'movies') {
-        filteredEntries = entries.filter(({ item }) => isMovieItem(item));
+        filteredEntries = entries.filter(({ item }) => isMovieItem(item) && !item.isPackage);
       } else if (currentIndexFilter === 'series') {
         filteredEntries = entries.filter(({ item }) => !isMovieItem(item));
+      } else if (currentIndexFilter === 'packages') {
+        filteredEntries = entries.filter(({ item }) => !!(item.isPackage || item.isCombinedFranchise || (item.parts && item.parts.length >= 2)));
       }
 
       if (indexShowingCount) {
@@ -5216,16 +6219,18 @@
         if (currentIndexFilter === 'all') {
           indexShowingCount.textContent = `Showing all ${count} title${count !== 1 ? 's' : ''}${isCombineFranchisesEnabled && multiPartGroups.length > 0 ? ' (Combined)' : ''}`;
         } else if (currentIndexFilter === 'movies') {
-          indexShowingCount.textContent = `Showing ${count} movie${count !== 1 ? 's' : ''} (Filtered)`;
-        } else {
-          indexShowingCount.textContent = `Showing ${count} series (Filtered)`;
+          indexShowingCount.textContent = `Showing ${count} feature film${count !== 1 ? 's' : ''} (Filtered)`;
+        } else if (currentIndexFilter === 'series') {
+          indexShowingCount.textContent = `Showing ${count} TV series run${count !== 1 ? 's' : ''} (Filtered)`;
+        } else if (currentIndexFilter === 'packages') {
+          indexShowingCount.textContent = `Showing ${count} franchise package${count !== 1 ? 's' : ''} (Filtered)`;
         }
       }
 
       if (filteredEntries.length === 0) {
         indexListEl.innerHTML = `
           <div style="padding:40px 12px; text-align:center; font-family:'Fraunces', serif; font-style:italic; font-size:18px; color:#78716c;">
-            No ${currentIndexFilter === 'movies' ? 'movies' : 'series'} recorded in your archive yet.
+            No ${currentIndexFilter === 'movies' ? 'movies' : (currentIndexFilter === 'series' ? 'series' : (currentIndexFilter === 'packages' ? 'franchise packages' : 'titles'))} recorded in your archive yet.
           </div>
         `;
         return;
@@ -5253,13 +6258,12 @@
         if (isComb && isExpanded) {
           accordionHtml = `
             <div class="franchise-accordion-wrap">
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:8px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
                 <span style="font-family:'Space Mono', monospace; font-size:10px; font-weight:700; color:#92400e; letter-spacing:0.08em; text-transform:uppercase;">
                   ⚡ Franchise Breakdown (${entry.parts.length} Feature Films)
                 </span>
-                <button type="button" class="franchise-consolidate-btn" data-key="${entry.franchiseKey}">
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                  <span>Merge into 1 Card on 3D Reel</span>
+                <button type="button" class="paper-btn franchise-unpack-row-btn" data-key="${entry.franchiseKey}" style="font-size:10px; padding:3px 10px; background:#fff; border:1px solid #d97706; color:#b45309; font-weight:700; border-radius:4px; cursor:pointer;" title="Unpack into standalone movies on your 3D reel">
+                  ↺ Unpack into Standalone Movies
                 </button>
               </div>
               ${entry.parts.map((p) => `
@@ -5268,14 +6272,11 @@
                     <img src="${p.p || ''}" class="franchise-part-thumb" alt="${p.t}" loading="lazy" />
                     <div style="min-width:0;">
                       <div class="franchise-part-title">${p.t}</div>
-                      <div class="franchise-part-meta">${p.y || ''} • ${p.d || 'Feature Film'} • ${p.g || 'Cinema'}</div>
+                      <div class="franchise-part-meta">${p.y || ''} • ${p.d || 'Feature Film'} • ★ ${Number(p.r || 0).toFixed(1)}</div>
                     </div>
                   </div>
                   <div style="display:flex; align-items:center; gap:8px;">
                     <span class="franchise-part-score">★ ${Number(p.r || 0).toFixed(1)}</span>
-                    <button type="button" class="index-row-delete-btn franchise-part-del-btn" data-orig="${p.originalIndex !== undefined ? p.originalIndex : primaryOrig}" data-title="${p.t.replace(/"/g, '&quot;')}" title="Remove '${p.t}' only">
-                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                    </button>
                   </div>
                 </div>
               `).join('')}
@@ -5372,12 +6373,17 @@
         };
       });
 
-      // Consolidate franchise button inside expanded accordion
-      indexListEl.querySelectorAll('.franchise-consolidate-btn').forEach(btn => {
+      // Unpack franchise button inside expanded accordion
+      indexListEl.querySelectorAll('.franchise-unpack-row-btn').forEach(btn => {
         btn.onclick = (e) => {
           e.stopPropagation();
           const key = btn.dataset.key;
-          consolidateFranchiseToReel(key);
+          const target = ITEMS.find(it => (it.baseName || it.t).toLowerCase() === key.toLowerCase() && (it.isPackage || it.isCombinedFranchise));
+          if (target) {
+            unpackFranchisePackage(target);
+          } else {
+            showToast('Package not found or already unpacked.');
+          }
         };
       });
 
@@ -7008,9 +8014,10 @@
       };
 
       ITEMS.push(newItem);
+      sortItemsByRatingDescending(ITEMS);
       saveWatchlist(ITEMS);
 
-      // Rebuild 3D spiral
+      // Rebuild 3D spiral (strictly realigned by rating in decreasing order)
       rebuildScene();
 
       // Reset form & slate state
@@ -7025,11 +8032,12 @@
         <span>Record Title</span>
       `;
 
-      showToast(`★ Archived "${newItem.t}" (${userRating.toFixed(1)}/10) to Reel!`);
+      showToast(`★ Archived "${newItem.t}" (${userRating.toFixed(1)}/10) · Realigned in Reel!`);
 
-      // Smoothly navigate to newly recorded item
+      // Smoothly navigate to newly recorded item at its realigned rating position
+      const newPos = ITEMS.indexOf(newItem);
       setTimeout(() => {
-        goTo(ITEMS.length - 1);
+        goTo(newPos >= 0 ? newPos : 0);
       }, 250);
     }
 
@@ -7078,26 +8086,37 @@
 
     document.getElementById('btnSaveEdit').onclick = () => {
       if (editingIndex >= 0 && editingIndex < ITEMS.length) {
+        const itemToUpdate = ITEMS[editingIndex];
         const newRating = clamp(parseFloat(document.getElementById('editRatingInput').value) || 0, 0, 10);
         const newNote = document.getElementById('editNoteInput').value.trim();
 
-        ITEMS[editingIndex].r = newRating;
-        if (newNote) ITEMS[editingIndex].n = newNote;
+        itemToUpdate.r = newRating;
+        if (newNote) itemToUpdate.n = newNote;
 
+        sortItemsByRatingDescending(ITEMS);
         saveWatchlist(ITEMS);
         rebuildScene();
         closeModals();
-        showToast(`Updated rating to ${newRating.toFixed(1)}★`);
+        showToast(`Updated rating to ${newRating.toFixed(1)}★ · Realigned in 3D reel!`);
+
+        const newPos = ITEMS.indexOf(itemToUpdate);
+        if (newPos >= 0) {
+          setTimeout(() => goTo(newPos), 200);
+        }
       }
     };
 
-    function deleteCurrentItem() {
+    async function deleteCurrentItem() {
       const idx = clamp(Math.round(curP), 0, ITEMS.length - 1);
       if (idx < 0 || idx >= ITEMS.length) return;
       const title = ITEMS[idx].t;
-      if (!confirm(`Are you sure you want to remove "${title}" from your cinema archive?`)) {
-        return;
-      }
+      const confirmed = await showCinemaConfirm(
+        'REMOVE ENTRY',
+        `Are you sure you want to remove <strong>"${title}"</strong> from your cinema archive?`,
+        'Remove Title',
+        '#dc2626'
+      );
+      if (!confirmed) return;
 
       ITEMS.splice(idx, 1);
       saveWatchlist(ITEMS);
@@ -7173,13 +8192,15 @@
               n: item.n || `Archived to Cinema Files at ${userRate.toFixed(1)}/10.`
             };
             ITEMS.push(newItem);
+            sortItemsByRatingDescending(ITEMS);
             saveWatchlist(ITEMS);
             rebuildScene();
             renderLedgerSection();
             closeModals();
-            showToast(`★ Archived "${newItem.t}" (${userRate.toFixed(1)}/10) to Reel!`);
+            showToast(`★ Archived "${newItem.t}" (${userRate.toFixed(1)}/10) · Realigned in Reel!`);
+            const newPos = ITEMS.indexOf(newItem);
             setTimeout(() => {
-              goTo(ITEMS.length - 1);
+              goTo(newPos >= 0 ? newPos : 0);
             }, 300);
           };
         });
@@ -7212,11 +8233,13 @@
       };
 
       ITEMS.push(newItem);
+      sortItemsByRatingDescending(ITEMS);
       saveWatchlist(ITEMS);
       rebuildScene();
       closeModals();
-      showToast(`Added "${newItem.t}" to Watchlist!`);
-      setTimeout(() => goTo(ITEMS.length - 1), 300);
+      showToast(`Added "${newItem.t}" (★ ${userRating.toFixed(1)}) · Realigned in Reel!`);
+      const newPos = ITEMS.indexOf(newItem);
+      setTimeout(() => goTo(newPos >= 0 ? newPos : 0), 300);
     }
 
     async function openTvmazeDetails(tvmazeIdOrCurrent) {
@@ -7329,11 +8352,70 @@
     }
 
     function closeModals() {
-      ['searchModal', 'detailModal', 'editRatingModal', 'shareModal', 'goatArenaModal'].forEach(id => {
+      ['searchModal', 'detailModal', 'editRatingModal', 'shareModal', 'goatArenaModal', 'packageFranchiseModal', 'cinemaConfirmModal'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.remove('active');
       });
       document.body.classList.remove('modal-open');
+    }
+
+    function showCinemaConfirm(title, message, confirmBtnText = 'Remove Title', confirmBtnColor = '#dc2626') {
+      return new Promise((resolve) => {
+        const modal = document.getElementById('cinemaConfirmModal');
+        const titleEl = document.getElementById('cinemaConfirmTitle');
+        const msgEl = document.getElementById('cinemaConfirmMessage');
+        const actionBtn = document.getElementById('btnCinemaConfirmAction');
+        const cancelBtn = document.getElementById('btnCinemaConfirmCancel');
+        const closeBtn = document.getElementById('btnCloseCinemaConfirm');
+
+        if (!modal || !titleEl || !msgEl || !actionBtn) {
+          resolve(window.confirm(message));
+          return;
+        }
+
+        titleEl.textContent = title;
+        msgEl.innerHTML = message;
+        actionBtn.textContent = confirmBtnText;
+        actionBtn.style.background = confirmBtnColor;
+
+        let isDone = false;
+        const cleanup = (result) => {
+          if (isDone) return;
+          isDone = true;
+          modal.classList.remove('active');
+          document.body.classList.remove('modal-open');
+          actionBtn.onclick = null;
+          cancelBtn.onclick = null;
+          if (closeBtn) closeBtn.onclick = null;
+          modal.onclick = null;
+          resolve(result);
+        };
+
+        actionBtn.onclick = (e) => {
+          e.stopPropagation();
+          cleanup(true);
+        };
+
+        cancelBtn.onclick = (e) => {
+          e.stopPropagation();
+          cleanup(false);
+        };
+
+        if (closeBtn) {
+          closeBtn.onclick = (e) => {
+            e.stopPropagation();
+            cleanup(false);
+          };
+        }
+
+        modal.onclick = (e) => {
+          if (e.target === modal) {
+            cleanup(false);
+          }
+        };
+
+        openModal('cinemaConfirmModal');
+      });
     }
 
     /* ================= THREE.JS INITIALIZATION ================= */
@@ -7578,12 +8660,26 @@
           renderLedgerSection();
         };
       }
+      const btnFilterPackages = document.getElementById('btnFilterPackages');
+      if (btnFilterPackages) {
+        btnFilterPackages.onclick = () => {
+          currentIndexFilter = 'packages';
+          renderLedgerSection();
+        };
+      }
+      const btnPackageFranchiseLedger = document.getElementById('btnPackageFranchiseLedger');
+      if (btnPackageFranchiseLedger) {
+        btnPackageFranchiseLedger.onclick = () => {
+          openPackageFranchiseModal();
+        };
+      }
 
       // Sort button toggles for The Index
       const btnSortRating = document.getElementById('btnSortRating');
       if (btnSortRating) {
         btnSortRating.onclick = () => {
           currentSortMode = 'rating';
+          realignReelByRating(false);
           renderLedgerSection();
           updateSortButtons();
         };
@@ -7605,6 +8701,12 @@
           renderLedgerSection();
           updateSortButtons();
         };
+      }
+
+      // Realign Reel button
+      const btnRealignReel = document.getElementById('btnRealignReel');
+      if (btnRealignReel) {
+        btnRealignReel.onclick = () => realignReelByRating(true);
       }
 
       // Franchise grouping toggle
@@ -7752,7 +8854,7 @@
               if (doc.exists && doc.data().watchlist && Array.isArray(doc.data().watchlist)) {
                 const cloudItems = doc.data().watchlist;
                 if (cloudItems.length > 0) {
-                  ITEMS = cloudItems;
+                  ITEMS = sortItemsByRatingDescending(cloudItems);
                   saveLocalWatchlist(ITEMS);
                   rebuildScene();
                   showToast(`Synced ${cloudItems.length} titles from your cloud vault!`);
@@ -8026,8 +9128,14 @@
 
       const btnGoatReset = document.getElementById('btnGoatReset');
       if (btnGoatReset) {
-        btnGoatReset.onclick = () => {
-          if (confirm('Reset tournament fixture bracket back to Round of 16?')) {
+        btnGoatReset.onclick = async () => {
+          const confirmed = await showCinemaConfirm(
+            'RESET TOURNAMENT',
+            'Reset tournament fixture bracket back to Round of 16?',
+            'Reset Bracket',
+            '#e11d48'
+          );
+          if (confirmed) {
             initGoatTournament(true);
             showToast('Knockout tournament reset.');
           }
@@ -8178,7 +9286,7 @@
       const it = ITEMS[i];
       if (!it) return;
       document.documentElement.style.setProperty('--accent', it.c || '#f2b34c');
-      el('i-type').textContent = it.k || 'Watched';
+      el('i-type').textContent = `${it.k || 'Watched'} • Rank #${i + 1}`;
       el('i-idx').textContent = `${pad(i + 1)} / ${pad(ITEMS.length)}`;
       el('i-title').textContent = it.t;
       el('i-year').textContent = it.y || '—';
