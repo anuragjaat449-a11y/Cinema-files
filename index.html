@@ -2131,6 +2131,123 @@
       color: #1e40af;
       border: 1px solid rgba(77, 150, 255, 0.35);
     }
+    .index-meta-pill.franchise-pill {
+      background: linear-gradient(135deg, rgba(242, 179, 76, 0.32), rgba(255, 107, 107, 0.22));
+      color: #78350f;
+      border: 1px solid rgba(242, 179, 76, 0.6);
+      font-weight: 700;
+    }
+    .franchise-expand-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: #92400e;
+      background: rgba(242, 179, 76, 0.18);
+      border: 1px solid rgba(242, 179, 76, 0.42);
+      border-radius: 4px;
+      padding: 3px 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.18s ease;
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+    .franchise-expand-btn:hover {
+      background: rgba(242, 179, 76, 0.35);
+      border-color: rgba(242, 179, 76, 0.75);
+      transform: translateY(-1px);
+    }
+    .franchise-accordion-wrap {
+      background: rgba(27, 25, 23, 0.04);
+      border-left: 3px solid #f2b34c;
+      margin: 0 0 10px 36px;
+      padding: 12px 14px;
+      border-radius: 0 8px 8px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      animation: fadeInFranchise 0.22s ease-out;
+    }
+    @keyframes fadeInFranchise {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .franchise-part-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px;
+      background: #fcfaf6;
+      border: 1px solid #e5dccf;
+      border-radius: 6px;
+      font-size: 13px;
+      gap: 12px;
+      transition: background 0.18s ease;
+    }
+    .franchise-part-row:hover {
+      background: #fff;
+      border-color: #d6cbba;
+    }
+    .franchise-part-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 1;
+      min-width: 0;
+    }
+    .franchise-part-thumb {
+      width: 26px;
+      height: 38px;
+      object-fit: cover;
+      border-radius: 4px;
+      border: 1px solid rgba(0,0,0,0.12);
+      flex-shrink: 0;
+      background: #191c26;
+    }
+    .franchise-part-title {
+      font-family: 'Fraunces', serif;
+      font-weight: 600;
+      color: #1c1917;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .franchise-part-meta {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      color: #78716c;
+      margin-top: 2px;
+    }
+    .franchise-part-score {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: #b45309;
+      flex-shrink: 0;
+    }
+    .franchise-consolidate-btn {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      background: #1c1917;
+      color: #eee8dc;
+      border: none;
+      border-radius: 4px;
+      padding: 4px 10px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      font-weight: 700;
+    }
+    .franchise-consolidate-btn:hover {
+      background: #38332e;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      transform: translateY(-1px);
+    }
     .index-row-delete-btn {
       background: transparent;
       border: 1px solid transparent;
@@ -3651,9 +3768,13 @@
             </button>
           </div>
 
-          <!-- Sort Modes -->
-          <div style="display:flex; gap:6px; align-items:center;">
-            <span style="font-family:'Space Mono', monospace; font-size:10px; color:#a8a29e; text-transform:uppercase; letter-spacing:0.1em; margin-right:2px;">Sort:</span>
+          <!-- Sort Modes & Franchise Mode -->
+          <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
+            <button type="button" id="btnToggleCombineFranchise" class="ledger-format-btn active" style="border:1px solid rgba(27,25,23,0.18); background:#1c1917; color:#eee8dc;" title="Combine sequels and multi-part series like Iron Man 1, 2, 3 into a single unified Trio entry">
+              <span>⚡ Combine Parts</span>
+              <span class="ledger-format-count" id="combineFranchiseStatusBadge" style="background:rgba(242,179,76,0.3); color:#f2b34c; padding:1px 5px; border-radius:3px; font-weight:700;">ON</span>
+            </button>
+            <span style="font-family:'Space Mono', monospace; font-size:10px; color:#a8a29e; text-transform:uppercase; letter-spacing:0.1em; margin-left:4px; margin-right:2px;">Sort:</span>
             <button id="btnSortRating" class="paper-btn" style="background:#1b1917; color:#eee8dc;">★ Rating</button>
             <button id="btnSortTitle" class="paper-btn">A–Z</button>
             <button id="btnSortYear" class="paper-btn">Year</button>
@@ -3665,6 +3786,9 @@
           <span id="indexShowingCount" style="font-size:10px; color:#8c827a; font-weight:700;">Showing 0 titles</span>
         </div>
       </div>
+
+      <!-- DETECTED FRANCHISE BANNER -->
+      <div id="franchiseDetectedBanner" style="display:none; margin-bottom:14px;"></div>
 
       <!-- THE INDEX TABLE ROWS (SORTED BY RATING) -->
       <div id="indexList" class="index-table">
@@ -4613,11 +4737,265 @@
     /* ================= EDITORIAL PAPER RATINGS LEDGER & INDEX ================= */
     let currentSortMode = 'rating'; // 'rating' (default - ordered by rating given by user), 'title', 'year'
     let currentIndexFilter = 'all'; // 'all', 'movies', 'series'
+    let isCombineFranchisesEnabled = true; // User preference: combine multi-parts like Iron Man 1, 2, 3
+    const expandedFranchiseSet = new Set(); // Track expanded franchise accordions in the index
 
     function isMovieItem(item) {
       if (!item) return true;
       const k = (item.k || '').toLowerCase();
-      return k.includes('movie') || k.includes('film') || k === 'feature';
+      return k.includes('movie') || k.includes('film') || k === 'feature' || k.includes('trio') || k.includes('duo') || k.includes('saga');
+    }
+
+    /* Franchise & Sequel Identifier */
+    function getFranchiseKeyAndPart(title) {
+      if (!title || typeof title !== 'string') return null;
+      const t = title.trim();
+
+      // Known franchise sets
+      const darkKnightGroup = ['batman begins', 'the dark knight', 'the dark knight rises'];
+      if (darkKnightGroup.includes(t.toLowerCase())) {
+        return {
+          franchiseKey: 'the dark knight',
+          baseName: 'The Dark Knight',
+          partNumber: darkKnightGroup.indexOf(t.toLowerCase()) + 1,
+          partName: t
+        };
+      }
+
+      // If already explicitly combined (e.g., "Iron Man Trio Movies")
+      if (/trio movies|trilogy|duo movies|duology|4-part saga|collection/i.test(t)) {
+        const cleanBase = t.replace(/\s+(Trio Movies|Trio|Trilogy|Duo Movies|Duology|4-Part Saga|Collection.*)$/i, '').trim();
+        return {
+          franchiseKey: cleanBase.toLowerCase(),
+          baseName: cleanBase,
+          partNumber: 1,
+          partName: t,
+          isAlreadyCombined: true
+        };
+      }
+
+      // Regex for numeric suffix: e.g. "Iron Man 2", "Iron Man 3", "Iron Man 1", "Spider-Man 2"
+      const numSuffixMatch = t.match(/^(.+?)\s+(\d+)$/i);
+      if (numSuffixMatch) {
+        const base = numSuffixMatch[1].trim();
+        const num = parseInt(numSuffixMatch[2], 10);
+        if (num > 0 && num <= 25) {
+          return {
+            franchiseKey: base.toLowerCase(),
+            baseName: base,
+            partNumber: num,
+            partName: t
+          };
+        }
+      }
+
+      // Regex for roman numerals: e.g. "Iron Man II", "The Godfather Part III", "Rocky IV"
+      const romanMap = { 'i': 1, 'ii': 2, 'iii': 3, 'iv': 4, 'v': 5, 'vi': 6, 'vii': 7, 'viii': 8, 'ix': 9, 'x': 10 };
+      const romanSuffixMatch = t.match(/^(.+?)[:\s]+(Part|Chapter|Vol\.?|Volume|Episode)?\s*(I|II|III|IV|V|VI|VII|VIII|IX|X)$/i);
+      if (romanSuffixMatch) {
+        const base = romanSuffixMatch[1].replace(/:\s*$/, '').trim();
+        const num = romanMap[romanSuffixMatch[3].toLowerCase()];
+        if (num) {
+          return {
+            franchiseKey: base.toLowerCase(),
+            baseName: base,
+            partNumber: num,
+            partName: t
+          };
+        }
+      }
+
+      // Regex for Part One / Part Two / Chapter 2 / Vol. 1
+      const wordPartMap = { 'one': 1, 'two': 2, 'three': 3, 'four': 4, 'five': 5, 'six': 6 };
+      const wordPartMatch = t.match(/^(.+?)[:\s]+(Part|Chapter|Vol\.?|Volume|Episode)\s+(One|Two|Three|Four|Five|Six|\d+)/i);
+      if (wordPartMatch) {
+        const base = wordPartMatch[1].trim();
+        const partRaw = wordPartMatch[3].toLowerCase();
+        const num = wordPartMap[partRaw] || parseInt(partRaw, 10);
+        if (num) {
+          return {
+            franchiseKey: base.toLowerCase(),
+            baseName: base,
+            partNumber: num,
+            partName: t
+          };
+        }
+      }
+
+      // Potential Part 1 / Base Title (e.g. "Iron Man", "The Godfather", "Dune", "John Wick")
+      return {
+        franchiseKey: t.toLowerCase(),
+        baseName: t,
+        partNumber: 1,
+        partName: t,
+        isPotentialBase: true
+      };
+    }
+
+    /* Consolidate multi-part films into Trio / Duo / Saga entries */
+    function combineFranchiseItems(rawItems) {
+      if (!rawItems || !rawItems.length) return [];
+
+      const groups = new Map();
+      const ungrouped = [];
+
+      rawItems.forEach((item, originalIndex) => {
+        if (item.isCombinedFranchise) {
+          ungrouped.push({
+            isCombined: true,
+            item: { ...item },
+            franchiseKey: (item.baseName || item.t).toLowerCase(),
+            originalIndices: item.parts && item.parts.length ? item.parts.map((p, i) => p.originalIndex !== undefined ? p.originalIndex : originalIndex) : [originalIndex],
+            parts: item.parts || [item]
+          });
+          return;
+        }
+
+        const info = getFranchiseKeyAndPart(item.t);
+        if (!info) {
+          ungrouped.push({
+            isCombined: false,
+            item: { ...item },
+            originalIndices: [originalIndex]
+          });
+          return;
+        }
+
+        const key = info.franchiseKey;
+        if (!groups.has(key)) {
+          groups.set(key, { baseName: info.baseName, parts: [] });
+        }
+        groups.get(key).parts.push({ item, info, originalIndex });
+      });
+
+      const combinedResults = [];
+
+      groups.forEach((group, key) => {
+        // Only combine if 2 or more parts exist
+        if (group.parts.length < 2) {
+          group.parts.forEach(p => {
+            combinedResults.push({
+              isCombined: false,
+              item: { ...p.item },
+              originalIndices: [p.originalIndex]
+            });
+          });
+          return;
+        }
+
+        // Sort parts chronologically by part number then release year
+        group.parts.sort((a, b) => (a.info.partNumber - b.info.partNumber) || ((parseInt(a.item.y) || 0) - (parseInt(b.item.y) || 0)));
+
+        const count = group.parts.length;
+        let combinedTitle = '';
+        if (count === 2) combinedTitle = `${group.baseName} Duo Movies`;
+        else if (count === 3) combinedTitle = `${group.baseName} Trio Movies`;
+        else if (count === 4) combinedTitle = `${group.baseName} 4-Part Saga`;
+        else combinedTitle = `${group.baseName} Collection (${count} Films)`;
+
+        const ratings = group.parts.map(p => Number(p.item.r || 0)).filter(r => r > 0);
+        const avgRating = ratings.length ? Number((ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1)) : 9.0;
+
+        const years = group.parts.map(p => parseInt(p.item.y)).filter(y => !isNaN(y));
+        const minYear = years.length ? Math.min(...years) : 2008;
+        const maxYear = years.length ? Math.max(...years) : 2013;
+        const yearSpan = minYear === maxYear ? `${minYear}` : `${minYear}–${maxYear}`;
+
+        const totalHours = group.parts.reduce((a, b) => a + (Number(b.item.h) || 2), 0);
+        const primaryPart = group.parts[0].item;
+        const partsWithOrig = group.parts.map(p => ({ ...p.item, originalIndex: p.originalIndex }));
+
+        const combinedItem = {
+          ...primaryPart,
+          t: combinedTitle,
+          baseName: group.baseName,
+          y: yearSpan,
+          r: avgRating,
+          h: totalHours,
+          d: `${count} Feature Films`,
+          k: count === 3 ? 'Movie Trio' : (count === 2 ? 'Movie Duo' : 'Movie Saga'),
+          n: `Combined Franchise: Includes ${partsWithOrig.map(p => `${p.t} (${p.y}) ★${Number(p.r || 0).toFixed(1)}`).join(' · ')}. Mean Rating: ★ ${avgRating.toFixed(1)}/10.`,
+          isCombinedFranchise: true,
+          partsCount: count,
+          parts: partsWithOrig
+        };
+
+        combinedResults.push({
+          isCombined: true,
+          item: combinedItem,
+          franchiseKey: key,
+          baseName: group.baseName,
+          originalIndices: group.parts.map(p => p.originalIndex),
+          parts: partsWithOrig
+        });
+      });
+
+      return [...combinedResults, ...ungrouped];
+    }
+
+    /* Merge franchise parts directly into a single 3D Reel card */
+    function consolidateFranchiseToReel(franchiseKey) {
+      if (!franchiseKey) return;
+      const allCombined = combineFranchiseItems(ITEMS);
+      const group = allCombined.find(c => c.isCombined && c.franchiseKey === franchiseKey.toLowerCase());
+      if (!group) return;
+
+      const indicesToRemove = new Set(group.originalIndices);
+      const remainingItems = ITEMS.filter((_, idx) => !indicesToRemove.has(idx));
+      remainingItems.push(group.item);
+
+      ITEMS = remainingItems;
+      saveWatchlist(ITEMS);
+      rebuildScene();
+      refreshStats();
+      if (typeof initGoatTournament === 'function') {
+        initGoatTournament(false);
+      }
+      showToast(`★ Successfully merged ${group.item.partsCount} films into "${group.item.t}" on 3D Reel!`);
+    }
+
+    /* Merge all detected franchises to the reel */
+    function consolidateAllFranchisesToReel() {
+      const allCombined = combineFranchiseItems(ITEMS);
+      const multiPartGroups = allCombined.filter(c => c.isCombined && c.parts && c.parts.length >= 2);
+      if (multiPartGroups.length === 0) return;
+
+      const allIndicesToRemove = new Set();
+      multiPartGroups.forEach(g => {
+        g.originalIndices.forEach(idx => allIndicesToRemove.add(idx));
+      });
+
+      const remainingItems = ITEMS.filter((_, idx) => !allIndicesToRemove.has(idx));
+      multiPartGroups.forEach(g => remainingItems.push(g.item));
+
+      ITEMS = remainingItems;
+      saveWatchlist(ITEMS);
+      rebuildScene();
+      refreshStats();
+      if (typeof initGoatTournament === 'function') {
+        initGoatTournament(false);
+      }
+      showToast(`★ Successfully merged ${multiPartGroups.length} franchises into unified entries on 3D Reel!`);
+    }
+
+    /* Remove an entire franchise collection */
+    function removeFranchiseGroup(franchiseKey, franchiseTitle, partsCount) {
+      if (!confirm(`Are you sure you want to remove all ${partsCount} parts of "${franchiseTitle}" from your cinema archive?`)) {
+        return;
+      }
+      const allCombined = combineFranchiseItems(ITEMS);
+      const group = allCombined.find(c => c.isCombined && c.franchiseKey === franchiseKey.toLowerCase());
+      if (!group) return;
+
+      const indicesToRemove = new Set(group.originalIndices);
+      ITEMS = ITEMS.filter((_, idx) => !indicesToRemove.has(idx));
+      saveWatchlist(ITEMS);
+      rebuildScene();
+      refreshStats();
+      if (typeof initGoatTournament === 'function') {
+        initGoatTournament(false);
+      }
+      showToast(`Removed all ${partsCount} parts of "${franchiseTitle}" from archive.`);
     }
 
     function removeItemByIndex(origIdx, title) {
@@ -4675,8 +5053,8 @@
       // 1. Calculate Runtime / Hours
       const totalHours = ITEMS.reduce((acc, it) => {
         if (it.h) return acc + Number(it.h);
-        if (it.k === 'Series') return acc + 12; // default series run
-        return acc + 2; // default 2 hour movie
+        if (it.k === 'Series') return acc + 12;
+        return acc + 2;
       }, 0);
 
       hoursEl.textContent = totalHours;
@@ -4761,7 +5139,36 @@
         }).join('');
       }
 
-      // 6. The Index (Ranked List strictly by personal rating)
+      // 6. Check for detected multi-part franchises in archive
+      const allCombined = combineFranchiseItems(ITEMS);
+      const multiPartGroups = allCombined.filter(c => c.isCombined && c.parts && c.parts.length >= 2);
+      const bannerEl = document.getElementById('franchiseDetectedBanner');
+      if (bannerEl) {
+        if (multiPartGroups.length > 0) {
+          const namesList = multiPartGroups.map(g => `<strong>${g.item.t}</strong> (${g.item.partsCount} films)`).join(', ');
+          bannerEl.style.display = 'block';
+          bannerEl.innerHTML = `
+            <div style="background:rgba(242, 179, 76, 0.12); border:1px solid rgba(242, 179, 76, 0.38); border-radius:8px; padding:10px 14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; font-family:'Space Mono', monospace; font-size:11px;">
+              <div style="display:flex; align-items:center; gap:8px; color:#78350f;">
+                <span style="font-size:15px;">⚡</span>
+                <span>Franchise detected: ${namesList}. Showing combined as one entry on ledger.</span>
+              </div>
+              <button type="button" class="paper-btn" id="btnConsolidateAllFranchises" style="background:#1b1917; color:#eee8dc; padding:4px 12px; font-size:10px; font-weight:700; cursor:pointer;" title="Merge all detected franchise parts into single cards directly on your 3D spiral reel">
+                Merge into 1 Card on 3D Reel
+              </button>
+            </div>
+          `;
+          const btnAll = bannerEl.querySelector('#btnConsolidateAllFranchises');
+          if (btnAll) {
+            btnAll.onclick = () => consolidateAllFranchisesToReel();
+          }
+        } else {
+          bannerEl.style.display = 'none';
+          bannerEl.innerHTML = '';
+        }
+      }
+
+      // 7. The Index (Ranked List strictly by personal rating)
       if (total === 0) {
         indexListEl.innerHTML = `
           <div style="padding:48px 12px; text-align:center; font-family:'Fraunces', serif; font-style:italic; font-size:19px; color:#78716c;">
@@ -4772,39 +5179,50 @@
         return;
       }
 
-      // Build sorted entries with reference to original array index for jump-to-reel
-      const indexedItems = ITEMS.map((item, originalIndex) => ({ item, originalIndex }));
+      // If franchise combining is enabled, use combined entries; else flat ITEMS
+      let entries = [];
+      if (isCombineFranchisesEnabled) {
+        entries = allCombined;
+      } else {
+        entries = ITEMS.map((item, originalIndex) => ({
+          isCombined: false,
+          item: { ...item },
+          originalIndices: [originalIndex]
+        }));
+      }
 
+      // Sort entries
       if (currentSortMode === 'rating') {
-        indexedItems.sort((a, b) => (Number(b.item.r || 0) - Number(a.item.r || 0)) || a.item.t.localeCompare(b.item.t));
+        entries.sort((a, b) => (Number(b.item.r || 0) - Number(a.item.r || 0)) || a.item.t.localeCompare(b.item.t));
         if (indexRankLabel) indexRankLabel.textContent = 'Ranked by your personal rating (Highest → Lowest)';
       } else if (currentSortMode === 'title') {
-        indexedItems.sort((a, b) => a.item.t.localeCompare(b.item.t));
+        entries.sort((a, b) => a.item.t.localeCompare(b.item.t));
         if (indexRankLabel) indexRankLabel.textContent = 'Ordered Alphabetically (A → Z)';
       } else if (currentSortMode === 'year') {
-        indexedItems.sort((a, b) => (parseInt(b.item.y) || 0) - (parseInt(a.item.y) || 0));
+        entries.sort((a, b) => (parseInt(b.item.y) || 0) - (parseInt(a.item.y) || 0));
         if (indexRankLabel) indexRankLabel.textContent = 'Ordered by Release Year (Newest → Oldest)';
       }
 
       // Filter according to active format filter (All, Movies, Series)
-      let filteredItems = indexedItems;
+      let filteredEntries = entries;
       if (currentIndexFilter === 'movies') {
-        filteredItems = indexedItems.filter(({ item }) => isMovieItem(item));
+        filteredEntries = entries.filter(({ item }) => isMovieItem(item));
       } else if (currentIndexFilter === 'series') {
-        filteredItems = indexedItems.filter(({ item }) => !isMovieItem(item));
+        filteredEntries = entries.filter(({ item }) => !isMovieItem(item));
       }
 
       if (indexShowingCount) {
+        const count = filteredEntries.length;
         if (currentIndexFilter === 'all') {
-          indexShowingCount.textContent = `Showing all ${filteredItems.length} title${filteredItems.length !== 1 ? 's' : ''}`;
+          indexShowingCount.textContent = `Showing all ${count} title${count !== 1 ? 's' : ''}${isCombineFranchisesEnabled && multiPartGroups.length > 0 ? ' (Combined)' : ''}`;
         } else if (currentIndexFilter === 'movies') {
-          indexShowingCount.textContent = `Showing ${filteredItems.length} movie${filteredItems.length !== 1 ? 's' : ''} (Filtered)`;
+          indexShowingCount.textContent = `Showing ${count} movie${count !== 1 ? 's' : ''} (Filtered)`;
         } else {
-          indexShowingCount.textContent = `Showing ${filteredItems.length} series (Filtered)`;
+          indexShowingCount.textContent = `Showing ${count} series (Filtered)`;
         }
       }
 
-      if (filteredItems.length === 0) {
+      if (filteredEntries.length === 0) {
         indexListEl.innerHTML = `
           <div style="padding:40px 12px; text-align:center; font-family:'Fraunces', serif; font-style:italic; font-size:18px; color:#78716c;">
             No ${currentIndexFilter === 'movies' ? 'movies' : 'series'} recorded in your archive yet.
@@ -4813,23 +5231,80 @@
         return;
       }
 
-      indexListEl.innerHTML = filteredItems.map(({ item, originalIndex }, rankIdx) => {
+      indexListEl.innerHTML = filteredEntries.map((entry, rankIdx) => {
+        const item = entry.item;
         const numStr = pad(rankIdx + 1);
         const score = Number(item.r || 0).toFixed(1);
         const safeTitle = item.t.replace(/"/g, '&quot;');
         const isMov = isMovieItem(item);
-        const badgeLabel = isMov ? '🎬 FILM' : '📺 SERIES';
-        const badgeClass = isMov ? 'movie-pill' : 'series-pill';
+        const isComb = !!entry.isCombined && entry.parts && entry.parts.length >= 2;
+        const primaryOrig = (entry.originalIndices && entry.originalIndices.length) ? entry.originalIndices[0] : 0;
+
+        let badgeLabel = isMov ? '🎬 FILM' : '📺 SERIES';
+        let badgeClass = isMov ? 'movie-pill' : 'series-pill';
+        if (isComb) {
+          badgeLabel = `🎬 ${item.partsCount || entry.parts.length}-FILM ${item.partsCount === 3 ? 'TRIO' : (item.partsCount === 2 ? 'DUO' : 'SAGA')}`;
+          badgeClass = 'franchise-pill';
+        }
+
+        const isExpanded = isComb && expandedFranchiseSet.has(entry.franchiseKey);
+
+        let accordionHtml = '';
+        if (isComb && isExpanded) {
+          accordionHtml = `
+            <div class="franchise-accordion-wrap">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; flex-wrap:wrap; gap:8px;">
+                <span style="font-family:'Space Mono', monospace; font-size:10px; font-weight:700; color:#92400e; letter-spacing:0.08em; text-transform:uppercase;">
+                  ⚡ Franchise Breakdown (${entry.parts.length} Feature Films)
+                </span>
+                <button type="button" class="franchise-consolidate-btn" data-key="${entry.franchiseKey}">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  <span>Merge into 1 Card on 3D Reel</span>
+                </button>
+              </div>
+              ${entry.parts.map((p) => `
+                <div class="franchise-part-row">
+                  <div class="franchise-part-left">
+                    <img src="${p.p || ''}" class="franchise-part-thumb" alt="${p.t}" loading="lazy" />
+                    <div style="min-width:0;">
+                      <div class="franchise-part-title">${p.t}</div>
+                      <div class="franchise-part-meta">${p.y || ''} • ${p.d || 'Feature Film'} • ${p.g || 'Cinema'}</div>
+                    </div>
+                  </div>
+                  <div style="display:flex; align-items:center; gap:8px;">
+                    <span class="franchise-part-score">★ ${Number(p.r || 0).toFixed(1)}</span>
+                    <button type="button" class="index-row-delete-btn franchise-part-del-btn" data-orig="${p.originalIndex !== undefined ? p.originalIndex : primaryOrig}" data-title="${p.t.replace(/"/g, '&quot;')}" title="Remove '${p.t}' only">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          `;
+        }
+
         return `
-          <div class="index-row" data-orig="${originalIndex}" data-title="${safeTitle}" data-poster="${item.p || ''}" data-score="${score}" data-sub="${item.y || ''} • ${item.k || (isMov ? 'Movie' : 'Series')} • ${item.g || 'Cinema'}">
-            <span class="index-num">${numStr}</span>
-            <span class="index-title">${item.t}</span>
-            <span class="index-meta-pill ${badgeClass}">${badgeLabel}</span>
-            <span class="index-meta-pill">${item.y || '—'}</span>
-            <span class="index-rating">★ ${score}</span>
-            <button type="button" class="index-row-delete-btn" data-orig="${originalIndex}" data-title="${safeTitle}" title="Remove '${safeTitle}' from archive">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-            </button>
+          <div style="display:flex; flex-direction:column; width:100%;">
+            <div class="index-row ${isComb ? 'franchise-header-row' : ''}" data-orig="${primaryOrig}" data-title="${safeTitle}" data-poster="${item.p || ''}" data-score="${score}" data-sub="${item.y || ''} • ${item.k || (isMov ? 'Movie' : 'Series')} • ${item.g || 'Cinema'}">
+              <span class="index-num">${numStr}</span>
+              <span class="index-title" style="${isComb ? 'font-weight:700;' : ''}">${item.t}</span>
+              <span class="index-meta-pill ${badgeClass}">${badgeLabel}</span>
+              <span class="index-meta-pill">${item.y || '—'}</span>
+              <span class="index-rating">★ ${score}</span>
+              ${isComb ? `
+                <button type="button" class="franchise-expand-btn" data-key="${entry.franchiseKey}" title="${isExpanded ? 'Collapse breakdown' : 'View individual parts'}">
+                  <span>${isExpanded ? '▲ Hide' : '▼ View'} ${entry.parts.length} Parts</span>
+                </button>
+                <button type="button" class="index-row-delete-btn franchise-delete-all-btn" data-key="${entry.franchiseKey}" data-title="${safeTitle}" data-count="${entry.parts.length}" title="Remove all ${entry.parts.length} parts from archive">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                </button>
+              ` : `
+                <button type="button" class="index-row-delete-btn" data-orig="${primaryOrig}" data-title="${safeTitle}" title="Remove '${safeTitle}' from archive">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
+                </button>
+              `}
+            </div>
+            ${accordionHtml}
           </div>
         `;
       }).join('');
@@ -4844,9 +5319,9 @@
 
       rows.forEach(row => {
         const origIdx = parseInt(row.dataset.orig, 10);
-        
+
         row.onclick = (e) => {
-          if (e.target.closest('.index-row-delete-btn')) return;
+          if (e.target.closest('.index-row-delete-btn') || e.target.closest('.franchise-expand-btn')) return;
           if (!isNaN(origIdx) && origIdx >= 0 && origIdx < ITEMS.length) {
             goTo(origIdx);
             document.getElementById('drawer').classList.remove('open');
@@ -4883,8 +5358,52 @@
         };
       });
 
-      // Direct delete buttons in index list
-      indexListEl.querySelectorAll('.index-row-delete-btn').forEach(btn => {
+      // Expand / Collapse franchise accordion buttons
+      indexListEl.querySelectorAll('.franchise-expand-btn').forEach(btn => {
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          const key = btn.dataset.key;
+          if (expandedFranchiseSet.has(key)) {
+            expandedFranchiseSet.delete(key);
+          } else {
+            expandedFranchiseSet.add(key);
+          }
+          renderLedgerSection();
+        };
+      });
+
+      // Consolidate franchise button inside expanded accordion
+      indexListEl.querySelectorAll('.franchise-consolidate-btn').forEach(btn => {
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          const key = btn.dataset.key;
+          consolidateFranchiseToReel(key);
+        };
+      });
+
+      // Delete all parts of franchise
+      indexListEl.querySelectorAll('.franchise-delete-all-btn').forEach(btn => {
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          const key = btn.dataset.key;
+          const title = btn.dataset.title;
+          const count = parseInt(btn.dataset.count, 10) || 3;
+          removeFranchiseGroup(key, title, count);
+        };
+      });
+
+      // Delete individual part inside expanded accordion
+      indexListEl.querySelectorAll('.franchise-part-del-btn').forEach(btn => {
+        btn.onclick = (e) => {
+          e.stopPropagation();
+          const origIdx = parseInt(btn.dataset.orig, 10);
+          const targetTitle = btn.dataset.title;
+          removeItemByIndex(origIdx, targetTitle);
+        };
+      });
+
+      // Direct delete buttons for standard rows
+      indexListEl.querySelectorAll('.index-row-delete-btn:not(.franchise-delete-all-btn):not(.franchise-part-del-btn)').forEach(btn => {
         btn.onclick = (e) => {
           e.stopPropagation();
           const origIdx = parseInt(btn.dataset.orig, 10);
@@ -5005,13 +5524,14 @@
     };
 
     // 2. Curated Legendary Seeds (Fallback / Instant Play)
-    // Matches the user's prompt: Rank 1 Breaking Bad vs Rank 16 365 Days
+    // Matches the user's prompt: Rank 1 Breaking Bad vs Rank 16 365 Days, with combined franchise trios
     const LEGENDARY_SEEDS = [
       { t: "Breaking Bad", y: 2008, k: "TV Series", r: 9.9, p: "https://static.tvmaze.com/uploads/images/medium_portrait/501/1253519.jpg", n: "A high school chemistry teacher diagnosed with lung cancer manufactures crystal meth." },
       { t: "The Godfather", y: 1972, k: "Feature Film", r: 9.8, p: "https://image.tmdb.org/t/p/w500/3bhkrj58Vtu7enYsRolD1fZdja1.jpg", n: "The patriarch of an organized crime dynasty transfers control to his reluctant son." },
       { t: "Interstellar", y: 2014, k: "Feature Film", r: 9.7, p: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg", n: "A team of explorers travel through a wormhole in space to ensure humanity's survival." },
       { t: "The Dark Knight", y: 2008, k: "Feature Film", r: 9.6, p: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg", n: "Batman battles the Joker who seeks to plunge Gotham City into complete anarchy." },
       { t: "Chernobyl", y: 2019, k: "Miniseries", r: 9.5, p: "https://static.tvmaze.com/uploads/images/medium_portrait/193/484439.jpg", n: "The true story of the 1986 nuclear power plant catastrophe and heroic cleanup." },
+      { t: "Iron Man Trio Movies", y: "2008–2013", k: "Movie Trio", r: 9.4, p: "https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX600.jpg", n: "Tony Stark's complete 3-film Marvel Cinematic Universe saga: Iron Man, Iron Man 2, and Iron Man 3 combined as one unified cinema contender." },
       { t: "Pulp Fiction", y: 1994, k: "Feature Film", r: 9.4, p: "https://image.tmdb.org/t/p/w500/d5iIlFnGhFvl0HqMAN2IPkeHRqD.jpg", n: "The lives of two mob hitmen, a boxer, and a gangster entwine in violent comedy." },
       { t: "Severance", y: 2022, k: "TV Series", r: 9.3, p: "https://static.tvmaze.com/uploads/images/medium_portrait/397/993181.jpg", n: "Employees whose work and personal memories have been surgically divided uncover dark secrets." },
       { t: "Succession", y: 2018, k: "TV Series", r: 9.2, p: "https://static.tvmaze.com/uploads/images/medium_portrait/456/1140989.jpg", n: "The Roy family clashes over succession of Waystar RoyCo, their global media empire." },
@@ -5021,7 +5541,6 @@
       { t: "Fight Club", y: 1999, k: "Feature Film", r: 8.8, p: "https://image.tmdb.org/t/p/w500/pB8BM7pdSp6B6Ih7QZ4DrQ3PmJK.jpg", n: "An insomniac office worker and a soapmaker form an underground fight club." },
       { t: "Parasite", y: 2019, k: "Feature Film", r: 8.7, p: "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg", n: "A poor family schemes to become employed by a wealthy family by infiltrating their home." },
       { t: "The Matrix", y: 1999, k: "Feature Film", r: 8.6, p: "https://image.tmdb.org/t/p/w500/f89U3ADr1oiB1s9GkdPOEpXUk5H.jpg", n: "Neo discovers reality is a simulated illusion created by machines feeding on humans." },
-      { t: "Game of Thrones", y: 2011, k: "TV Series", r: 8.5, p: "https://static.tvmaze.com/uploads/images/medium_portrait/190/476117.jpg", n: "Nine noble families fight for control over the Iron Throne of the mythical lands of Westeros." },
       { t: "365 Days", y: 2020, k: "Feature Film", r: 2.1, p: "https://image.tmdb.org/t/p/w500/6KIm382tG9s6Z0Y8M0q4KSmjH4q.jpg", n: "A Sicilian mafia boss gives a fiery captive woman 365 days to fall in love with him." }
     ];
 
@@ -5029,10 +5548,11 @@
     let goatTournament = null;
     let activeDuelMatchId = null;
 
-    // 3. Seeding Logic from Archive
+    // 3. Seeding Logic from Archive (with Franchise Consolidation)
     function getArchiveTournamentSeeds() {
-      // Sort all archive items descending by rating
-      const sortedArchive = [...ITEMS].sort((a, b) => Number(b.r || 0) - Number(a.r || 0));
+      // Group multi-part franchises so Iron Man 1, 2, 3 compete as Iron Man Trio Movies
+      const combinedArchive = combineFranchiseItems(ITEMS).map(c => c.item);
+      const sortedArchive = [...combinedArchive].sort((a, b) => Number(b.r || 0) - Number(a.r || 0));
       
       if (sortedArchive.length >= 16) {
         return sortedArchive.slice(0, 16).map((it, idx) => ({
@@ -5983,6 +6503,24 @@
         cinemetaId: 'tt0371746',
         n: 'After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil as Iron Man.',
         rating: 9.4
+      },
+      {
+        t: 'Iron Man Trio Movies',
+        baseName: 'Iron Man',
+        y: '2008–2013',
+        k: 'Movie Trio',
+        g: 'Action',
+        genres: ['Action', 'Sci-Fi', 'Adventure'],
+        c: '#f2b34c',
+        d: '3 Feature Films (384 min)',
+        h: 6,
+        p: 'https://m.media-amazon.com/images/M/MV5BMTczNTI2ODUwOF5BMl5BanBnXkFtZTcwMTU0NTIzMw@@._V1_SX600.jpg',
+        tvmazeId: null,
+        cinemetaId: 'tt0371746',
+        n: 'The complete 3-film Marvel Cinematic Universe saga starring Robert Downey Jr. as Tony Stark: Iron Man, Iron Man 2, and Iron Man 3 combined as one unified cinema entry.',
+        rating: 9.4,
+        isCombinedFranchise: true,
+        partsCount: 3
       }
     ];
 
@@ -6239,7 +6777,52 @@
         }
       });
 
-      return results;
+      // Synthesize franchise trio/duo suggestions if multi-part films exist in results or match query
+      const franchiseGroups = new Map();
+      results.forEach(it => {
+        const info = getFranchiseKeyAndPart(it.t);
+        if (info && !info.isAlreadyCombined) {
+          const k = info.franchiseKey;
+          if (!franchiseGroups.has(k)) {
+            franchiseGroups.set(k, { baseName: info.baseName, items: [] });
+          }
+          franchiseGroups.get(k).items.push(it);
+        }
+      });
+
+      const franchiseCombos = [];
+      franchiseGroups.forEach((grp) => {
+        if (grp.items.length >= 2) {
+          grp.items.sort((a, b) => ((parseInt(a.y) || 0) - (parseInt(b.y) || 0)));
+          const count = grp.items.length;
+          const comboTitle = count === 2 ? `${grp.baseName} Duo Movies` : (count === 3 ? `${grp.baseName} Trio Movies` : `${grp.baseName} Collection (${count} Films)`);
+          const years = grp.items.map(i => parseInt(i.y)).filter(y => !isNaN(y));
+          const yearSpan = years.length ? `${Math.min(...years)}–${Math.max(...years)}` : '2008–2013';
+          const ratings = grp.items.map(i => Number(i.rating || 9.0));
+          const avgScore = Number((ratings.reduce((a, b) => a + b, 0) / ratings.length).toFixed(1));
+
+          franchiseCombos.push({
+            t: comboTitle,
+            baseName: grp.baseName,
+            y: yearSpan,
+            k: count === 3 ? 'Movie Trio' : (count === 2 ? 'Movie Duo' : 'Movie Saga'),
+            g: grp.items[0].g || 'Action',
+            genres: grp.items[0].genres || ['Action', 'Adventure'],
+            c: grp.items[0].c || '#f2b34c',
+            d: `${count} Feature Films`,
+            h: count * 2,
+            p: grp.items[0].p,
+            n: `Unified franchise collection including all ${count} parts: ${grp.items.map(i => `${i.t} (${i.y})`).join(', ')}. Logged as one combined cinema contender.`,
+            rating: avgScore,
+            isCombinedFranchise: true,
+            partsCount: count,
+            parts: grp.items
+          });
+        }
+      });
+
+      // Place combined franchise candidates at top of recommendations
+      return [...franchiseCombos, ...results];
     }
 
     function renderSuggestions(list, query) {
@@ -6265,21 +6848,31 @@
         return;
       }
 
-      listContainer.innerHTML = list.map((item, idx) => `
-        <div class="suggestion-item" data-idx="${idx}">
-          <img src="${item.p}" class="suggestion-poster" alt="${item.t}" loading="lazy" />
-          <div class="suggestion-info">
-            <div class="suggestion-title">${item.t}</div>
-            <div class="suggestion-meta">
-              <span class="suggestion-badge">${item.k}</span>
-              <span>${item.y}</span>
-              <span>•</span>
-              <span>${item.g}</span>
+      listContainer.innerHTML = list.map((item, idx) => {
+        const isComb = !!item.isCombinedFranchise;
+        const count = item.partsCount || 3;
+        const badgeLabel = isComb ? `⚡ ${count}-FILM ${count === 3 ? 'TRIO' : (count === 2 ? 'DUO' : 'SAGA')}` : item.k;
+        const badgeStyle = isComb ? 'background:rgba(242,179,76,0.3); color:#f2b34c; border:1px solid rgba(242,179,76,0.6); font-weight:700;' : '';
+        const itemStyle = isComb ? 'background:rgba(242,179,76,0.08); border-left:3px solid #f2b34c;' : '';
+        const pickText = isComb ? `Record ${count}-Film Trio` : 'Pick & Preview';
+        const pickStyle = isComb ? 'background:#f2b34c; color:#12131a; font-weight:700;' : '';
+
+        return `
+          <div class="suggestion-item" data-idx="${idx}" style="${itemStyle}">
+            <img src="${item.p}" class="suggestion-poster" alt="${item.t}" loading="lazy" />
+            <div class="suggestion-info">
+              <div class="suggestion-title" style="${isComb ? 'color:#f2b34c; font-weight:700;' : ''}">${item.t}</div>
+              <div class="suggestion-meta">
+                <span class="suggestion-badge" style="${badgeStyle}">${badgeLabel}</span>
+                <span>${item.y}</span>
+                <span>•</span>
+                <span>${item.g}</span>
+              </div>
             </div>
+            <button type="button" class="suggestion-pick-btn" style="${pickStyle}">${pickText}</button>
           </div>
-          <button type="button" class="suggestion-pick-btn">Pick & Preview</button>
-        </div>
-      `).join('');
+        `;
+      }).join('');
 
       // Add click listeners to items
       listContainer.querySelectorAll('.suggestion-item').forEach(el => {
@@ -7011,6 +7604,33 @@
           currentSortMode = 'year';
           renderLedgerSection();
           updateSortButtons();
+        };
+      }
+
+      // Franchise grouping toggle
+      const btnToggleCombineFranchise = document.getElementById('btnToggleCombineFranchise');
+      if (btnToggleCombineFranchise) {
+        btnToggleCombineFranchise.onclick = () => {
+          isCombineFranchisesEnabled = !isCombineFranchisesEnabled;
+          const statusBadge = document.getElementById('combineFranchiseStatusBadge');
+          if (isCombineFranchisesEnabled) {
+            btnToggleCombineFranchise.style.background = '#1c1917';
+            btnToggleCombineFranchise.style.color = '#eee8dc';
+            if (statusBadge) {
+              statusBadge.textContent = 'ON';
+              statusBadge.style.background = 'rgba(242,179,76,0.3)';
+              statusBadge.style.color = '#f2b34c';
+            }
+          } else {
+            btnToggleCombineFranchise.style.background = 'transparent';
+            btnToggleCombineFranchise.style.color = '#1c1917';
+            if (statusBadge) {
+              statusBadge.textContent = 'OFF';
+              statusBadge.style.background = 'rgba(0,0,0,0.1)';
+              statusBadge.style.color = '#78716c';
+            }
+          }
+          renderLedgerSection();
         };
       }
 
